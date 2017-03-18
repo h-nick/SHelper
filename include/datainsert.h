@@ -2,6 +2,7 @@
 #define DATAINSERT_H
 
 #include <QDialog>
+#include <QValidator>
 
 namespace Ui {
 class DataInsert;
