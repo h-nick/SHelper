@@ -15,6 +15,9 @@ public:
 	explicit DataInsert(QWidget *parent = 0);
 	~DataInsert();
 
+private slots:
+	void datainsertion();
+
 private:
 	Ui::DataInsert *ui;
 };

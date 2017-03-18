@@ -1,4 +1,4 @@
-#include "simplefreqt.h"
+#include "include/simplefreqt.h"
 #include "ui_simplefreqt.h"
 
 SimpleFreqT::SimpleFreqT(QWidget *parent) :

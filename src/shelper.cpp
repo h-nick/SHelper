@@ -1,9 +1,9 @@
 #include <QDebug>
 #include <memory>
-#include "shelper.h"
+#include "include/shelper.h"
 #include "ui_shelper.h"
-#include "simplefreqt.h"
-#include "datainsert.h"
+#include "include/simplefreqt.h"
+#include "include/datainsert.h"
 
 Shelper::Shelper(QWidget *parent) :
 	QMainWindow(parent),
