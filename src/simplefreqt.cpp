@@ -11,7 +11,6 @@ SimpleFreqT::SimpleFreqT(_vct<double> &raw_numeric_data, QWidget *parent) :
 {
 	ui->setupUi(this);
 
-	//_vct<double> raw_numeric_data = numeric_data;
 	vectorialCalculations(raw_numeric_data);
 	connect(ui->button_return, SIGNAL(pressed()), this, SLOT(close()));
 	//connect(ui->button_graph, SIGNAL(pressed()), this, SLOT())
@@ -99,30 +98,70 @@ void SimpleFreqT::buildTable()
 		crn++;
 	}
 
+	/* Builds accumulated percentage column */
+	crn = 0;
+	for(dItr = accumulated_percentage.begin(); dItr != accumulated_percentage.end(); dItr++)
+	{
+		QTableWidgetItem *item = new QTableWidgetItem(QString::number(*dItr));
+		item->setTextAlignment(Qt::AlignCenter);
+
+		ui->table->setItem(crn, 6, item);
+		crn++;
+	}
+
 	/* Builds the index items in the last row */
 	// crn shouldn't be reset to 0 in the last build function. Crn will be used to know the last row
 	// index.
-	// TODO: This is not implemented fully. It should probably be moved to another function.
-	QTableWidgetItem *item = new QTableWidgetItem(QString::number(absoluteSum));
-
-	QFont font;
-	font.setWeight(QFont::Bold);
-	item->setFont(font);
-	item->setBackgroundColor(Qt::green);
-	item->setTextAlignment(Qt::AlignCenter);
-
-	ui->table->setItem(crn, 0, new QTableWidgetItem("-"));
-	ui->table->setItem(crn, 1, item);
+	// TODO: This should probably be moved to another function. Consider it a placeholder for now.
 
 	double sum_relative_frequency = 0;
 	for(auto &n : relative_freq)
 		sum_relative_frequency += n;
 
-	item = new QTableWidgetItem(QString::number(sum_relative_frequency));
-	item->setFont(font);
-	item->setTextAlignment(Qt::AlignCenter);
-	item->setBackgroundColor(Qt::green);
-	ui->table->setItem(crn, 2, item);
+	double sum_relative_percentage = 0;
+	for(auto &n : relative_percentage)
+		sum_relative_percentage += n;
+
+	QTableWidgetItem *iNull = new QTableWidgetItem("-");
+	QTableWidgetItem *iAbsoluteF = new QTableWidgetItem(QString::number(absoluteSum));
+	QTableWidgetItem *iRelativeF = new QTableWidgetItem(QString::number(sum_relative_frequency));
+	QTableWidgetItem *iRelativeP = new QTableWidgetItem(QString::number(sum_relative_percentage));
+
+	QFont font;
+	font.setWeight(QFont::Bold);
+	QBrush brush;
+	brush.setColor(Qt::blue);
+
+	iNull->setFont(font);
+	iNull->setForeground(brush);
+	iNull->setTextAlignment(Qt::AlignCenter);
+
+
+	iAbsoluteF->setFont(font);
+	iAbsoluteF->setForeground(brush);
+	iAbsoluteF->setTextAlignment(Qt::AlignCenter);
+
+
+	iRelativeF->setFont(font);
+	iRelativeF->setForeground(brush);
+	iRelativeF->setTextAlignment(Qt::AlignCenter);
+
+
+	iRelativeP->setFont(font);
+	iRelativeP->setForeground(brush);
+	iRelativeP->setTextAlignment(Qt::AlignCenter);
+
+
+
+	ui->table->setItem(crn, 0, iNull);
+	ui->table->setItem(crn, 1, iAbsoluteF);
+	ui->table->setItem(crn, 2, iRelativeF);
+	//ui->table->setItem(crn, 3, iNull);
+	//ui->table->setItem(crn, 4, iNull);
+	ui->table->setItem(crn, 5, iRelativeP);
+	//ui->table->setItem(crn, 6, iNull);
+
+	// FIXME: The same item can't be assigned to several columns.
 }
 
 void SimpleFreqT::vectorialCalculations(_vct<double> & raw_numeric_data)
@@ -151,8 +190,10 @@ void SimpleFreqT::vectorialCalculations(_vct<double> & raw_numeric_data)
 	for(unsigned int crn = 0; crn < relative_percentage.size(); crn++)
 		relative_percentage.at(crn) = relative_freq.at(crn) * 100;
 
+	/* Creates the accumulated percentage table */
+	makeACMFreqTable(relative_percentage, accumulated_percentage);
 
-	/* Creates the final table */
+	/* Builds the simple frequency table */
 	buildTable();
 }
 

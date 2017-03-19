@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>750</width>
-    <height>373</height>
+    <width>824</width>
+    <height>435</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,6 +43,15 @@
    </item>
    <item row="0" column="0" colspan="3">
     <widget class="QTableWidget" name="table">
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="sortingEnabled">
+      <bool>true</bool>
+     </property>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>110</number>
+     </attribute>
      <column>
       <property name="text">
        <string>Variable (X)</string>
