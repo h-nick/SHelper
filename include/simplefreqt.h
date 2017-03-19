@@ -36,7 +36,8 @@ private:
 	void buildTable();
 	void vectorialCalculations(_vct<double> &);
 	void makeVectorUnique(_vct<double> & vector);
-	void makeFrequencyTable(_vct<double> & variables, _vct<double> & raw_numeric_data);
+	void makeFrequencyTable(_vct<double> & raw_numeric_data);
+	void makeACMFreqTable();
 };
 
 #endif // SIMPLEFREQT_H

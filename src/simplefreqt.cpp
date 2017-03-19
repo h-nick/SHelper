@@ -47,7 +47,6 @@ void SimpleFreqT::buildTable()
 	for(nItr = absolute_freq.begin(); nItr != absolute_freq.end(); nItr++)
 	{
 		QTableWidgetItem *item = new QTableWidgetItem(QString::number(*nItr));
-		//absoluteSum += *nItr;
 		item->setTextAlignment(Qt::AlignCenter);
 
 		ui->table->setItem(crn, 1, item);
@@ -65,6 +64,19 @@ void SimpleFreqT::buildTable()
 		crn++;
 	}
 
+	/* Builds the accumulated frequencies column */
+	crn = 0;
+	for(nItr = accumulated_freq.begin(); nItr != accumulated_freq.end(); nItr++)
+	{
+		QTableWidgetItem *item = new QTableWidgetItem(QString::number(*nItr));
+		item->setTextAlignment(Qt::AlignCenter);
+
+		ui->table->setItem(crn, 3, item);
+		crn++;
+	}
+
+	/* Builds the accumulated relative frequencies column */
+
 	/* Builds the index items in the last row */
 	// crn shouldn't be reset to 0 in the last build function. Crn will be used to know the last row
 	// index.
@@ -74,10 +86,7 @@ void SimpleFreqT::buildTable()
 	QFont font;
 	font.setWeight(QFont::Bold);
 	item->setFont(font);
-	QBrush brush;
-	brush.setColor(Qt::yellow);
-	item->setForeground(brush);
-	item->setBackgroundColor(Qt::black);
+	item->setBackgroundColor(Qt::green);
 	item->setTextAlignment(Qt::AlignCenter);
 
 	ui->table->setItem(crn, 0, new QTableWidgetItem("-"));
@@ -89,9 +98,8 @@ void SimpleFreqT::buildTable()
 
 	item = new QTableWidgetItem(QString::number(sum_relative_frequency));
 	item->setFont(font);
-	item->setForeground(brush);
 	item->setTextAlignment(Qt::AlignCenter);
-	item->setBackgroundColor(Qt::black);
+	item->setBackgroundColor(Qt::green);
 	ui->table->setItem(crn, 2, item);
 }
 
@@ -105,12 +113,15 @@ void SimpleFreqT::vectorialCalculations(_vct<double> & raw_numeric_data)
 	makeVectorUnique(variables);
 
 	/* Creates the absolute frequency table */
-	makeFrequencyTable(variables, raw_numeric_data);
+	makeFrequencyTable(raw_numeric_data);
 
 	/* Creates the relative frequency table */
 	relative_freq.resize(absolute_freq.size());
 	for(unsigned int crn = 0; crn < absolute_freq.size(); crn++)
 		relative_freq.at(crn) = static_cast<double>(absolute_freq.at(crn)) / absoluteSum;
+
+	/* Creates the accumulated frequency table */
+	makeACMFreqTable();
 
 	/* Creates the final table */
 	buildTable();
@@ -121,7 +132,7 @@ void SimpleFreqT::makeVectorUnique(_vct<double> & vector)
 	vector.erase(unique(vector.begin(), vector.end()), vector.end());
 }
 
-void SimpleFreqT::makeFrequencyTable(_vct<double> & variables, _vct<double> & raw_numeric_data)
+void SimpleFreqT::makeFrequencyTable(_vct<double> & raw_numeric_data)
 {
 	_vct<double>::iterator dVarItr, dRVarItr;
 
@@ -139,5 +150,19 @@ void SimpleFreqT::makeFrequencyTable(_vct<double> & variables, _vct<double> & ra
 		absolute_freq.resize(current + 1);
 		absolute_freq.at(current) = count;
 		current++;
+	}
+}
+
+void SimpleFreqT::makeACMFreqTable()
+{
+	accumulated_freq.resize(variables.size());
+	_vct<int>::const_iterator const_nItr = absolute_freq.begin();
+	_vct<int>::iterator nItr = accumulated_freq.begin();
+	int accumulatedSum = 0;
+
+	for(; const_nItr != absolute_freq.end(); const_nItr++)
+	{
+		accumulatedSum += *const_nItr;
+		*(nItr++) = accumulatedSum;
 	}
 }
