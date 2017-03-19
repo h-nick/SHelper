@@ -16,6 +16,8 @@
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QTableWidget>
 
 QT_BEGIN_NAMESPACE
@@ -24,6 +26,9 @@ class Ui_SimpleFreqT
 {
 public:
     QGridLayout *gridLayout;
+    QPushButton *button_return;
+    QPushButton *button_graph;
+    QSpacerItem *horizontalSpacer;
     QTableWidget *table;
 
     void setupUi(QDialog *SimpleFreqT)
@@ -33,6 +38,20 @@ public:
         SimpleFreqT->resize(750, 373);
         gridLayout = new QGridLayout(SimpleFreqT);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        button_return = new QPushButton(SimpleFreqT);
+        button_return->setObjectName(QStringLiteral("button_return"));
+
+        gridLayout->addWidget(button_return, 1, 1, 1, 1);
+
+        button_graph = new QPushButton(SimpleFreqT);
+        button_graph->setObjectName(QStringLiteral("button_graph"));
+
+        gridLayout->addWidget(button_graph, 1, 2, 1, 1);
+
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout->addItem(horizontalSpacer, 1, 0, 1, 1);
+
         table = new QTableWidget(SimpleFreqT);
         if (table->columnCount() < 7)
             table->setColumnCount(7);
@@ -52,7 +71,7 @@ public:
         table->setHorizontalHeaderItem(6, __qtablewidgetitem6);
         table->setObjectName(QStringLiteral("table"));
 
-        gridLayout->addWidget(table, 0, 0, 1, 1);
+        gridLayout->addWidget(table, 0, 0, 1, 3);
 
 
         retranslateUi(SimpleFreqT);
@@ -63,6 +82,8 @@ public:
     void retranslateUi(QDialog *SimpleFreqT)
     {
         SimpleFreqT->setWindowTitle(QApplication::translate("SimpleFreqT", "Dialog", Q_NULLPTR));
+        button_return->setText(QApplication::translate("SimpleFreqT", "Return", Q_NULLPTR));
+        button_graph->setText(QApplication::translate("SimpleFreqT", "Show Graph", Q_NULLPTR));
         QTableWidgetItem *___qtablewidgetitem = table->horizontalHeaderItem(0);
         ___qtablewidgetitem->setText(QApplication::translate("SimpleFreqT", "Variable (X)", Q_NULLPTR));
         QTableWidgetItem *___qtablewidgetitem1 = table->horizontalHeaderItem(1);

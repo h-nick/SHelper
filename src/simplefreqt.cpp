@@ -1,6 +1,7 @@
 #include <iostream>
 #include <QDebug>
 #include <algorithm>
+#include <vector>
 #include "include/simplefreqt.h"
 #include "ui_simplefreqt.h"
 
@@ -27,6 +28,7 @@ void SimpleFreqT::buildTable()
 	_vct<int>::const_iterator nItr;	// Iterator for int-type vectors.
 	ui->table->setRowCount(variables.size() + 1);
 
+	// TODO: Compress all of this in one or two functions since they are all the same.
 	/* Builds the variables column */
 	int crn = 0;
 	for(dItr = variables.begin(); dItr != variables.end(); dItr++)
@@ -76,6 +78,26 @@ void SimpleFreqT::buildTable()
 	}
 
 	/* Builds the accumulated relative frequencies column */
+	crn = 0;
+	for(dItr = accumulated_relative_freq.begin(); dItr != accumulated_relative_freq.end(); dItr++)
+	{
+		QTableWidgetItem *item = new QTableWidgetItem(QString::number(*dItr));
+		item->setTextAlignment(Qt::AlignCenter);
+
+		ui->table->setItem(crn, 4, item);
+		crn++;
+	}
+
+	/* Builds relative percentage column */
+	crn = 0;
+	for(dItr = relative_percentage.begin(); dItr != relative_percentage.end(); dItr++)
+	{
+		QTableWidgetItem *item = new QTableWidgetItem(QString::number(*dItr));
+		item->setTextAlignment(Qt::AlignCenter);
+
+		ui->table->setItem(crn, 5, item);
+		crn++;
+	}
 
 	/* Builds the index items in the last row */
 	// crn shouldn't be reset to 0 in the last build function. Crn will be used to know the last row
@@ -106,7 +128,7 @@ void SimpleFreqT::buildTable()
 void SimpleFreqT::vectorialCalculations(_vct<double> & raw_numeric_data)
 {
 	/* Sorts the original vector */
-	std::sort(raw_numeric_data.begin(), raw_numeric_data.end());
+	std::sort(raw_numeric_data.rbegin(), raw_numeric_data.rend());
 
 	/* Deletes duplicated entries in the variables vector */
 	variables = raw_numeric_data;
@@ -120,8 +142,15 @@ void SimpleFreqT::vectorialCalculations(_vct<double> & raw_numeric_data)
 	for(unsigned int crn = 0; crn < absolute_freq.size(); crn++)
 		relative_freq.at(crn) = static_cast<double>(absolute_freq.at(crn)) / absoluteSum;
 
-	/* Creates the accumulated frequency table */
-	makeACMFreqTable();
+	/* Creates the accumulated absolute and relative frequency table */
+	makeACMFreqTable(absolute_freq, accumulated_freq);
+	makeACMFreqTable(relative_freq, accumulated_relative_freq);
+
+	/* Creates the relative percentage table */
+	relative_percentage.resize(variables.size());
+	for(unsigned int crn = 0; crn < relative_percentage.size(); crn++)
+		relative_percentage.at(crn) = relative_freq.at(crn) * 100;
+
 
 	/* Creates the final table */
 	buildTable();
@@ -153,16 +182,17 @@ void SimpleFreqT::makeFrequencyTable(_vct<double> & raw_numeric_data)
 	}
 }
 
-void SimpleFreqT::makeACMFreqTable()
+template<typename T>
+void SimpleFreqT::makeACMFreqTable(_vct<T> & mainFreq, _vct<T> & ACMFreq)
 {
-	accumulated_freq.resize(variables.size());
-	_vct<int>::const_iterator const_nItr = absolute_freq.begin();
-	_vct<int>::iterator nItr = accumulated_freq.begin();
-	int accumulatedSum = 0;
+	ACMFreq.resize(variables.size());
+	_vct<T>::const_iterator const_itr = mainFreq.begin();
+	_vct<T>::iterator itr = ACMFreq.begin();
+	T accumulatedSum = 0;
 
-	for(; const_nItr != absolute_freq.end(); const_nItr++)
+	for(; const_itr != mainFreq.end(); const_itr++)
 	{
-		accumulatedSum += *const_nItr;
-		*(nItr++) = accumulatedSum;
+		accumulatedSum += *const_itr;
+		*(itr++) = accumulatedSum;
 	}
 }

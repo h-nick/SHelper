@@ -29,7 +29,7 @@ private:
 	_vct<int> absolute_freq;
 	_vct<double> relative_freq;
 	_vct<int> accumulated_freq;
-	_vct<double> accumulared_relative_freq;
+	_vct<double> accumulated_relative_freq;
 	_vct<double> relative_percentage;
 	_vct<double> accumulated_percentage;
 
@@ -37,7 +37,9 @@ private:
 	void vectorialCalculations(_vct<double> &);
 	void makeVectorUnique(_vct<double> & vector);
 	void makeFrequencyTable(_vct<double> & raw_numeric_data);
-	void makeACMFreqTable();
+
+	template<typename T>
+	void makeACMFreqTable(_vct<T> & mainFreq, _vct<T> & ACMFreq);
 };
 
 #endif // SIMPLEFREQT_H

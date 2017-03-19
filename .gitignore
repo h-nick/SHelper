@@ -21,6 +21,12 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Qt and Makefiles
+Makefile.*
+.qmake.stash
+*.pro.*
+ui_*.*
+
 # =========================
 # Operating System Files
 # =========================
