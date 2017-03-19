@@ -23,6 +23,7 @@ public:
 
 private:
 	Ui::SimpleFreqT *ui;
+	int absoluteSum = 0;
 
 	_vct<double> variables;
 	_vct<int> absolute_freq;

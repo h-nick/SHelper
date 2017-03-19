@@ -4,13 +4,13 @@
 #include "include/simplefreqt.h"
 #include "ui_simplefreqt.h"
 
-SimpleFreqT::SimpleFreqT(_vct<double> &numeric_data, QWidget *parent) :
-	QDialog(parent),
+SimpleFreqT::SimpleFreqT(_vct<double> &raw_numeric_data, QWidget *parent) :
+	QDialog(parent), absoluteSum(raw_numeric_data.size()),
 	ui(new Ui::SimpleFreqT)
 {
 	ui->setupUi(this);
 
-	_vct<double> raw_numeric_data = numeric_data;
+	//_vct<double> raw_numeric_data = numeric_data;
 	vectorialCalculations(raw_numeric_data);
 	connect(ui->button_return, SIGNAL(pressed()), this, SLOT(close()));
 	//connect(ui->button_graph, SIGNAL(pressed()), this, SLOT())
@@ -23,8 +23,9 @@ SimpleFreqT::~SimpleFreqT()
 
 void SimpleFreqT::buildTable()
 {
-	_vct<double>::const_iterator dItr;
-	_vct<int>::const_iterator nItr;
+	_vct<double>::const_iterator dItr; // Iterator for double-type vectors.
+	_vct<int>::const_iterator nItr;	// Iterator for int-type vectors.
+	ui->table->setRowCount(variables.size() + 1);
 
 	/* Builds the variables column */
 	int crn = 0;
@@ -37,41 +38,61 @@ void SimpleFreqT::buildTable()
 		item->setFont(font);
 		item->setTextAlignment(Qt::AlignCenter);
 
-		ui->table->setRowCount(variables.size() + 1);
 		ui->table->setItem(crn, 0, item);
 		crn++;
 	}
 
 	/* Builds the absolute frequencies column */
 	crn = 0;
-	int absoluteSum = 0;
 	for(nItr = absolute_freq.begin(); nItr != absolute_freq.end(); nItr++)
 	{
 		QTableWidgetItem *item = new QTableWidgetItem(QString::number(*nItr));
-		absoluteSum += *nItr;
+		//absoluteSum += *nItr;
 		item->setTextAlignment(Qt::AlignCenter);
 
 		ui->table->setItem(crn, 1, item);
 		crn++;
 	}
 
+	/* Builds the relative frequencies column */
+	crn = 0;
+	for(dItr = relative_freq.begin(); dItr != relative_freq.end(); dItr++)
+	{
+		QTableWidgetItem *item = new QTableWidgetItem(QString::number(*dItr));
+		item->setTextAlignment(Qt::AlignCenter);
+
+		ui->table->setItem(crn, 2, item);
+		crn++;
+	}
+
 	/* Builds the index items in the last row */
 	// crn shouldn't be reset to 0 in the last build function. Crn will be used to know the last row
 	// index.
-	// TODO: This is not implemented fully.
+	// TODO: This is not implemented fully. It should probably be moved to another function.
 	QTableWidgetItem *item = new QTableWidgetItem(QString::number(absoluteSum));
 
 	QFont font;
 	font.setWeight(QFont::Bold);
 	item->setFont(font);
 	QBrush brush;
-	brush.setColor(Qt::blue);
+	brush.setColor(Qt::yellow);
 	item->setForeground(brush);
+	item->setBackgroundColor(Qt::black);
 	item->setTextAlignment(Qt::AlignCenter);
 
 	ui->table->setItem(crn, 0, new QTableWidgetItem("-"));
 	ui->table->setItem(crn, 1, item);
 
+	double sum_relative_frequency = 0;
+	for(auto &n : relative_freq)
+		sum_relative_frequency += n;
+
+	item = new QTableWidgetItem(QString::number(sum_relative_frequency));
+	item->setFont(font);
+	item->setForeground(brush);
+	item->setTextAlignment(Qt::AlignCenter);
+	item->setBackgroundColor(Qt::black);
+	ui->table->setItem(crn, 2, item);
 }
 
 void SimpleFreqT::vectorialCalculations(_vct<double> & raw_numeric_data)
@@ -83,9 +104,15 @@ void SimpleFreqT::vectorialCalculations(_vct<double> & raw_numeric_data)
 	variables = raw_numeric_data;
 	makeVectorUnique(variables);
 
-	/* Creates the frequency table */
+	/* Creates the absolute frequency table */
 	makeFrequencyTable(variables, raw_numeric_data);
 
+	/* Creates the relative frequency table */
+	relative_freq.resize(absolute_freq.size());
+	for(unsigned int crn = 0; crn < absolute_freq.size(); crn++)
+		relative_freq.at(crn) = static_cast<double>(absolute_freq.at(crn)) / absoluteSum;
+
+	/* Creates the final table */
 	buildTable();
 }
 
@@ -97,7 +124,6 @@ void SimpleFreqT::makeVectorUnique(_vct<double> & vector)
 void SimpleFreqT::makeFrequencyTable(_vct<double> & variables, _vct<double> & raw_numeric_data)
 {
 	_vct<double>::iterator dVarItr, dRVarItr;
-	_vct<int>::iterator nVarItr;
 
 	// NOTE: This can be done more optimally with a hash map.
 	int current = 0;
