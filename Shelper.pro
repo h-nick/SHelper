@@ -24,18 +24,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
-SOURCES += src/main.cpp\
-        src/shelper.cpp \
-    src/simplefreqt.cpp \
-    src/datainsert.cpp
+SOURCES +=  src/main.cpp\
+            src/shelper.cpp \
+            src/simplefreqt.cpp \
+            src/datainsert.cpp \
+            src/simplefreqg.cpp
 
 HEADERS  += include/shelper.h \
-    include/simplefreqt.h \
-    include/datainsert.h
+            include/simplefreqt.h \
+            include/datainsert.h \
+            include/simplefreqg.h
 
-FORMS    += src/shelper.ui \
-    src/simplefreqt.ui \
-    src/datainsert.ui
+FORMS    += ui/shelper.ui \
+            ui/simplefreqt.ui \
+            ui/simplefreqg.ui \
+            ui/datainsert.ui
 
 TRANSLATIONS += locale_en.ts \
                 locale_es.ts

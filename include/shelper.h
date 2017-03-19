@@ -3,6 +3,9 @@
 
 #include <QMainWindow>
 
+template<class T>
+using _vct = std::vector<T>;
+
 namespace Ui {
 class Shelper;
 }

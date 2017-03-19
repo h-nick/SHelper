@@ -1,5 +1,5 @@
 #include <QDebug>
-#include <memory>
+#include <algorithm>
 #include "include/shelper.h"
 #include "ui_shelper.h"
 #include "include/simplefreqt.h"
@@ -21,6 +21,13 @@ Shelper::~Shelper()
 
 void Shelper::callSimpleFreqT()
 {
-	std::unique_ptr<DataInsert> alldata(new DataInsert());
+	DataInsert * alldata = new DataInsert(this);
 	alldata->exec();
+	_vct<double> numeric_data = alldata->getVectorData();
+
+	delete alldata;
+	alldata = nullptr;
+
+	SimpleFreqT * table = new SimpleFreqT(numeric_data, this);
+	table->exec();
 }

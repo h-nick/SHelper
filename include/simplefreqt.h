@@ -3,6 +3,12 @@
 
 #include <QDialog>
 
+template<class T>
+using _vct = std::vector<T>;
+
+//using dVect = std::vector<double>;	//Substitute to typedef.
+//using nVect = std::vector<int>;
+
 namespace Ui {
 class SimpleFreqT;
 }
@@ -12,11 +18,24 @@ class SimpleFreqT : public QDialog
 	Q_OBJECT
 
 public:
-	explicit SimpleFreqT(QWidget *parent = 0);
+	explicit SimpleFreqT(_vct<double> & numeric_data, QWidget *parent = 0);
 	~SimpleFreqT();
 
 private:
 	Ui::SimpleFreqT *ui;
+
+	_vct<double> variables;
+	_vct<int> absolute_freq;
+	_vct<double> relative_freq;
+	_vct<int> accumulated_freq;
+	_vct<double> accumulared_relative_freq;
+	_vct<double> relative_percentage;
+	_vct<double> accumulated_percentage;
+
+	void buildTable();
+	void vectorialCalculations(_vct<double> &);
+	void makeVectorUnique(_vct<double> & vector);
+	void makeFrequencyTable(_vct<double> & variables, _vct<double> & raw_numeric_data);
 };
 
 #endif // SIMPLEFREQT_H
