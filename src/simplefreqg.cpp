@@ -6,8 +6,7 @@ SimpleFreqG::SimpleFreqG(QWidget *parent) :
 	ui(new Ui::SimpleFreqG)
 {
 	ui->setupUi(this);
-
-	connect(ui->button_return, SIGNAL(pressed()), this, SLOT(close()));
+	connect(ui->button_close, SIGNAL(pressed()), this, SLOT(close()));
 }
 
 SimpleFreqG::~SimpleFreqG()

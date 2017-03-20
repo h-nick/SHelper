@@ -2,6 +2,7 @@
 #define SHELPER_H
 
 #include <QMainWindow>
+#include <QCloseEvent>
 
 template<class T>
 using _vct = std::vector<T>;
@@ -17,6 +18,9 @@ class Shelper : public QMainWindow
 public:
 	explicit Shelper(QWidget *parent = 0);
 	~Shelper();
+
+protected:
+	void closeEvent(QCloseEvent *event);
 
 private slots:
 	void callSimpleFreqT();

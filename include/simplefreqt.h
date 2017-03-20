@@ -1,7 +1,8 @@
 #ifndef SIMPLEFREQT_H
 #define SIMPLEFREQT_H
 
-#include <QDialog>
+#include <QWidget>
+#include "include/simplefreqg.h"
 
 template<class T>
 using _vct = std::vector<T>;
@@ -13,7 +14,7 @@ namespace Ui {
 class SimpleFreqT;
 }
 
-class SimpleFreqT : public QDialog
+class SimpleFreqT : public QWidget
 {
 	Q_OBJECT
 
@@ -40,6 +41,9 @@ private:
 
 	template<typename T>
 	void makeACMFreqTable(_vct<T> & mainFreq, _vct<T> & ACMFreq);
+
+private slots:
+	void showBarChart();
 };
 
 #endif // SIMPLEFREQT_H

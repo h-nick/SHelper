@@ -6,14 +6,14 @@
 #include "ui_simplefreqt.h"
 
 SimpleFreqT::SimpleFreqT(_vct<double> &raw_numeric_data, QWidget *parent) :
-	QDialog(parent), absoluteSum(raw_numeric_data.size()),
+	QWidget(parent), absoluteSum(raw_numeric_data.size()),
 	ui(new Ui::SimpleFreqT)
 {
 	ui->setupUi(this);
 
 	vectorialCalculations(raw_numeric_data);
 	connect(ui->button_return, SIGNAL(pressed()), this, SLOT(close()));
-	//connect(ui->button_graph, SIGNAL(pressed()), this, SLOT())
+	connect(ui->button_graph, SIGNAL(pressed()), this, SLOT(showBarChart()));
 }
 
 SimpleFreqT::~SimpleFreqT()
@@ -21,11 +21,19 @@ SimpleFreqT::~SimpleFreqT()
 	delete ui;
 }
 
+void SimpleFreqT::showBarChart()
+{
+	// TODO: Avoid duplication of this window. Set a flag or something.
+	SimpleFreqG *barChart = new SimpleFreqG(this);
+	barChart->setAttribute(Qt::WA_DeleteOnClose);
+	barChart->show();
+}
+
 void SimpleFreqT::buildTable()
 {
 	_vct<double>::const_iterator dItr; // Iterator for double-type vectors.
 	_vct<int>::const_iterator nItr;	// Iterator for int-type vectors.
-	ui->table->setRowCount(variables.size() + 1);
+	ui->table->setRowCount(variables.size());
 
 	// TODO: Compress all of this in one or two functions since they are all the same.
 	/* Builds the variables column */
@@ -108,60 +116,6 @@ void SimpleFreqT::buildTable()
 		ui->table->setItem(crn, 6, item);
 		crn++;
 	}
-
-	/* Builds the index items in the last row */
-	// crn shouldn't be reset to 0 in the last build function. Crn will be used to know the last row
-	// index.
-	// TODO: This should probably be moved to another function. Consider it a placeholder for now.
-
-	double sum_relative_frequency = 0;
-	for(auto &n : relative_freq)
-		sum_relative_frequency += n;
-
-	double sum_relative_percentage = 0;
-	for(auto &n : relative_percentage)
-		sum_relative_percentage += n;
-
-	QTableWidgetItem *iNull = new QTableWidgetItem("-");
-	QTableWidgetItem *iAbsoluteF = new QTableWidgetItem(QString::number(absoluteSum));
-	QTableWidgetItem *iRelativeF = new QTableWidgetItem(QString::number(sum_relative_frequency));
-	QTableWidgetItem *iRelativeP = new QTableWidgetItem(QString::number(sum_relative_percentage));
-
-	QFont font;
-	font.setWeight(QFont::Bold);
-	QBrush brush;
-	brush.setColor(Qt::blue);
-
-	iNull->setFont(font);
-	iNull->setForeground(brush);
-	iNull->setTextAlignment(Qt::AlignCenter);
-
-
-	iAbsoluteF->setFont(font);
-	iAbsoluteF->setForeground(brush);
-	iAbsoluteF->setTextAlignment(Qt::AlignCenter);
-
-
-	iRelativeF->setFont(font);
-	iRelativeF->setForeground(brush);
-	iRelativeF->setTextAlignment(Qt::AlignCenter);
-
-
-	iRelativeP->setFont(font);
-	iRelativeP->setForeground(brush);
-	iRelativeP->setTextAlignment(Qt::AlignCenter);
-
-
-
-	ui->table->setItem(crn, 0, iNull);
-	ui->table->setItem(crn, 1, iAbsoluteF);
-	ui->table->setItem(crn, 2, iRelativeF);
-	//ui->table->setItem(crn, 3, iNull);
-	//ui->table->setItem(crn, 4, iNull);
-	ui->table->setItem(crn, 5, iRelativeP);
-	//ui->table->setItem(crn, 6, iNull);
-
-	// FIXME: The same item can't be assigned to several columns.
 }
 
 void SimpleFreqT::vectorialCalculations(_vct<double> & raw_numeric_data)
