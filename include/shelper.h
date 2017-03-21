@@ -24,6 +24,7 @@ protected:
 
 private slots:
 	void callSimpleFreqT();
+	void showAbout();
 
 private:
 	Ui::Shelper *ui;

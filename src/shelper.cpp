@@ -4,6 +4,7 @@
 #include "ui_shelper.h"
 #include "include/simplefreqt.h"
 #include "include/datainsert.h"
+#include "include/aboutdialog.h"
 
 Shelper::Shelper(QWidget *parent) :
 	QMainWindow(parent),
@@ -12,11 +13,19 @@ Shelper::Shelper(QWidget *parent) :
 	ui->setupUi(this);
 
 	connect(ui->button_simplefreq, SIGNAL(pressed()), this, SLOT(callSimpleFreqT()));
+	connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(showAbout()));
 }
 
 Shelper::~Shelper()
 {
 	delete ui;
+}
+
+void Shelper::showAbout()
+{
+	AboutDialog *about = new AboutDialog(this);
+	about->exec();
+	about->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void Shelper::closeEvent(QCloseEvent *event)
