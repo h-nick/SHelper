@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Simple Frequency Table</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="1">
@@ -57,27 +57,27 @@
      </attribute>
      <column>
       <property name="text">
-       <string>Variable (X)</string>
+       <string>Variable</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>Absolute Freq (fi)</string>
+       <string>Absolute Freq</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>Relative Freq (hi)</string>
+       <string>Relative Freq</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>AAbs Freq (Fi)</string>
+       <string>AAbs Freq</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>ARel Freq (Hi)</string>
+       <string>ARel Freq</string>
       </property>
      </column>
      <column>

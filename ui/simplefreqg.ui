@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Chart</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>

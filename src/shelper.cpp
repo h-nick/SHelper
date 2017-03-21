@@ -1,5 +1,7 @@
 #include <QDebug>
 #include <QMessageBox>
+#include <QTranslator>
+#include <QDir>
 #include "include/shelper.h"
 #include "ui_shelper.h"
 #include "include/simplefreqt.h"
@@ -14,11 +16,29 @@ Shelper::Shelper(QWidget *parent) :
 
 	connect(ui->button_simplefreq, SIGNAL(pressed()), this, SLOT(callSimpleFreqT()));
 	connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(showAbout()));
+	connect(ui->actionLanguage, SIGNAL(triggered()), this, SLOT(changeLang()));
 }
 
 Shelper::~Shelper()
 {
 	delete ui;
+}
+
+void Shelper::changeLang()
+{
+	// TODO: Implement this fully.
+	QDir masterPath(QApplication::applicationDirPath());
+	masterPath.cdUp();
+	masterPath.cd(masterPath.absolutePath() + "/locale");
+
+	QTranslator locale;
+
+	if(locale.load("locale_es", masterPath.absolutePath()))
+		qDebug() << "successful";
+	else
+		qDebug() << "error";
+
+	qApp->installTranslator(&locale);
 }
 
 void Shelper::showAbout()

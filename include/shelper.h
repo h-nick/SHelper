@@ -25,6 +25,7 @@ protected:
 private slots:
 	void callSimpleFreqT();
 	void showAbout();
+	void changeLang();
 
 private:
 	Ui::Shelper *ui;
