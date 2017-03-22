@@ -2,7 +2,6 @@
 #define SIMPLEFREQT_H
 
 #include <QWidget>
-#include "include/simplefreqg.h"
 
 template<class T>
 using _vct = std::vector<T>;

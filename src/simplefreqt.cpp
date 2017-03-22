@@ -1,8 +1,8 @@
-#include <iostream>
 #include <QDebug>
 #include <algorithm>
 #include <vector>
 #include "include/simplefreqt.h"
+#include "include/simplefreqg.h"
 #include "ui_simplefreqt.h"
 
 SimpleFreqT::SimpleFreqT(_vct<double> &raw_numeric_data, QWidget *parent) :
@@ -24,7 +24,7 @@ SimpleFreqT::~SimpleFreqT()
 void SimpleFreqT::showBarChart()
 {
 	// TODO: Avoid duplication of this window. Set a flag or something.
-	SimpleFreqG *barChart = new SimpleFreqG(this);
+	SimpleFreqG *barChart = new SimpleFreqG(variables, absolute_freq, this);
 	barChart->setAttribute(Qt::WA_DeleteOnClose);
 	barChart->show();
 }
