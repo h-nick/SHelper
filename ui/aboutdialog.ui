@@ -45,6 +45,9 @@
      <property name="text">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SHelper has been developed as a tool to simplify statistical calculations for engineering purposes.&lt;br/&gt;&lt;br/&gt;This is an open-source project made in C++ and QT5, available at:&lt;br/&gt;&lt;a href=&quot;https://github.com/nhd15c/SHelper&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/nhd15c/SHelper&lt;br/&gt;&lt;br/&gt;&lt;/span&gt;&lt;/a&gt;Developed by:&lt;br/&gt;Nicolás H.&lt;br/&gt;&lt;br/&gt;(C) All rights reserved | 2017.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
+     </property>
      <property name="textInteractionFlags">
       <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
      </property>

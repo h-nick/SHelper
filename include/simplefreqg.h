@@ -2,9 +2,15 @@
 #define SIMPLEFREQG_H
 
 #include <QDialog>
+#include <QtCharts/qbarset.h>
+#include <QtCharts/qchart.h>
+
+using namespace QtCharts;
 
 template<typename T>
 using _vct = std::vector<T>;
+
+using _ptr = std::vector<QBarSet *>;
 
 namespace Ui {
 class SimpleFreqG;
@@ -24,6 +30,7 @@ private:
 	_vct<int> m_absolute_freq;
 
 	void generateSet();
+	void generateBar(_ptr & barsetPtr);
 
 };
 
