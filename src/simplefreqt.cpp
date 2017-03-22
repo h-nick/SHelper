@@ -6,7 +6,7 @@
 #include "ui_simplefreqt.h"
 
 SimpleFreqT::SimpleFreqT(_vct<double> &raw_numeric_data, QWidget *parent) :
-	QWidget(parent), absoluteSum(raw_numeric_data.size()),
+	QWidget(parent),
 	ui(new Ui::SimpleFreqT)
 {
 	ui->setupUi(this);
@@ -133,7 +133,7 @@ void SimpleFreqT::vectorialCalculations(_vct<double> & raw_numeric_data)
 	/* Creates the relative frequency table */
 	relative_freq.resize(absolute_freq.size());
 	for(unsigned int crn = 0; crn < absolute_freq.size(); crn++)
-		relative_freq.at(crn) = static_cast<double>(absolute_freq.at(crn)) / absoluteSum;
+		relative_freq.at(crn) = static_cast<double>(absolute_freq.at(crn)) / raw_numeric_data.size();
 
 	/* Creates the accumulated absolute and relative frequency table */
 	makeACMFreqTable(absolute_freq, accumulated_freq);

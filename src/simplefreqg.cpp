@@ -5,6 +5,10 @@
 #include "include/simplefreqg.h"
 #include "ui_simplefreqg.h"
 
+/* TODO: Most memory leaks of the class have been corrected. But they haven't been checked yet...
+ * In other words: Check for memory leaks.
+ */
+
 SimpleFreqG::SimpleFreqG(_vct<double> & variables, _vct<int> & absolute_freq, QWidget *parent) :
 	QDialog(parent), m_variables(variables), m_absolute_freq(absolute_freq),
 	ui(new Ui::SimpleFreqG)
@@ -38,7 +42,7 @@ void SimpleFreqG::generateSet()
 
 	for(; dItr != m_variables.end(); dItr++)
 	{
-		*pItr = new QBarSet(QString::number(*dItr));
+		*pItr = new QBarSet(QString::number(*dItr), this);
 		**(pItr++) << *(nItr++); /* Adds the nItr-dereference (the variable frequency) to the
 								  * dereference of the pointer accesed by
 								  * dereferencing pItr... This is kinda messy... which is what

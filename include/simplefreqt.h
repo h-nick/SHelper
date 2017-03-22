@@ -23,7 +23,6 @@ public:
 
 private:
 	Ui::SimpleFreqT *ui;
-	int absoluteSum; // Total number of elements. This is initialized in the constructor.
 
 	_vct<double> variables;
 	_vct<int> absolute_freq;

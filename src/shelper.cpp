@@ -39,6 +39,8 @@ void Shelper::changeLang()
 		qDebug() << "error";
 
 	qApp->installTranslator(&locale);
+
+	ui->retranslateUi(this);
 }
 
 void Shelper::showAbout()
