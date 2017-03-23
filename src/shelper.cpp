@@ -5,6 +5,7 @@
 #include "include/shelper.h"
 #include "ui_shelper.h"
 #include "include/simplefreqt.h"
+#include "include/classintervalfreqt.h"
 #include "include/datainsert.h"
 #include "include/aboutdialog.h"
 
@@ -15,6 +16,7 @@ Shelper::Shelper(QWidget *parent) :
 	ui->setupUi(this);
 
 	connect(ui->button_simplefreq, SIGNAL(pressed()), this, SLOT(callSimpleFreqT()));
+	connect(ui->button_classintervalfreq, SIGNAL(pressed()), this, SLOT(callClassIntervalFreqT()));
 	connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(showAbout()));
 	connect(ui->actionLanguage, SIGNAL(triggered()), this, SLOT(changeLang()));
 }
@@ -26,7 +28,7 @@ Shelper::~Shelper()
 
 void Shelper::changeLang()
 {
-	// TODO: Implement this fully.
+	// TODO: Implement this fully. I think this must be moved to main() before QMainWindow constructor.
 	QDir masterPath(QApplication::applicationDirPath());
 	masterPath.cdUp();
 	masterPath.cd(masterPath.absolutePath() + "/locale");
@@ -63,14 +65,26 @@ void Shelper::closeEvent(QCloseEvent *event)
 		event->ignore();
 }
 
-void Shelper::callSimpleFreqT()
+void Shelper::obtainData()
 {
-	DataInsert * alldata = new DataInsert(this);
+	DataInsert *alldata = new DataInsert(this);
 	alldata->exec();
 	alldata->deleteLater();
 	_vct<double> numeric_data = alldata->getVectorData();
+}
 
-	SimpleFreqT * table = new SimpleFreqT(numeric_data);
+void Shelper::callSimpleFreqT(_vct<double> &numeric_data)
+{
+	obtainData();
+	SimpleFreqT *table = new SimpleFreqT(numeric_data, this);
+	table->show();
+	table->setAttribute(Qt::WA_DeleteOnClose);
+}
+
+void Shelper::callClassIntervalFreqT(_vct<double> &numeric_data)
+{
+	obtainData();
+	ClassIntervalFreqT *table = new ClassIntervalFreqT(numeric_data, this);
 	table->show();
 	table->setAttribute(Qt::WA_DeleteOnClose);
 }

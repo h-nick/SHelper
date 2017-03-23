@@ -4,6 +4,8 @@
 #include <QTranslator>
 #include <QDebug>
 
+/* TODO: makeACMFreqTable should be its own function */
+
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
