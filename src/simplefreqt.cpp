@@ -35,6 +35,9 @@ void SimpleFreqT::buildTable()
 	_vct<int>::const_iterator nItr;	// Iterator for int-type vectors.
 	ui->table->setRowCount(variables.size());
 
+
+
+
 	// TODO: Compress all of this in one or two functions since they are all the same.
 	/* Builds the variables column */
 	int crn = 0;
@@ -120,7 +123,7 @@ void SimpleFreqT::buildTable()
 
 void SimpleFreqT::vectorialCalculations(_vct<double> & raw_numeric_data)
 {
-	/* Sorts the original vector */
+	/* Sorts the original vector is asc order */
 	std::sort(raw_numeric_data.rbegin(), raw_numeric_data.rend());
 
 	/* Deletes duplicated entries in the variables vector */

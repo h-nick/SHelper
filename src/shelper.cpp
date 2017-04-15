@@ -65,26 +65,26 @@ void Shelper::closeEvent(QCloseEvent *event)
 		event->ignore();
 }
 
-void Shelper::obtainData()
+_vct<double> Shelper::obtainData()
 {
 	DataInsert *alldata = new DataInsert(this);
 	alldata->exec();
 	alldata->deleteLater();
 	_vct<double> numeric_data = alldata->getVectorData();
+	return numeric_data;
 }
 
-void Shelper::callSimpleFreqT(_vct<double> &numeric_data)
+void Shelper::callSimpleFreqT()
 {
-	obtainData();
-	SimpleFreqT *table = new SimpleFreqT(numeric_data, this);
+	SimpleFreqT *table = new SimpleFreqT(obtainData());
 	table->show();
 	table->setAttribute(Qt::WA_DeleteOnClose);
 }
 
-void Shelper::callClassIntervalFreqT(_vct<double> &numeric_data)
+void Shelper::callClassIntervalFreqT()
 {
 	obtainData();
-	ClassIntervalFreqT *table = new ClassIntervalFreqT(numeric_data, this);
+	ClassIntervalFreqT *table = new ClassIntervalFreqT(obtainData(), this);
 	table->show();
 	table->setAttribute(Qt::WA_DeleteOnClose);
 }

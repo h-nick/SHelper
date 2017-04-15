@@ -23,14 +23,14 @@ protected:
 	void closeEvent(QCloseEvent *event);
 
 private slots:
-	void callSimpleFreqT(_vct<double> &numeric_data = _vct<double> ());
-	void callClassIntervalFreqT(_vct<double> &numeric_data = _vct<double> ());
+	void callSimpleFreqT();
+	void callClassIntervalFreqT();
 	void showAbout();
 	void changeLang();
 
 private:
 	Ui::Shelper *ui;
-	void obtainData();
+	_vct<double> obtainData();
 };
 
 #endif // SHELPER_H

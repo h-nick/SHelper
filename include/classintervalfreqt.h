@@ -28,10 +28,10 @@ private slots:
 private:
 	Ui::ClassIntervalFreqT *ui;
 
-	_oda m_ClassInterval; // Holds the class interval range.
+	_oda m_classIntervalRange; // Holds the class interval range.
 	_vct<int> m_absoluteFreq;
 	_vct<int> m_accAbsoluteFreq;
-	_vct<int> m_ClassMarks;
+	_vct<int> m_classMarks;
 	_vct<double> m_relativeFreq;
 	_vct<double> m_accRelativeFreq;
 	_vct<double> m_relativePrcntgs;
@@ -40,13 +40,13 @@ private:
 	_vct<_oda> m_allClassIntervals; // Holds all the class interval ranges.
 
 	int getTotalRealAmplitude();
-	void getClassInterval();
+	void getClassIntervalRanges();
 	void getClassMarks();
 	void vectorialCalculations();
 	void buildTable();
 
 	template<typename T>
-	void makeACMFreqTable(_vct<T> & mainFreq, _vct<T> & ACMFreq);
+	void makeACMFreqTable(_vct<T> &mainFreq, _vct<T> &ACMFreq);
 };
 
 #endif // CLASSINTERVALFREQT_H
