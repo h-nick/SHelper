@@ -2,7 +2,7 @@
 
 ## English  
 SHelper (Statistics Helper) is a tool designed to help the satistical calculations in engineering problems.  
-*This tool is **undergoing development** and requires the Qt C++ libraries to function.*    
+*This tool is **undergoing development** and requires the Qt5 Framework to function properly.*    
   
 SHelper *will* support the following calculations for its release version:  
 
@@ -40,7 +40,7 @@ SHelper *will* support the following calculations for its release version:
   
 ## Español
 SHelper (Statistics Helper) es una herramienta diseñada para ayudar al cálculo estadístico en problemas de ingeniería.
-*Esta herramienta está **bajo desarrollo** y requiere las librerías de Qt C++ para funcionar.*  
+*Esta herramienta está **bajo desarrollo** y requiere de la Framework Qt5 para funcionar adecuadamente.*  
   
 SHelper *soportará* las siguientes operaciones para su versión de distribución:  
 
