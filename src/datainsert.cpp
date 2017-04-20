@@ -27,8 +27,8 @@ const _vct<double> & DataInsert::getVectorData() const
 void DataInsert::datainsertion()
 {
 /*	FIXME: QDoubleValidator kinda works. But returns Not-Acceptable if there's a newlines. Perhaps
-*	QValidator should be used instead or perhaps the way the data values are entered should be changed.
-*/
+ *	QValidator should be used instead or perhaps the way the data values are entered should be changed.
+ */
 
 	//QDoubleValidator val(ui->values);
 	QString data = ui->values->toPlainText(); // Gets all the written text on the QPlainTextEdit.

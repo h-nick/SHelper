@@ -53,6 +53,10 @@ void ClassIntervalFreqT::vectorialCalculations()
 	{
 	}
 
+	/* NOTE: Plan to calculate this: Get the classInterval, create them based on the minValue and maxValue.
+	 * Then iterate the vector and add 1 to the absolute frequency of the class interval.
+	 */
+
 }
 
 void ClassIntervalFreqT::buildTable()

@@ -4,7 +4,15 @@
 #include <QTranslator>
 #include <QDebug>
 
-/* TODO: makeACMFreqTable should be its own function */
+/*
+ *	aboutdialog			>>> Shows information about the program and Qt.
+ *	classintervalfreq	>>> Calculations and table generation for Class-Interval statistical calculations.
+ *	datainser			>>> Data insertion for statistical calculations.
+ *	shelper				>>> MainWindow.
+ *	simplefreqg			>>>	Graph generation for Simple Frequency statistical calculations.
+ *	simplefreqt			>>> Calculations and table generation for Simple Frequency statistical calculations.
+ */
+
 
 int main(int argc, char *argv[])
 {

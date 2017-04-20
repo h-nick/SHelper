@@ -180,6 +180,7 @@ void SimpleFreqT::makeFrequencyTable(_vct<double> & raw_numeric_data)
 	}
 }
 
+/* TODO: makeACMFreqTable should be its own function */
 template<typename T>
 void SimpleFreqT::makeACMFreqTable(_vct<T> & mainFreq, _vct<T> & ACMFreq)
 {
