@@ -28,7 +28,7 @@ private slots:
 private:
 	Ui::ClassIntervalFreqT *ui;
 
-	_oda m_classIntervalRange; // Holds the class interval range.
+	//_oda m_classIntervalRange; // Holds the class interval range.
 	_vct<int> m_absoluteFreq;
 	_vct<int> m_accAbsoluteFreq;
 	_vct<int> m_classMarks;
@@ -37,7 +37,7 @@ private:
 	_vct<double> m_relativePrcntgs;
 	_vct<double> m_accRelativePrcntgs;
 	_vct<double> m_rawNumericData;
-	_vct<_oda> m_allClassIntervals; // Holds all the class interval ranges.
+	_vct<int> m_allClassIntervals; // Holds all the class interval ranges.
 
 	int getTotalRealAmplitude();
 	void getClassIntervalRanges();

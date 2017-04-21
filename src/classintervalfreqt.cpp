@@ -1,4 +1,6 @@
+#include <QDebug>
 #include <algorithm>
+#include <cmath>
 #include "include/classintervalfreqt.h"
 #include "ui_classintervalfreqt.h"
 
@@ -7,6 +9,8 @@ ClassIntervalFreqT::ClassIntervalFreqT(_vct<double> &numeric_data, QWidget *pare
 	ui(new Ui::ClassIntervalFreqT)
 {
 	ui->setupUi(this);
+	m_rawNumericData.resize(numeric_data.size());
+	vectorialCalculations();
 }
 
 ClassIntervalFreqT::~ClassIntervalFreqT()
@@ -35,23 +39,42 @@ void ClassIntervalFreqT::getClassMarks()
 void ClassIntervalFreqT::vectorialCalculations()
 {
 	/* Sorts the data in asc order */
-	std::sort(m_rawNumericData.rbegin(), m_rawNumericData.rend());
+	std::sort(m_rawNumericData.begin(), m_rawNumericData.end());
 
 	/* Gets the TRA */
 	// FIXME: This doesn't work if the values are decimals. This must be fixed.
-	int TRA = getTotalRealAmplitude();
+	double TRA = getTotalRealAmplitude();
 
 	/* Gets the class interval */
-	int observationK = (1 + (3.222 * log10(m_rawNumericData.size()))) + 1;
-	int classInterval = TRA/observationK;
+	// TODO: Check formulas.
+	double observationK = round((1 + (3.322 * log10(m_rawNumericData.size()))));
+	double classInterval = round(TRA/observationK);
 
 	/* Sets the ranges */
-	_vct<double>::const_iterator minValue = m_rawNumericData.begin();
-	_vct<double>::const_iterator maxValue = m_rawNumericData.end();
+	// TODO: Check if there's a way to reduce the iterator part.
+	_vct<double>::iterator cntValueIt = m_rawNumericData.begin();
+	_vct<double>::iterator maxValueIt = (m_rawNumericData.end() - 1);
+	int cntValue = round(*cntValueIt);
 
-	for(int cnt = 0; cnt < 1; cnt++)
+	m_allClassIntervals.reserve(m_rawNumericData.size());
+	_vct<int>::iterator cnt = m_allClassIntervals.begin();
+
+	qDebug() << *cnt;	// FIXME: This is not working.
+
+	while(cntValue <= *maxValueIt)
 	{
+		*cnt = cntValue;
+		cnt++;
+		cntValue += classInterval;
+		*cnt = cntValue - 1;
+		cnt++;
 	}
+
+	cnt = m_allClassIntervals.begin();
+	qDebug() << "ITR: \n";
+	for(; cnt != m_allClassIntervals.end(); cnt++)
+		qDebug() << *cnt << " ";
+
 
 	/* NOTE: Plan to calculate this: Get the classInterval, create them based on the minValue and maxValue.
 	 * Then iterate the vector and add 1 to the absolute frequency of the class interval.

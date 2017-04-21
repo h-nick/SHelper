@@ -1,4 +1,4 @@
-#include "simplexdatainsert.h"
+#include "include/simplexdatainsert.h"
 #include "ui_simplexdatainsert.h"
 
 SimplexDataInsert::SimplexDataInsert(QWidget *parent) :
