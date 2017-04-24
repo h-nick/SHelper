@@ -19,24 +19,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/aboutdialog.ui" line="56"/>
+        <location filename="../ui/aboutdialog.ui" line="59"/>
         <source>BUILD_DATE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/aboutdialog.ui" line="65"/>
+        <location filename="../ui/aboutdialog.ui" line="68"/>
         <location filename="../src/aboutdialog.cpp" line="26"/>
         <source>About QT5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/aboutdialog.ui" line="72"/>
+        <location filename="../ui/aboutdialog.ui" line="75"/>
         <source>Return</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/aboutdialog.cpp" line="16"/>
         <source>Build date: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ClassIntervalFreqT</name>
+    <message>
+        <location filename="../ui/classintervalfreqt.ui" line="16"/>
+        <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -71,33 +79,66 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/shelper.ui" line="53"/>
+        <location filename="../ui/shelper.ui" line="27"/>
         <source>Simple Freq.
 Table</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/shelper.ui" line="71"/>
+        <location filename="../ui/shelper.ui" line="48"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Linear Programming Calculations&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/shelper.ui" line="81"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Statistics Calculations&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/shelper.ui" line="97"/>
+        <source>Graphical
+Method</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/shelper.ui" line="114"/>
+        <source>Class Interval
+Freq. Table</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/shelper.ui" line="122"/>
+        <source>Simplex
+Method</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/shelper.ui" line="130"/>
+        <source>DEBUG MODE ENABLED</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/shelper.ui" line="150"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/shelper.ui" line="80"/>
-        <source>Language (Not Implemented)</source>
+        <location filename="../ui/shelper.ui" line="159"/>
+        <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/shelper.ui" line="85"/>
+        <location filename="../ui/shelper.ui" line="164"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/shelper.cpp" line="33"/>
+        <location filename="../src/shelper.cpp" line="57"/>
         <source>Close Shelper?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/shelper.cpp" line="34"/>
+        <location filename="../src/shelper.cpp" line="58"/>
         <source>If you close Shelper, all open tables will be closed. Are you sure you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -134,27 +175,27 @@ Table</source>
     </message>
     <message>
         <location filename="../ui/simplefreqt.ui" line="60"/>
-        <source>Variable (X)</source>
+        <source>Variable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ui/simplefreqt.ui" line="65"/>
-        <source>Absolute Freq (fi)</source>
+        <source>Absolute Freq</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ui/simplefreqt.ui" line="70"/>
-        <source>Relative Freq (hi)</source>
+        <source>Relative Freq</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ui/simplefreqt.ui" line="75"/>
-        <source>AAbs Freq (Fi)</source>
+        <source>AAbs Freq</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ui/simplefreqt.ui" line="80"/>
-        <source>ARel Freq (Hi)</source>
+        <source>ARel Freq</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -165,6 +206,14 @@ Table</source>
     <message>
         <location filename="../ui/simplefreqt.ui" line="90"/>
         <source>Acmlt %</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SimplexDataInsert</name>
+    <message>
+        <location filename="../ui/simplexdatainsert.ui" line="13"/>
+        <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

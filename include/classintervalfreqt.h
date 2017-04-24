@@ -37,7 +37,7 @@ private:
 	_vct<double> m_relativePrcntgs;
 	_vct<double> m_accRelativePrcntgs;
 	_vct<double> m_rawNumericData;
-	_vct<int> m_allClassIntervals; // Holds all the class interval ranges.
+	_vct<_oda> m_allClassIntervals; // Holds all the class interval ranges.
 
 	int getTotalRealAmplitude();
 	void getClassIntervalRanges();

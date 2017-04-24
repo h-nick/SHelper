@@ -50,36 +50,46 @@ void ClassIntervalFreqT::vectorialCalculations()
 	double observationK = round((1 + (3.322 * log10(m_rawNumericData.size()))));
 	double classInterval = round(TRA/observationK);
 
-	/* Sets the ranges */
+	/* Sets the class interval ranges */
 	// TODO: Check if there's a way to reduce the iterator part.
 	_vct<double>::iterator cntValueIt = m_rawNumericData.begin();
 	_vct<double>::iterator maxValueIt = (m_rawNumericData.end() - 1);
 	int cntValue = round(*cntValueIt);
 
-	m_allClassIntervals.reserve(m_rawNumericData.size());
-	_vct<int>::iterator cnt = m_allClassIntervals.begin();
-
-	qDebug() << *cnt;	// FIXME: This is not working.
+	m_allClassIntervals.resize(m_rawNumericData.size());
+	_vct<_oda>::iterator cnt = m_allClassIntervals.begin();
 
 	while(cntValue <= *maxValueIt)
 	{
-		*cnt = cntValue;
+		_oda ciTemp = *cnt;
+		ciTemp.at(0) = cntValue;
 		cnt++;
 		cntValue += classInterval;
-		*cnt = cntValue - 1;
-		cnt++;
+		ciTemp.at(1) = cntValue - 1;
+
+		if(ciTemp.at(1) < *maxValueIt)
+			cnt++; // FIXME: The final class interval .at(1) should be cntValue, not cntValue - 1.
+
+		qDebug()
+				<< "Class Interval:" << QString::number(ciTemp.at(0))
+				<< " " << QString::number(ciTemp.at(1));
 	}
+	m_allClassIntervals.resize(m_allClassIntervals.size());
+	// FIXME: Perhaps .push_back() should be used instead of this constant use of .resize().
 
+	/* Calculates the class marks */
+	// FIXME: This doesn't work for some reason. The ciTemp is getting an empty _oda.
 	cnt = m_allClassIntervals.begin();
-	qDebug() << "ITR: \n";
+	m_classMarks.resize(m_allClassIntervals.size());
+	_vct<int>::iterator cntMark = m_classMarks.begin();
+
 	for(; cnt != m_allClassIntervals.end(); cnt++)
-		qDebug() << *cnt << " ";
-
-
-	/* NOTE: Plan to calculate this: Get the classInterval, create them based on the minValue and maxValue.
-	 * Then iterate the vector and add 1 to the absolute frequency of the class interval.
-	 */
-
+	{
+		_oda ciTemp = *cnt;
+		*cntMark = (ciTemp.at(0) + ciTemp.at(1)) / 2;
+		cntMark++;
+		qDebug() << "Class Mark:" << QString::number(*cntMark);
+	}
 }
 
 void ClassIntervalFreqT::buildTable()

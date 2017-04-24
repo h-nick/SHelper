@@ -19,18 +19,18 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SHelper ha sido desarrollado como una herramienta para simplificar los cálculos estadísticos&lt;br/&gt;para propósitos de ingeniería.&lt;br/&gt;&lt;br/&gt;Este es un proyecto de código-abierto desarrollado en C++ y QT5, disponible en:&lt;br/&gt;&lt;a href=&quot;https://github.com/nhd15c/SHelper&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/nhd15c/SHelper&lt;br/&gt;&lt;br/&gt;&lt;/span&gt;&lt;/a&gt;Desarrollado por:&lt;br/&gt;Nicolás H.&lt;br/&gt;&lt;br/&gt;(C) Todos los derechos reservados | 2017.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/aboutdialog.ui" line="56"/>
+        <location filename="../ui/aboutdialog.ui" line="59"/>
         <source>BUILD_DATE</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/aboutdialog.ui" line="65"/>
+        <location filename="../ui/aboutdialog.ui" line="68"/>
         <location filename="../src/aboutdialog.cpp" line="26"/>
         <source>About QT5</source>
         <translation>Acerca de QT5</translation>
     </message>
     <message>
-        <location filename="../ui/aboutdialog.ui" line="72"/>
+        <location filename="../ui/aboutdialog.ui" line="75"/>
         <source>Return</source>
         <translation>Retornar</translation>
     </message>
@@ -38,6 +38,14 @@
         <location filename="../src/aboutdialog.cpp" line="16"/>
         <source>Build date: </source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>ClassIntervalFreqT</name>
+    <message>
+        <location filename="../ui/classintervalfreqt.ui" line="16"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -71,34 +79,71 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/shelper.ui" line="53"/>
+        <location filename="../ui/shelper.ui" line="27"/>
         <source>Simple Freq.
 Table</source>
         <translation>Tabla de Frecuencia
 Simple</translation>
     </message>
     <message>
-        <location filename="../ui/shelper.ui" line="71"/>
+        <location filename="../ui/shelper.ui" line="48"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Linear Programming Calculations&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/shelper.ui" line="81"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Statistics Calculations&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/shelper.ui" line="97"/>
+        <source>Graphical
+Method</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/shelper.ui" line="114"/>
+        <source>Class Interval
+Freq. Table</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/shelper.ui" line="122"/>
+        <source>Simplex
+Method</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/shelper.ui" line="130"/>
+        <source>DEBUG MODE ENABLED</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/shelper.ui" line="150"/>
         <source>Options</source>
         <translation>Opciones</translation>
     </message>
     <message>
-        <location filename="../ui/shelper.ui" line="80"/>
-        <source>Language (Not Implemented)</source>
-        <translation>Lenguaje</translation>
+        <location filename="../ui/shelper.ui" line="159"/>
+        <source>Language</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/shelper.ui" line="85"/>
+        <source>Language (Not Implemented)</source>
+        <translation type="vanished">Lenguaje</translation>
+    </message>
+    <message>
+        <location filename="../ui/shelper.ui" line="164"/>
         <source>About</source>
         <translation>Acerca de</translation>
     </message>
     <message>
-        <location filename="../src/shelper.cpp" line="33"/>
+        <location filename="../src/shelper.cpp" line="57"/>
         <source>Close Shelper?</source>
         <translation>¿Cerrar SHelper?</translation>
     </message>
     <message>
-        <location filename="../src/shelper.cpp" line="34"/>
+        <location filename="../src/shelper.cpp" line="58"/>
         <source>If you close Shelper, all open tables will be closed. Are you sure you want to continue?</source>
         <translation>Si cierra SHelper, todas las tablas abiertas serán cerradas. ¿Está seguro de que desea continuar?</translation>
     </message>
@@ -135,28 +180,44 @@ Simple</translation>
     </message>
     <message>
         <location filename="../ui/simplefreqt.ui" line="60"/>
-        <source>Variable (X)</source>
-        <translation></translation>
+        <source>Variable</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ui/simplefreqt.ui" line="65"/>
-        <source>Absolute Freq (fi)</source>
-        <translation>Frecuencia Abs</translation>
+        <source>Absolute Freq</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ui/simplefreqt.ui" line="70"/>
-        <source>Relative Freq (hi)</source>
-        <translation>Frecuencia Rel</translation>
+        <source>Relative Freq</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ui/simplefreqt.ui" line="75"/>
-        <source>AAbs Freq (Fi)</source>
-        <translation>Frecuencia Abs Acm</translation>
+        <source>AAbs Freq</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ui/simplefreqt.ui" line="80"/>
+        <source>ARel Freq</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Absolute Freq (fi)</source>
+        <translation type="vanished">Frecuencia Abs</translation>
+    </message>
+    <message>
+        <source>Relative Freq (hi)</source>
+        <translation type="vanished">Frecuencia Rel</translation>
+    </message>
+    <message>
+        <source>AAbs Freq (Fi)</source>
+        <translation type="vanished">Frecuencia Abs Acm</translation>
+    </message>
+    <message>
         <source>ARel Freq (Hi)</source>
-        <translation>Frecuencia Rel Acm</translation>
+        <translation type="vanished">Frecuencia Rel Acm</translation>
     </message>
     <message>
         <location filename="../ui/simplefreqt.ui" line="85"/>
@@ -167,6 +228,14 @@ Simple</translation>
         <location filename="../ui/simplefreqt.ui" line="90"/>
         <source>Acmlt %</source>
         <translation>% Acumulado</translation>
+    </message>
+</context>
+<context>
+    <name>SimplexDataInsert</name>
+    <message>
+        <location filename="../ui/simplexdatainsert.ui" line="13"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
