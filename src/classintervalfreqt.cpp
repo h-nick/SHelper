@@ -46,50 +46,36 @@ void ClassIntervalFreqT::vectorialCalculations()
 	double TRA = getTotalRealAmplitude();
 
 	/* Gets the class interval */
-	// TODO: Check formulas.
 	double observationK = round((1 + (3.322 * log10(m_rawNumericData.size()))));
 	double classInterval = round(TRA/observationK);
 
 	/* Sets the class interval ranges */
-	// TODO: Check if there's a way to reduce the iterator part.
 	_vct<double>::iterator cntValueIt = m_rawNumericData.begin();
 	_vct<double>::iterator maxValueIt = (m_rawNumericData.end() - 1);
 	int cntValue = round(*cntValueIt);
 
-	m_allClassIntervals.resize(m_rawNumericData.size());
-	_vct<_oda>::iterator cnt = m_allClassIntervals.begin();
+	//m_allClassIntervals.resize(m_rawNumericData.size());
+
 
 	while(cntValue <= *maxValueIt)
 	{
-		_oda ciTemp = *cnt;
+		_oda ciTemp;
 		ciTemp.at(0) = cntValue;
-		cnt++;
 		cntValue += classInterval;
 		ciTemp.at(1) = cntValue - 1;
-
-		if(ciTemp.at(1) < *maxValueIt)
-			cnt++; // FIXME: The final class interval .at(1) should be cntValue, not cntValue - 1.
-
-		qDebug()
-				<< "Class Interval:" << QString::number(ciTemp.at(0))
-				<< " " << QString::number(ciTemp.at(1));
+		m_allClassIntervals.push_back(ciTemp);
+		// FIXME: The final class interval .at(1) should be cntValue, not cntValue - 1.
 	}
-	m_allClassIntervals.resize(m_allClassIntervals.size());
-	// FIXME: Perhaps .push_back() should be used instead of this constant use of .resize().
 
 	/* Calculates the class marks */
-	// FIXME: This doesn't work for some reason. The ciTemp is getting an empty _oda.
-	cnt = m_allClassIntervals.begin();
-	m_classMarks.resize(m_allClassIntervals.size());
-	_vct<int>::iterator cntMark = m_classMarks.begin();
+	_vct<_oda>::iterator cnt = m_allClassIntervals.begin();
 
 	for(; cnt != m_allClassIntervals.end(); cnt++)
 	{
 		_oda ciTemp = *cnt;
-		*cntMark = (ciTemp.at(0) + ciTemp.at(1)) / 2;
-		cntMark++;
-		qDebug() << "Class Mark:" << QString::number(*cntMark);
+		m_classMarks.push_back(round((double)ciTemp.at(0) + (double)ciTemp.at(1) / 2));
 	}
+
 }
 
 void ClassIntervalFreqT::buildTable()
