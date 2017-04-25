@@ -40,7 +40,7 @@ private:
 	_vct<_oda> m_allClassIntervals; // Holds all the class interval ranges.
 
 	int getTotalRealAmplitude();
-	void getClassIntervalRanges();
+	void getClassIntervalRanges(double classInterval);
 	void getClassMarks();
 	void vectorialCalculations();
 	void buildTable();
