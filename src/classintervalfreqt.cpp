@@ -141,72 +141,69 @@ void ClassIntervalFreqT::buildTable()
 		ui->table->setItem(crn++, 0, item);
 	}
 
-
-	/*the absolute frequencies column
+	/* Builds the classes marks column */
+	// FIXME: This values are wrong. Check if it's a problem here or in the vector.
 	crn = 0;
-	for(nItr = absolute_freq.begin(); nItr != absolute_freq.end(); nItr++)
+	for(nItr = m_classMarks.begin(); nItr != m_classMarks.end(); nItr++)
 	{
 		QTableWidgetItem *item = new QTableWidgetItem(QString::number(*nItr));
 		item->setTextAlignment(Qt::AlignCenter);
-
-		ui->table->setItem(crn, 1, item);
-		crn++;
+		ui->table->setItem(crn++, 1, item);
 	}
 
-	/* Builds the relative frequencies column
+	/* Builds the absolute frequencies column */
 	crn = 0;
-	for(dItr = relative_freq.begin(); dItr != relative_freq.end(); dItr++)
-	{
-		QTableWidgetItem *item = new QTableWidgetItem(QString::number(*dItr));
-		item->setTextAlignment(Qt::AlignCenter);
-
-		ui->table->setItem(crn, 2, item);
-		crn++;
-	}
-
-	/* Builds the accumulated frequencies column
-	crn = 0;
-	for(nItr = accumulated_freq.begin(); nItr != accumulated_freq.end(); nItr++)
+	for(nItr = m_absoluteFreq.begin(); nItr != m_absoluteFreq.end(); nItr++)
 	{
 		QTableWidgetItem *item = new QTableWidgetItem(QString::number(*nItr));
 		item->setTextAlignment(Qt::AlignCenter);
-
-		ui->table->setItem(crn, 3, item);
-		crn++;
+		ui->table->setItem(crn++, 2, item);
 	}
 
-	/* Builds the accumulated relative frequencies column
+	/* Builds the accumulated frequencies column */
 	crn = 0;
-	for(dItr = accumulated_relative_freq.begin(); dItr != accumulated_relative_freq.end(); dItr++)
+	for(nItr = m_accAbsoluteFreq.begin(); nItr != m_accAbsoluteFreq.end(); nItr++)
+	{
+		QTableWidgetItem *item = new QTableWidgetItem(QString::number(*nItr));
+		item->setTextAlignment(Qt::AlignCenter);
+		ui->table->setItem(crn++, 3, item);
+	}
+
+	/* Builds the relative frequencies column */
+	crn = 0;
+	for(dItr = m_relativeFreq.begin(); dItr != m_relativeFreq.end(); dItr++)
 	{
 		QTableWidgetItem *item = new QTableWidgetItem(QString::number(*dItr));
 		item->setTextAlignment(Qt::AlignCenter);
-
-		ui->table->setItem(crn, 4, item);
-		crn++;
+		ui->table->setItem(crn++, 4, item);
 	}
 
-	/* Builds relative percentage column
+	/* Builds the accumulated relative frequencies column */
 	crn = 0;
-	for(dItr = relative_percentage.begin(); dItr != relative_percentage.end(); dItr++)
+	for(dItr = m_accRelativeFreq.begin(); dItr != m_accRelativeFreq.end(); dItr++)
 	{
 		QTableWidgetItem *item = new QTableWidgetItem(QString::number(*dItr));
 		item->setTextAlignment(Qt::AlignCenter);
-
-		ui->table->setItem(crn, 5, item);
-		crn++;
+		ui->table->setItem(crn++, 5, item);
 	}
 
-	/* Builds accumulated percentage column
+	/* Builds the percentages column */
 	crn = 0;
-	for(dItr = accumulated_percentage.begin(); dItr != accumulated_percentage.end(); dItr++)
+	for(dItr = m_relativePrcntgs.begin(); dItr != m_relativePrcntgs.end(); dItr++)
 	{
 		QTableWidgetItem *item = new QTableWidgetItem(QString::number(*dItr));
 		item->setTextAlignment(Qt::AlignCenter);
+		ui->table->setItem(crn++, 6, item);
+	}
 
-		ui->table->setItem(crn, 6, item);
-		crn++;
-	}*/
+	/* Builds the accumulated percentages column */
+	crn = 0;
+	for(dItr = m_accRelativePrcntgs.begin(); dItr != m_accRelativePrcntgs.end(); dItr++)
+	{
+		QTableWidgetItem *item = new QTableWidgetItem(QString::number(*dItr));
+		item->setTextAlignment(Qt::AlignCenter);
+		ui->table->setItem(crn++, 7, item);
+	}
 }
 
 void ClassIntervalFreqT::showFreqPoligon()
