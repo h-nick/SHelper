@@ -1,21 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author/>
- <comment/>
- <exportmacro/>
  <class>ClassIntervalFreqT</class>
  <widget class="QWidget" name="ClassIntervalFreqT">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>834</width>
+    <height>387</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QTableWidget" name="table">
+     <column>
+      <property name="text">
+       <string>CI</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Xi</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Fi</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Fi (ACM)</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Hi</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Hi (ACM)</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>%</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>% (ACM)</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+  </layout>
  </widget>
- <pixmapfunction/>
+ <resources/>
  <connections/>
 </ui>

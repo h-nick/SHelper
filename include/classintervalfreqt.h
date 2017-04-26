@@ -42,6 +42,7 @@ private:
 	int getTotalRealAmplitude();
 	void getClassIntervalRanges(double classInterval);
 	void getClassMarks();
+	void getSingleClassIntervalRange();
 	void vectorialCalculations();
 	void buildTable();
 

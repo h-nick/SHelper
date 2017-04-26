@@ -1,7 +1,9 @@
 #include <QDebug>
+#include <QTableWidget>
 #include <algorithm>
 #include <cmath>
 #include "include/classintervalfreqt.h"
+#include "include/accumulator.h"
 #include "ui_classintervalfreqt.h"
 
 ClassIntervalFreqT::ClassIntervalFreqT(_vct<double> &numeric_data, QWidget *parent) :
@@ -54,6 +56,26 @@ void ClassIntervalFreqT::getClassMarks()
 	}
 }
 
+void ClassIntervalFreqT::getSingleClassIntervalRange()
+{
+	// TODO: This can be optimized greatly. Consider this algorithm a placeholder.
+	_vct<_oda>::const_iterator cntCI = m_allClassIntervals.begin();
+	m_absoluteFreq.resize(m_allClassIntervals.size());
+	_vct<int>::iterator cntAF = m_absoluteFreq.begin();
+
+	for(; cntCI != m_allClassIntervals.end(); cntCI++)
+	{
+		_oda ciTemp = *cntCI;
+
+		_vct<double>::const_iterator cntVal = m_rawNumericData.begin();
+		for(; cntVal != m_rawNumericData.end(); cntVal++)
+			if(*cntVal <= ciTemp.at(1) && *cntVal >= ciTemp.at(0))
+				*cntAF += 1;
+		cntAF++;
+	}
+
+}
+
 void ClassIntervalFreqT::vectorialCalculations()
 {
 	/* Sorts the data in asc order */
@@ -73,33 +95,118 @@ void ClassIntervalFreqT::vectorialCalculations()
 	/* Calculates the class marks */
 	getClassMarks();
 
-	/* Determine the absolute frequencies per class range*/
-	// TODO: This can be optimized greatly. Consider this algorithm a placeholder.
-	_vct<_oda>::const_iterator cntCI = m_allClassIntervals.begin();
-	m_absoluteFreq.resize(m_allClassIntervals.size());
-	_vct<int>::iterator cntAF = m_absoluteFreq.begin();
+	/* Determines the absolute frequencies per class range*/
+	getSingleClassIntervalRange();
 
-	for(; cntCI != m_allClassIntervals.end(); cntCI++)
-	{
-		_oda ciTemp = *cntCI;
+	/* Creates the relative frequency table */
+	// TODO: Move this (And the ones in SimpleFreqT) to the global scope. These are very similar.
+	_vct<int>::const_iterator nItr = m_absoluteFreq.begin();
+	for(; nItr != m_absoluteFreq.end(); nItr++)
+		m_relativeFreq.push_back(static_cast<double>(*nItr) / m_rawNumericData.size());
 
-		_vct<double>::const_iterator cntVal = m_rawNumericData.begin();
-		for(; cntVal != m_rawNumericData.end(); cntVal++)
-			if(*cntVal <= ciTemp.at(1) && *cntVal >= ciTemp.at(0))
-				*cntAF += 1;
-		cntAF++;
-	}
+	/* Creates the percentage list */
+	_vct<double>::const_iterator dItr = m_relativeFreq.begin();
+	for(; dItr != m_relativeFreq.end(); dItr++)
+		m_relativePrcntgs.push_back(*dItr * 100);
 
-	cntAF = m_absoluteFreq.begin();
-	for(; cntAF != m_absoluteFreq.end(); cntAF++)
-		qDebug() << QString::number(*cntAF);
+	/* Accumulator */
+	createACMFreqVector(m_absoluteFreq, m_accAbsoluteFreq);
+	createACMFreqVector(m_relativeFreq, m_accRelativeFreq);
+	createACMFreqVector(m_relativePrcntgs, m_accRelativePrcntgs);
 
-
+	/* Builds the table */
+	buildTable();
 }
 
 void ClassIntervalFreqT::buildTable()
 {
+	_vct<double>::const_iterator dItr; // Iterator for double-type vectors.
+	_vct<int>::const_iterator nItr;	// Iterator for int-type vectors.
+	_vct<_oda>::const_iterator ciItr = m_allClassIntervals.begin();
+	ui->table->setRowCount(m_allClassIntervals.size());
 
+	// TODO: Compress all of this in one or two functions since they are all the same.
+	/* Builds the class-intervals column */
+	int crn = 0;
+	for(; ciItr != m_allClassIntervals.end(); ciItr++)
+	{
+		_oda ciTemp = *ciItr;
+		QTableWidgetItem *item =
+				new QTableWidgetItem(QString::number(ciTemp.at(0)) + " - " + QString::number(ciTemp.at(1)));
+
+		QFont font;
+		font.setWeight(QFont::Bold);
+		item->setFont(font);
+		item->setTextAlignment(Qt::AlignCenter);
+		ui->table->setItem(crn++, 0, item);
+	}
+
+
+	/*the absolute frequencies column
+	crn = 0;
+	for(nItr = absolute_freq.begin(); nItr != absolute_freq.end(); nItr++)
+	{
+		QTableWidgetItem *item = new QTableWidgetItem(QString::number(*nItr));
+		item->setTextAlignment(Qt::AlignCenter);
+
+		ui->table->setItem(crn, 1, item);
+		crn++;
+	}
+
+	/* Builds the relative frequencies column
+	crn = 0;
+	for(dItr = relative_freq.begin(); dItr != relative_freq.end(); dItr++)
+	{
+		QTableWidgetItem *item = new QTableWidgetItem(QString::number(*dItr));
+		item->setTextAlignment(Qt::AlignCenter);
+
+		ui->table->setItem(crn, 2, item);
+		crn++;
+	}
+
+	/* Builds the accumulated frequencies column
+	crn = 0;
+	for(nItr = accumulated_freq.begin(); nItr != accumulated_freq.end(); nItr++)
+	{
+		QTableWidgetItem *item = new QTableWidgetItem(QString::number(*nItr));
+		item->setTextAlignment(Qt::AlignCenter);
+
+		ui->table->setItem(crn, 3, item);
+		crn++;
+	}
+
+	/* Builds the accumulated relative frequencies column
+	crn = 0;
+	for(dItr = accumulated_relative_freq.begin(); dItr != accumulated_relative_freq.end(); dItr++)
+	{
+		QTableWidgetItem *item = new QTableWidgetItem(QString::number(*dItr));
+		item->setTextAlignment(Qt::AlignCenter);
+
+		ui->table->setItem(crn, 4, item);
+		crn++;
+	}
+
+	/* Builds relative percentage column
+	crn = 0;
+	for(dItr = relative_percentage.begin(); dItr != relative_percentage.end(); dItr++)
+	{
+		QTableWidgetItem *item = new QTableWidgetItem(QString::number(*dItr));
+		item->setTextAlignment(Qt::AlignCenter);
+
+		ui->table->setItem(crn, 5, item);
+		crn++;
+	}
+
+	/* Builds accumulated percentage column
+	crn = 0;
+	for(dItr = accumulated_percentage.begin(); dItr != accumulated_percentage.end(); dItr++)
+	{
+		QTableWidgetItem *item = new QTableWidgetItem(QString::number(*dItr));
+		item->setTextAlignment(Qt::AlignCenter);
+
+		ui->table->setItem(crn, 6, item);
+		crn++;
+	}*/
 }
 
 void ClassIntervalFreqT::showFreqPoligon()

@@ -3,7 +3,9 @@
 #include <vector>
 #include "include/simplefreqt.h"
 #include "include/simplefreqg.h"
+#include "include/accumulator.h"
 #include "ui_simplefreqt.h"
+
 
 SimpleFreqT::SimpleFreqT(_vct<double> &raw_numeric_data, QWidget *parent) :
 	QWidget(parent),
@@ -139,8 +141,8 @@ void SimpleFreqT::vectorialCalculations(_vct<double> & raw_numeric_data)
 		relative_freq.at(crn) = static_cast<double>(absolute_freq.at(crn)) / raw_numeric_data.size();
 
 	/* Creates the accumulated absolute and relative frequency table */
-	makeACMFreqTable(absolute_freq, accumulated_freq);
-	makeACMFreqTable(relative_freq, accumulated_relative_freq);
+	createACMFreqVector(absolute_freq, accumulated_freq);
+	createACMFreqVector(relative_freq, accumulated_relative_freq);
 
 	/* Creates the relative percentage table */
 	relative_percentage.resize(variables.size());
@@ -148,7 +150,7 @@ void SimpleFreqT::vectorialCalculations(_vct<double> & raw_numeric_data)
 		relative_percentage.at(crn) = relative_freq.at(crn) * 100;
 
 	/* Creates the accumulated percentage table */
-	makeACMFreqTable(relative_percentage, accumulated_percentage);
+	createACMFreqVector(relative_percentage, accumulated_percentage);
 
 	/* Builds the simple frequency table */
 	buildTable();
@@ -177,21 +179,5 @@ void SimpleFreqT::makeFrequencyTable(_vct<double> & raw_numeric_data)
 		absolute_freq.resize(current + 1);
 		absolute_freq.at(current) = count;
 		current++;
-	}
-}
-
-/* TODO: makeACMFreqTable should be its own function */
-template<typename T>
-void SimpleFreqT::makeACMFreqTable(_vct<T> & mainFreq, _vct<T> & ACMFreq)
-{
-	ACMFreq.resize(variables.size());
-	_vct<T>::const_iterator const_itr = mainFreq.begin();
-	_vct<T>::iterator itr = ACMFreq.begin();
-	T accumulatedSum = 0;
-
-	for(; const_itr != mainFreq.end(); const_itr++)
-	{
-		accumulatedSum += *const_itr;
-		*(itr++) = accumulatedSum;
 	}
 }

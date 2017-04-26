@@ -37,9 +37,6 @@ private:
 	void makeVectorUnique(_vct<double> & vector);
 	void makeFrequencyTable(_vct<double> & raw_numeric_data);
 
-	template<typename T>
-	void makeACMFreqTable(_vct<T> & mainFreq, _vct<T> & ACMFreq);
-
 private slots:
 	void showBarChart();
 };

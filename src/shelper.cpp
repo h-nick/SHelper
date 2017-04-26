@@ -83,7 +83,7 @@ void Shelper::callSimpleFreqT()
 
 void Shelper::callClassIntervalFreqT()
 {
-	ClassIntervalFreqT *table = new ClassIntervalFreqT(obtainData(), this);
+	ClassIntervalFreqT *table = new ClassIntervalFreqT(obtainData());
 	table->show();
 	table->setAttribute(Qt::WA_DeleteOnClose);
 }
