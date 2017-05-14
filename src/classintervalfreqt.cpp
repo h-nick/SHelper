@@ -4,6 +4,7 @@
 #include <cmath>
 #include "include/classintervalfreqt.h"
 #include "include/accumulator.h"
+#include "include/classintervalfreqg.h"
 #include "ui_classintervalfreqt.h"
 
 ClassIntervalFreqT::ClassIntervalFreqT(_vct<double> &numeric_data, QWidget *parent) :
@@ -13,6 +14,8 @@ ClassIntervalFreqT::ClassIntervalFreqT(_vct<double> &numeric_data, QWidget *pare
 	ui->setupUi(this);
 	m_rawNumericData.resize(numeric_data.size());
 	vectorialCalculations();
+
+	connect(ui->buttonHistogram, SIGNAL(pressed()), this, SLOT(showHistogram()));
 }
 
 ClassIntervalFreqT::~ClassIntervalFreqT()
@@ -52,7 +55,7 @@ void ClassIntervalFreqT::getClassMarks()
 	for(; cnt != m_allClassIntervals.end(); cnt++)
 	{
 		_oda ciTemp = *cnt;
-		m_classMarks.push_back(round((double)ciTemp.at(0) + (double)ciTemp.at(1) / 2));
+		m_classMarks.push_back(round(((double)ciTemp.at(0) + (double)ciTemp.at(1)) / 2));
 	}
 }
 
@@ -142,7 +145,6 @@ void ClassIntervalFreqT::buildTable()
 	}
 
 	/* Builds the classes marks column */
-	// FIXME: This values are wrong. Check if it's a problem here or in the vector.
 	crn = 0;
 	for(nItr = m_classMarks.begin(); nItr != m_classMarks.end(); nItr++)
 	{
@@ -213,7 +215,9 @@ void ClassIntervalFreqT::showFreqPoligon()
 
 void ClassIntervalFreqT::showHistogram()
 {
-
+	ClassIntervalFreqG *histogram = new ClassIntervalFreqG(m_allClassIntervals, m_absoluteFreq, this);
+	histogram->setAttribute(Qt::WA_DeleteOnClose);
+	histogram->show();
 }
 
 void ClassIntervalFreqT::showOjive()

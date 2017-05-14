@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>834</width>
+    <width>843</width>
     <height>387</height>
    </rect>
   </property>
@@ -14,7 +14,27 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
+   <item row="1" column="1">
+    <widget class="QPushButton" name="buttonHistogram">
+     <property name="text">
+      <string>Show Histogram</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="0" colspan="2">
     <widget class="QTableWidget" name="table">
      <column>
       <property name="text">

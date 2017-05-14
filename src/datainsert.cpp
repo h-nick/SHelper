@@ -26,7 +26,7 @@ const _vct<double> & DataInsert::getVectorData() const
 
 void DataInsert::datainsertion()
 {
-/*	FIXME: QDoubleValidator kinda works. But returns Not-Acceptable if there's a newlines. Perhaps
+/*	FIXME: QDoubleValidator kinda works. But returns Not-Acceptable if there's a newline. Perhaps
  *	QValidator should be used instead or perhaps the way the data values are entered should be changed.
  */
 

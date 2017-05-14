@@ -9,6 +9,7 @@
  * In other words: Check for memory leaks.
  */
 
+// TODO: BarSet generation should be it's own class, shared between SimpleFreqT and ClassIntervalFreqT.
 SimpleFreqG::SimpleFreqG(_vct<double> & variables, _vct<int> & absolute_freq, QWidget *parent) :
 	QDialog(parent), m_variables(variables), m_absolute_freq(absolute_freq),
 	ui(new Ui::SimpleFreqG)
