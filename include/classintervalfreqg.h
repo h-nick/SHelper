@@ -2,8 +2,7 @@
 #define CLASSINTERVALFREQG_H
 
 #include <QDialog>
-#include <QtCharts/qbarset.h>
-#include <QtCharts/qchart.h>
+#include <QtCharts/qsplineseries.h>
 #include <array>
 
 using namespace QtCharts;
@@ -21,16 +20,19 @@ class ClassIntervalFreqG : public QDialog
 	Q_OBJECT
 
 public:
-	explicit ClassIntervalFreqG(_vct<_oda> & classIntervals, _vct<int> & absoluteFreqs, QWidget *parent = 0);
+	explicit ClassIntervalFreqG(_vct<_oda> & classIntervals, _vct<int> & AbsFreq, QWidget *parent = 0);
+	explicit ClassIntervalFreqG(_vct<int> & classMarks, _vct<int> & acmAbsFreq, QWidget *parent = 0);
 	~ClassIntervalFreqG();
 
 private:
 	Ui::ClassIntervalFreqG *ui;
 	_vct<_oda> m_allClassIntervals;
-	_vct<int> m_absoluteFreq;
+	_vct<int> m_classMarks;
+	_vct<int> m_freq;
 
-	void generateBarSet();
-	void generateBar(_vct<QBarSet *> &barSet);
+	void generateFreqPol();
+	void generateOjive();
+	void generateChart(QSplineSeries *chartSeries);
 };
 
 #endif // CLASSINTERVALFREQG_H

@@ -21,9 +21,9 @@ public:
 	~ClassIntervalFreqT();
 
 private slots:
-	void showFreqPoligon();
+	void showFreqPolygon();
 	void showHistogram();
-	void showOjive();
+	void showOgive();
 
 private:
 	Ui::ClassIntervalFreqT *ui;

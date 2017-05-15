@@ -15,7 +15,9 @@ ClassIntervalFreqT::ClassIntervalFreqT(_vct<double> &numeric_data, QWidget *pare
 	m_rawNumericData.resize(numeric_data.size());
 	vectorialCalculations();
 
+	connect(ui->buttonFreqPol, SIGNAL(pressed()), this, SLOT(showFreqPolygon()));
 	connect(ui->buttonHistogram, SIGNAL(pressed()), this, SLOT(showHistogram()));
+	connect(ui->buttonOgive, SIGNAL(pressed()), this, SLOT(showOgive()));
 }
 
 ClassIntervalFreqT::~ClassIntervalFreqT()
@@ -208,19 +210,24 @@ void ClassIntervalFreqT::buildTable()
 	}
 }
 
-void ClassIntervalFreqT::showFreqPoligon()
+void ClassIntervalFreqT::showFreqPolygon()
 {
-
+	ClassIntervalFreqG *freqPolygon = new ClassIntervalFreqG(m_classMarks, m_absoluteFreq, this);
+	freqPolygon->setAttribute(Qt::WA_DeleteOnClose);
+	freqPolygon->show();
 }
 
 void ClassIntervalFreqT::showHistogram()
 {
+	// TODO: Not currently on use.
 	ClassIntervalFreqG *histogram = new ClassIntervalFreqG(m_allClassIntervals, m_absoluteFreq, this);
 	histogram->setAttribute(Qt::WA_DeleteOnClose);
 	histogram->show();
 }
 
-void ClassIntervalFreqT::showOjive()
+void ClassIntervalFreqT::showOgive()
 {
-
+	ClassIntervalFreqG *ogive = new ClassIntervalFreqG(m_allClassIntervals, m_accAbsoluteFreq, this);
+	ogive->setAttribute(Qt::WA_DeleteOnClose);
+	ogive->show();
 }
