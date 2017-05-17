@@ -62,32 +62,32 @@
      </column>
      <column>
       <property name="text">
-       <string>Absolute Freq</string>
+       <string>Fi</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>Relative Freq</string>
+       <string>Hi</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>AAbs Freq</string>
+       <string>Fi (ACM)</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>ARel Freq</string>
+       <string>Hi (ACM)</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>Relative %</string>
+       <string>%</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>Acmlt %</string>
+       <string>% (ACM)</string>
       </property>
      </column>
     </widget>

@@ -48,7 +48,18 @@ void BarChart::generateBar(_vct<QBarSet *> &barSet)
 
 void BarChart::generateSetSimple(_vct<double> variables)
 {
+	_vct<double>::const_iterator ItrVa = variables.begin();
+	_vct<int>::const_iterator ItrFr = m_absFreq.begin();
 
+	_vct<QBarSet *> barSet;
+	int crn = 0;
+	for(; ItrVa != variables.end(); ItrVa++)
+	{
+		barSet.push_back(new QBarSet(QString::number(*ItrVa), this));
+		*(barSet.at(crn++)) << *(ItrFr++);
+	}
+
+	generateBar(barSet);
 }
 
 void BarChart::generateSetCI(_vct<_oda> classInt)
@@ -62,8 +73,7 @@ void BarChart::generateSetCI(_vct<_oda> classInt)
 	{
 		_oda temp = *(ItrCI);
 		barSet.push_back(new QBarSet(QString::number(temp.at(0)), this));
-		*(barSet.at(crn)) << *(ItrFr++);
-		crn++;
+		*(barSet.at(crn++)) << *(ItrFr++);
 	}
 	generateBar(barSet);
 }

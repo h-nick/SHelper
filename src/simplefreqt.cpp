@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <vector>
 #include "include/simplefreqt.h"
-#include "include/simplefreqg.h"
+#include "include/barchart.h"
 #include "include/accumulator.h"
 #include "ui_simplefreqt.h"
 
@@ -26,7 +26,7 @@ SimpleFreqT::~SimpleFreqT()
 void SimpleFreqT::showBarChart()
 {
 	// TODO: Avoid duplication of this window. Set a flag or something.
-	SimpleFreqG *barChart = new SimpleFreqG(variables, absolute_freq, this);
+	BarChart *barChart = new BarChart(variables, absolute_freq, this);
 	barChart->setAttribute(Qt::WA_DeleteOnClose);
 	barChart->show();
 }
