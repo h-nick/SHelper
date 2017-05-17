@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>barChart</class>
- <widget name="barChart" class="QDialog">
+ <class>BarChart</class>
+ <widget class="QDialog" name="BarChart">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -12,7 +13,20 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QtCharts::QChartView" name="graphShow" native="true"/>
+   </item>
+  </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QtCharts::QChartView</class>
+   <extends>QWidget</extends>
+   <header location="global">QtCharts/qchartview.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -31,7 +31,7 @@ private:
 	_vct<int> m_freq;
 
 	void generateFreqPol();
-	void generateOjive();
+	void generateOgive();
 	void generateChart(QSplineSeries *chartSeries);
 };
 

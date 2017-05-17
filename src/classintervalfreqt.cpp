@@ -5,10 +5,11 @@
 #include "include/classintervalfreqt.h"
 #include "include/accumulator.h"
 #include "include/classintervalfreqg.h"
+#include "include/barchart.h"
 #include "ui_classintervalfreqt.h"
 
-ClassIntervalFreqT::ClassIntervalFreqT(_vct<double> &numeric_data, QWidget *parent) :
-	QWidget(parent), m_rawNumericData(numeric_data),
+ClassIntervalFreqT::ClassIntervalFreqT(_vct<double> &numeric_data, QWidget *parent)
+										: QWidget(parent), m_rawNumericData(numeric_data),
 	ui(new Ui::ClassIntervalFreqT)
 {
 	ui->setupUi(this);
@@ -219,8 +220,7 @@ void ClassIntervalFreqT::showFreqPolygon()
 
 void ClassIntervalFreqT::showHistogram()
 {
-	// TODO: Not currently on use.
-	ClassIntervalFreqG *histogram = new ClassIntervalFreqG(m_allClassIntervals, m_absoluteFreq, this);
+	BarChart *histogram = new BarChart(m_allClassIntervals, m_absoluteFreq, this);
 	histogram->setAttribute(Qt::WA_DeleteOnClose);
 	histogram->show();
 }
