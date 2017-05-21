@@ -7,6 +7,4 @@ using _vct = std::vector<T>;
 
 template<typename T>
 void createACMFreqVector(_vct<T> & mainFreq, _vct<T> & ACMFreq);
-
-void hi();
 #endif // ACCUMULATOR_H

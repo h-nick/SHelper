@@ -7,6 +7,7 @@
 #include "include/simplefreqt.h"
 #include "include/classintervalfreqt.h"
 #include "include/datainsert.h"
+#include "include/datainput.h" // TODO: Maybe merge this with DataInsert.
 #include "include/aboutdialog.h"
 
 Shelper::Shelper(QWidget *parent) :
@@ -19,6 +20,7 @@ Shelper::Shelper(QWidget *parent) :
 	connect(ui->button_classintervalfreq, SIGNAL(pressed()), this, SLOT(callClassIntervalFreqT()));
 	connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(showAbout()));
 	connect(ui->actionLanguage, SIGNAL(triggered()), this, SLOT(changeLang()));
+	connect(ui->button_LPgraphical, SIGNAL(pressed()), this, SLOT(test())); // NOTE: Placeholder to test class.
 }
 
 Shelper::~Shelper()
@@ -86,4 +88,11 @@ void Shelper::callClassIntervalFreqT()
 	ClassIntervalFreqT *table = new ClassIntervalFreqT(obtainData());
 	table->show();
 	table->setAttribute(Qt::WA_DeleteOnClose);
+}
+
+void Shelper::test()
+{
+	DataInput *input = new DataInput(this);
+	input->exec();
+	input->setAttribute(Qt::WA_DeleteOnClose);
 }

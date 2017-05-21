@@ -28,7 +28,7 @@ private slots:
 private:
 	Ui::ClassIntervalFreqT *ui;
 
-	//_oda m_classIntervalRange; // Holds the class interval range.
+	// _oda m_classIntervalRange; // Holds the class interval range.
 	_vct<int> m_absoluteFreq;
 	_vct<int> m_accAbsoluteFreq;
 	_vct<int> m_classMarks;
@@ -38,6 +38,29 @@ private:
 	_vct<double> m_accRelativePrcntgs;
 	_vct<double> m_rawNumericData;
 	_vct<_oda> m_allClassIntervals; // Holds all the class interval ranges.
+	int m_totalElements;
+
+	// Central trends:
+	double m_arithmeticAverage;
+	double m_geometricAverage;
+	double m_mode;
+	double m_median;
+	void calculateAverages();
+
+	// Position trends:
+	std::array<double, 4> m_quartiles;
+	std::array<double, 6> m_sextiles;
+	std::array<double, 10> m_deciles;
+	std::array<double, 100> m_percentiles;
+
+	// Measures of dispersion:
+	double m_range;
+	double m_standardDeviation;
+	double m_variance;
+	double m_varianceCoefficient;
+	double m_coefficientPearson;
+	double m_coefficientBowley;
+	double m_coefficientKurtosis;
 
 	int getTotalRealAmplitude();
 	void getClassIntervalRanges(double classInterval);

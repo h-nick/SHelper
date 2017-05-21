@@ -120,6 +120,9 @@ void ClassIntervalFreqT::vectorialCalculations()
 	createACMFreqVector(m_relativeFreq, m_accRelativeFreq);
 	createACMFreqVector(m_relativePrcntgs, m_accRelativePrcntgs);
 
+	/* Calculate central trends */
+	calculateAverages();
+
 	/* Builds the table */
 	buildTable();
 }
@@ -230,4 +233,23 @@ void ClassIntervalFreqT::showOgive()
 	ClassIntervalFreqG *ogive = new ClassIntervalFreqG(m_allClassIntervals, m_accAbsoluteFreq, this);
 	ogive->setAttribute(Qt::WA_DeleteOnClose);
 	ogive->show();
+}
+
+void ClassIntervalFreqT::calculateAverages()
+{
+	m_totalElements = m_accAbsoluteFreq.size() - 1;
+	_vct<int>::const_iterator ItrFreq = m_absoluteFreq.begin();
+	_vct<int>::const_iterator ItrMark = m_classMarks.begin();
+	double sumForAAvg(0), sumForGAvg(0);
+	int totalElements(0);
+
+	for(; ItrFreq != m_absoluteFreq.end(); ItrFreq++)
+	{
+		sumForAAvg += ((*ItrFreq) * (*ItrMark));			// Arithmetic average.
+		sumForGAvg += ((*ItrFreq) * log10(*(ItrMark++)));	// Geometric average.
+		totalElements += *(ItrFreq);
+
+	}
+	m_arithmeticAverage = sumForAAvg / m_totalElements;
+	m_geometricAverage = pow(10, (sumForGAvg / m_totalElements));
 }

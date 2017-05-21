@@ -17,6 +17,5 @@ void createACMFreqVector(_vct<T> & mainFreq, _vct<T> & ACMFreq)
 		ACMFreq.push_back(accumulatedSum);
 	}
 }
-
 // NOTE: Apparently template functions have an issue if they are called from within a class.
 // Check more on this. Also try tomorrow template void createACMFreqVector(_vct... bla bla bla).

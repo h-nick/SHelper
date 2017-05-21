@@ -27,6 +27,7 @@ private slots:
 	void callClassIntervalFreqT();
 	void showAbout();
 	void changeLang();
+	void test();
 
 private:
 	Ui::Shelper *ui;
