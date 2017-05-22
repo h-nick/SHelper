@@ -1,5 +1,6 @@
 #include <QDebug>
 #include <QTableWidget>
+#include <QLabel>
 #include <algorithm>
 #include <cmath>
 #include "include/classintervalfreqt.h"
@@ -34,7 +35,7 @@ int ClassIntervalFreqT::getTotalRealAmplitude()
 	// 1 or 0.1 accordingly.
 }
 
-void ClassIntervalFreqT::getClassIntervalRanges(double classInterval)
+void ClassIntervalFreqT::getClassIntervalRanges()
 {
 	_vct<double>::iterator cntValueIt = m_rawNumericData.begin();
 	_vct<double>::iterator maxValueIt = (m_rawNumericData.end() - 1);
@@ -44,7 +45,7 @@ void ClassIntervalFreqT::getClassIntervalRanges(double classInterval)
 	{
 		_oda ciTemp;
 		ciTemp.at(0) = cntValue;
-		cntValue += classInterval;
+		cntValue += m_classInterval;
 		ciTemp.at(1) = cntValue - 1;
 		m_allClassIntervals.push_back(ciTemp);
 		// FIXME: The final class interval .at(1) should be cntValue, not cntValue - 1.
@@ -88,15 +89,15 @@ void ClassIntervalFreqT::vectorialCalculations()
 	std::sort(m_rawNumericData.begin(), m_rawNumericData.end());
 
 	/* Gets the TRA */
-	// FIXME: This doesn't work if the values are decimals. This must be fixed.
+	// FIXME: This doesn't work if the values are decimals.
 	double TRA = getTotalRealAmplitude();
 
 	/* Gets the class interval */
 	double observationK = round((1 + (3.322 * log10(m_rawNumericData.size()))));
-	double classInterval = round(TRA/observationK);
+	m_classInterval = round(TRA/observationK);
 
 	/* Sets the class interval ranges */
-	getClassIntervalRanges(classInterval);
+	getClassIntervalRanges();
 
 	/* Calculates the class marks */
 	getClassMarks();
@@ -122,9 +123,13 @@ void ClassIntervalFreqT::vectorialCalculations()
 
 	/* Calculate central trends */
 	calculateAverages();
+	calculateMedian(); // calculateMedian() calls calculateMode().
 
 	/* Builds the table */
 	buildTable();
+
+	/* Prints the data */
+	printData();
 }
 
 void ClassIntervalFreqT::buildTable()
@@ -235,21 +240,68 @@ void ClassIntervalFreqT::showOgive()
 	ogive->show();
 }
 
+void ClassIntervalFreqT::printData()
+{
+	QLabel *CentralTendencyLabel = new QLabel(this);
+	CentralTendencyLabel->setTextFormat(Qt::RichText);
+	CentralTendencyLabel->setText(
+				"<b>Central tendencies:</b><br>"
+				"Arithmetic average: "	+ QString::number(m_arithmeticAverage) + "<br>"
+				"Geometric average: "	+ QString::number(m_geometricAverage) + "<br>"
+				"Median: "				+ QString::number(m_median) + "<br>"
+				"Mode: "				+ QString::number(m_mode)
+				);
+	ui->gridLayout->addWidget(CentralTendencyLabel, 2, 0, Qt::AlignLeft | Qt::AlignVCenter);
+
+	QLabel *DispersionMeasurementLabel = new QLabel(this);
+	DispersionMeasurementLabel->setTextFormat(Qt::RichText);
+	DispersionMeasurementLabel->setText(
+				"<b>Measures of disperion:</b><br>"
+				"Range: "				+ QString::number(m_range) + "<br>"
+				"Standard deviation: "	+ QString::number(m_standardDeviation) + "<br>"
+				"Variance: "			+ QString::number(m_variance) + "<br>"
+				"Typical deviation: "	+ QString::number(sqrt(m_variance)) + "<br>"
+				"Cft. of variation: "	+ QString::number(m_varianceCoefficient) + "<br>"
+				"Interquartile range: "	"PLACEHOLDER <br>"
+				"Pearson Cft.:"			+ QString::number(m_coefficientPearson) + "<br>"
+				"Bowley Cft.:"			+ QString::number(m_coefficientBowley) + "<br>"
+				"Kurtosis Cft.:"		+ QString::number(m_coefficientKurtosis) + "<br>"
+				);
+	ui->gridLayout->addWidget(DispersionMeasurementLabel, 2, 1, Qt::AlignHCenter | Qt::AlignVCenter);
+}
+
 void ClassIntervalFreqT::calculateAverages()
 {
-	m_totalElements = m_accAbsoluteFreq.size() - 1;
 	_vct<int>::const_iterator ItrFreq = m_absoluteFreq.begin();
 	_vct<int>::const_iterator ItrMark = m_classMarks.begin();
 	double sumForAAvg(0), sumForGAvg(0);
-	int totalElements(0);
 
 	for(; ItrFreq != m_absoluteFreq.end(); ItrFreq++)
 	{
 		sumForAAvg += ((*ItrFreq) * (*ItrMark));			// Arithmetic average.
 		sumForGAvg += ((*ItrFreq) * log10(*(ItrMark++)));	// Geometric average.
-		totalElements += *(ItrFreq);
+		m_totalElements += *(ItrFreq);
 
 	}
 	m_arithmeticAverage = sumForAAvg / m_totalElements;
 	m_geometricAverage = pow(10, (sumForGAvg / m_totalElements));
+}
+
+void ClassIntervalFreqT::calculateMedian()
+{
+	int rawFreqMedian = m_absoluteFreq.at(static_cast<int>(m_absoluteFreq.size() / 2) - 1);
+	int accFreqMedianM1 = m_accAbsoluteFreq.at(static_cast<int>(m_accAbsoluteFreq.size() / 2) - 2);
+	_oda medianLimit = m_allClassIntervals.at(static_cast<int>(m_allClassIntervals.size() / 2 - 1));
+	int lowerLimit = medianLimit.at(0);
+
+	m_median = ((((m_totalElements / 2) - accFreqMedianM1) * m_classInterval) /
+				static_cast<double>(rawFreqMedian)) + lowerLimit;
+
+	calculateMode(lowerLimit);
+}
+
+void ClassIntervalFreqT::calculateMode(int lowerLimit)
+{
+	_vct<int>::iterator FreqItr = std::max_element(m_absoluteFreq.begin(), m_absoluteFreq.end());
+	m_mode = ((*FreqItr / ((*FreqItr - 1) + (*FreqItr + 1))) * m_classInterval) + lowerLimit;
 }

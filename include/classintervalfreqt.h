@@ -28,7 +28,6 @@ private slots:
 private:
 	Ui::ClassIntervalFreqT *ui;
 
-	// _oda m_classIntervalRange; // Holds the class interval range.
 	_vct<int> m_absoluteFreq;
 	_vct<int> m_accAbsoluteFreq;
 	_vct<int> m_classMarks;
@@ -38,7 +37,18 @@ private:
 	_vct<double> m_accRelativePrcntgs;
 	_vct<double> m_rawNumericData;
 	_vct<_oda> m_allClassIntervals; // Holds all the class interval ranges.
-	int m_totalElements;
+	int m_totalElements = 0;
+	int m_classInterval;
+	int getTotalRealAmplitude();
+	void getClassIntervalRanges();
+	void getClassMarks();
+	void getSingleClassIntervalRange();
+	void vectorialCalculations();
+	void buildTable();
+	void printData();
+
+	template<typename T>
+	void makeACMFreqTable(_vct<T> &mainFreq, _vct<T> &ACMFreq);
 
 	// Central trends:
 	double m_arithmeticAverage;
@@ -46,6 +56,8 @@ private:
 	double m_mode;
 	double m_median;
 	void calculateAverages();
+	void calculateMedian();
+	void calculateMode(int lowerLimit);
 
 	// Position trends:
 	std::array<double, 4> m_quartiles;
@@ -61,16 +73,6 @@ private:
 	double m_coefficientPearson;
 	double m_coefficientBowley;
 	double m_coefficientKurtosis;
-
-	int getTotalRealAmplitude();
-	void getClassIntervalRanges(double classInterval);
-	void getClassMarks();
-	void getSingleClassIntervalRange();
-	void vectorialCalculations();
-	void buildTable();
-
-	template<typename T>
-	void makeACMFreqTable(_vct<T> &mainFreq, _vct<T> &ACMFreq);
 };
 
 #endif // CLASSINTERVALFREQT_H
