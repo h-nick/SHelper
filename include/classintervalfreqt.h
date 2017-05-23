@@ -64,6 +64,8 @@ private:
 	std::array<double, 6> m_sextiles;
 	std::array<double, 10> m_deciles;
 	std::array<double, 100> m_percentiles;
+	void positionFormula();
+	void calculatePosition();
 
 	// Measures of dispersion:
 	double m_range;
@@ -73,6 +75,10 @@ private:
 	double m_coefficientPearson;
 	double m_coefficientBowley;
 	double m_coefficientKurtosis;
+	_vct<double> calculateAllDeviations();
+	void calculateDispersion(_vct<double> deviation, int cType);
+	void calculateVariance(_vct<double> deviation);
+	void calculateCoefficients(_vct<double> deviation);
 };
 
 #endif // CLASSINTERVALFREQT_H

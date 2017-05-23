@@ -125,6 +125,15 @@ void ClassIntervalFreqT::vectorialCalculations()
 	calculateAverages();
 	calculateMedian(); // calculateMedian() calls calculateMode().
 
+	/* Calculate position trends */
+
+	/* Calculate measures of dispersion */
+	_vct<double> allDeviations = calculateAllDeviations();
+	calculateDispersion(allDeviations, 1);
+	calculateDispersion(allDeviations, 2);
+	calculateDispersion(allDeviations, 3);
+	// TODO: Use an ENUM or something for this.
+
 	/* Builds the table */
 	buildTable();
 
@@ -304,4 +313,57 @@ void ClassIntervalFreqT::calculateMode(int lowerLimit)
 {
 	_vct<int>::iterator FreqItr = std::max_element(m_absoluteFreq.begin(), m_absoluteFreq.end());
 	m_mode = ((*FreqItr / ((*FreqItr - 1) + (*FreqItr + 1))) * m_classInterval) + lowerLimit;
+}
+
+_vct<double> ClassIntervalFreqT::calculateAllDeviations()
+{
+	_vct<int>::const_iterator itrMark = m_classMarks.begin();
+	_vct<double> deviationTemp;
+
+	for(; itrMark != m_classMarks.end(); itrMark++)
+		deviationTemp.push_back(std::abs(*itrMark - m_arithmeticAverage));
+
+	return deviationTemp;
+}
+
+void ClassIntervalFreqT::calculateDispersion(_vct<double> deviation, int cType)
+{
+	m_range = m_rawNumericData.at(m_rawNumericData.size() - 1) - m_rawNumericData.at(0);
+
+	double dvSum(0);
+	_vct<double>::const_iterator itrDev = deviation.begin();
+	_vct<int>::const_iterator itrFreq = m_absoluteFreq.begin();
+
+	switch(cType)
+	{
+		case 1:
+			for(; itrDev != deviation.end(); itrDev++)
+				dvSum += *itrDev * *(itrFreq++);
+			m_standardDeviation = dvSum / m_totalElements;
+		break;
+
+		case 2:
+			for(; itrDev != deviation.end(); itrDev++)
+				dvSum += pow(*itrDev, 2) * *(itrFreq++);
+			m_variance = dvSum / m_totalElements;
+		break;
+
+		case 3:
+			for(; itrDev != deviation.end(); itrDev++)
+				dvSum += pow(*itrDev, 4) * *(itrFreq++);
+			m_coefficientKurtosis = dvSum / m_totalElements;
+
+		default:
+			return;
+	}
+}
+
+void ClassIntervalFreqT::calculateVariance(_vct<double> deviation)
+{
+
+}
+
+void ClassIntervalFreqT::calculateCoefficients(_vct<double> deviation)
+{
+
 }
