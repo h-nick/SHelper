@@ -126,13 +126,17 @@ void ClassIntervalFreqT::vectorialCalculations()
 	calculateMedian(); // calculateMedian() calls calculateMode().
 
 	/* Calculate position trends */
+	positionFormula(posType::QUARTILE);
+	positionFormula(posType::SEXTILE);
+	positionFormula(posType::DECILE);
+	positionFormula(posType::PERCENTILE);
 
 	/* Calculate measures of dispersion */
 	_vct<double> allDeviations = calculateAllDeviations();
-	calculateDispersion(allDeviations, 1);
-	calculateDispersion(allDeviations, 2);
-	calculateDispersion(allDeviations, 3);
-	// TODO: Use an ENUM or something for this.
+	calculateDispersion(allDeviations, opType::TYPE_DEVIATION);
+	calculateDispersion(allDeviations, opType::TYPE_VARIANCE);
+	calculateDispersion(allDeviations, opType::TYPE_KURTOSIS);
+	calculateCoefficients();
 
 	/* Builds the table */
 	buildTable();
@@ -266,15 +270,17 @@ void ClassIntervalFreqT::printData()
 	DispersionMeasurementLabel->setTextFormat(Qt::RichText);
 	DispersionMeasurementLabel->setText(
 				"<b>Measures of disperion:</b><br>"
-				"Range: "				+ QString::number(m_range) + "<br>"
-				"Standard deviation: "	+ QString::number(m_standardDeviation) + "<br>"
-				"Variance: "			+ QString::number(m_variance) + "<br>"
-				"Typical deviation: "	+ QString::number(sqrt(m_variance)) + "<br>"
-				"Cft. of variation: "	+ QString::number(m_varianceCoefficient) + "<br>"
-				"Interquartile range: "	"PLACEHOLDER <br>"
-				"Pearson Cft.:"			+ QString::number(m_coefficientPearson) + "<br>"
-				"Bowley Cft.:"			+ QString::number(m_coefficientBowley) + "<br>"
-				"Kurtosis Cft.:"		+ QString::number(m_coefficientKurtosis) + "<br>"
+				"Range: "				+ QString::number(m_range)					+ "<br>"
+				"Standard deviation: "	+ QString::number(m_standardDeviation)		+ "<br>"
+				"Variance: "			+ QString::number(m_variance)				+ "<br>"
+				"Typical deviation: "	+ QString::number(m_typicalDeviation)		+ "<br>"
+				"Cft. of variation: "	+ QString::number(m_varianceCoefficient)	+ "% <br>"
+				"Interquartile range: "	+ QString::number(m_interquartileRange)		+ "<br>"
+				"Interqrt. deviation: "	+ QString::number(m_interquartileDeviation) + "<br>"
+				"Pearson Cft.: "		+ QString::number(m_coefficientPearson, 'f')	+ "<br>"
+				"Bowley Cft.: "			+ QString::number(m_coefficientBowley, 'f')		+ "<br>"
+				"Kurtosis Cft.: "		+ QString::number(m_coefficientKurtosis, 'f')	+
+				" (" + getShape() + ")"
 				);
 	ui->gridLayout->addWidget(DispersionMeasurementLabel, 2, 1, Qt::AlignHCenter | Qt::AlignVCenter);
 }
@@ -326,7 +332,7 @@ _vct<double> ClassIntervalFreqT::calculateAllDeviations()
 	return deviationTemp;
 }
 
-void ClassIntervalFreqT::calculateDispersion(_vct<double> deviation, int cType)
+void ClassIntervalFreqT::calculateDispersion(_vct<double> deviation, opType type)
 {
 	m_range = m_rawNumericData.at(m_rawNumericData.size() - 1) - m_rawNumericData.at(0);
 
@@ -334,36 +340,125 @@ void ClassIntervalFreqT::calculateDispersion(_vct<double> deviation, int cType)
 	_vct<double>::const_iterator itrDev = deviation.begin();
 	_vct<int>::const_iterator itrFreq = m_absoluteFreq.begin();
 
-	switch(cType)
+	switch(type)
 	{
-		case 1:
-			for(; itrDev != deviation.end(); itrDev++)
-				dvSum += *itrDev * *(itrFreq++);
-			m_standardDeviation = dvSum / m_totalElements;
+	case opType::TYPE_DEVIATION:
+		for(; itrDev != deviation.end(); itrDev++)
+			dvSum += *itrDev * *(itrFreq++);
+		m_standardDeviation = dvSum / m_totalElements;
 		break;
 
-		case 2:
-			for(; itrDev != deviation.end(); itrDev++)
-				dvSum += pow(*itrDev, 2) * *(itrFreq++);
-			m_variance = dvSum / m_totalElements;
+	case opType::TYPE_VARIANCE:
+		for(; itrDev != deviation.end(); itrDev++)
+			dvSum += pow(*itrDev, 2) * *(itrFreq++);
+		m_variance = dvSum / m_totalElements;
+		m_typicalDeviation = sqrt(m_variance);
+		m_varianceCoefficient = (m_typicalDeviation / m_arithmeticAverage) * 100;
 		break;
 
-		case 3:
-			for(; itrDev != deviation.end(); itrDev++)
-				dvSum += pow(*itrDev, 4) * *(itrFreq++);
-			m_coefficientKurtosis = dvSum / m_totalElements;
+	case opType::TYPE_KURTOSIS:
+		for(; itrDev != deviation.end(); itrDev++)
+			dvSum += pow(*itrDev, 4) * *(itrFreq++);
+		m_coefficientKurtosis = dvSum / m_totalElements;
+		break;
 
-		default:
-			return;
+	default:
+		return;
 	}
 }
 
-void ClassIntervalFreqT::calculateVariance(_vct<double> deviation)
+QString ClassIntervalFreqT::getShape()
 {
-
+	double shape;
+	shape = m_coefficientKurtosis / pow(m_variance, 2);
+	if(shape < 3)
+		return "Platykurtic";
+	if(shape = 3)
+		return "Mesokurtic";
+	else
+		return "Leptokurtic";
 }
 
-void ClassIntervalFreqT::calculateCoefficients(_vct<double> deviation)
+void ClassIntervalFreqT::calculateCoefficients()
 {
+	m_coefficientPearson = (3 * (m_arithmeticAverage - m_median)) / m_typicalDeviation;
+	m_coefficientBowley = (m_quartiles.at(2) + m_quartiles.at(0) - (2 * m_median)) /
+			(m_quartiles.at(2) - m_quartiles.at(0));
+}
 
+double ClassIntervalFreqT::calculatePosition(int position, posType type)
+{
+	int temp = position * m_totalElements;
+
+	switch(type)
+	{
+	case posType::QUARTILE:
+		return (temp / 4);
+
+	case posType::SEXTILE:
+		return (temp / 6);
+
+	case posType::DECILE:
+		return (temp / 10);
+
+	case posType::PERCENTILE:
+		return (temp / 100);
+
+	default:
+		return 0;
+	}
+}
+
+void ClassIntervalFreqT::positionFormula(posType type)
+{
+	// NOTE: This are the same formulas used in a function above. Try merging them or something.
+	int rawFreqMedian = m_absoluteFreq.at(static_cast<int>(m_absoluteFreq.size() / 2) - 1);
+	int accFreqMedianM1 = m_accAbsoluteFreq.at(static_cast<int>(m_accAbsoluteFreq.size() / 2) - 2);
+	_oda medianLimit = m_allClassIntervals.at(static_cast<int>(m_allClassIntervals.size() / 2 - 1));
+	int lowerLimit = medianLimit.at(0);
+
+	switch(type)
+	{
+	case posType::QUARTILE:
+		for(int position = 1; position <= 4; position++)
+		{
+			m_quartiles.at(position - 1) =
+					((lowerLimit + calculatePosition(position, posType::QUARTILE) - accFreqMedianM1)
+					 * m_classInterval) / rawFreqMedian;
+		}
+		break;
+
+	case posType::SEXTILE:
+		for(int position = 1; position <= 6; position++)
+		{
+			m_sextiles.at(position - 1) =
+					((lowerLimit + calculatePosition(position, posType::SEXTILE) - accFreqMedianM1)
+					 * m_classInterval) / rawFreqMedian;
+		}
+		break;
+
+	case posType::DECILE:
+		for(int position = 1; position <= 10; position++)
+		{
+			m_deciles.at(position - 1) =
+					((lowerLimit + calculatePosition(position, posType::DECILE) - accFreqMedianM1)
+					 * m_classInterval) / rawFreqMedian;
+		}
+		break;
+
+	case posType::PERCENTILE:
+		for(int position = 1; position <= 100; position++)
+		{
+			m_percentiles.at(position - 1) =
+					((lowerLimit + calculatePosition(position, posType::PERCENTILE) - accFreqMedianM1)
+					 * m_classInterval) / rawFreqMedian;
+		}
+		break;
+
+	default:
+		return;
+	}
+
+	m_interquartileRange = m_quartiles.at(2) - m_quartiles.at(0);
+	m_interquartileDeviation = m_interquartileRange / 2;
 }
