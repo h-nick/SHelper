@@ -1,6 +1,8 @@
+#include <QSignalMapper>
 #include <QDebug>
 #include <QTableWidget>
 #include <QLabel>
+#include <QMessageBox>
 #include <algorithm>
 #include <cmath>
 #include "include/classintervalfreqt.h"
@@ -20,6 +22,18 @@ ClassIntervalFreqT::ClassIntervalFreqT(_vct<double> &numeric_data, QWidget *pare
 	connect(ui->buttonFreqPol, SIGNAL(pressed()), this, SLOT(showFreqPolygon()));
 	connect(ui->buttonHistogram, SIGNAL(pressed()), this, SLOT(showHistogram()));
 	connect(ui->buttonOgive, SIGNAL(pressed()), this, SLOT(showOgive()));
+
+	QSignalMapper *mapper = new QSignalMapper(this);
+	connect(mapper, SIGNAL(mapped(int)), this, SLOT(printPosition(int)));
+
+	connect(ui->buttonQuartiles, SIGNAL(pressed()), mapper, SLOT(map()));
+	mapper->setMapping(ui->buttonQuartiles, (int)posType::QUARTILE);
+	connect(ui->buttonSextiles, SIGNAL(pressed()), mapper, SLOT(map()));
+	mapper->setMapping(ui->buttonSextiles, (int)posType::SEXTILE);
+	connect(ui->buttonDeciles, SIGNAL(pressed()), mapper, SLOT(map()));
+	mapper->setMapping(ui->buttonDeciles, (int)posType::DECILE);
+	connect(ui->buttonPercentiles, SIGNAL(pressed()), mapper, SLOT(map()));
+	mapper->setMapping(ui->buttonPercentiles, (int)posType::PERCENTILE);
 }
 
 ClassIntervalFreqT::~ClassIntervalFreqT()
@@ -255,8 +269,9 @@ void ClassIntervalFreqT::showOgive()
 
 void ClassIntervalFreqT::printData()
 {
-	QLabel *CentralTendencyLabel = new QLabel(this);
+	/* Prints all the data below the tableGrid */
 	CentralTendencyLabel->setTextFormat(Qt::RichText);
+	QLabel *CentralTendencyLabel = new QLabel(this);
 	CentralTendencyLabel->setText(
 				"<b>Central tendencies:</b><br>"
 				"Arithmetic average: "	+ QString::number(m_arithmeticAverage) + "<br>"
@@ -295,8 +310,7 @@ void ClassIntervalFreqT::calculateAverages()
 	{
 		sumForAAvg += ((*ItrFreq) * (*ItrMark));			// Arithmetic average.
 		sumForGAvg += ((*ItrFreq) * log10(*(ItrMark++)));	// Geometric average.
-		m_totalElements += *(ItrFreq);
-
+		m_totalElements += *(ItrFreq);	// Gets the total number of elements in the table.
 	}
 	m_arithmeticAverage = sumForAAvg / m_totalElements;
 	m_geometricAverage = pow(10, (sumForGAvg / m_totalElements));
@@ -323,6 +337,7 @@ void ClassIntervalFreqT::calculateMode(int lowerLimit)
 
 _vct<double> ClassIntervalFreqT::calculateAllDeviations()
 {
+	/* The deviation is the result of absolutely subtracting the arithmetic average to each class mark. */
 	_vct<int>::const_iterator itrMark = m_classMarks.begin();
 	_vct<double> deviationTemp;
 
@@ -334,6 +349,11 @@ _vct<double> ClassIntervalFreqT::calculateAllDeviations()
 
 void ClassIntervalFreqT::calculateDispersion(_vct<double> deviation, opType type)
 {
+	/* Gets the dispersion using the deviation vector. It elevates each value of the
+	 * deviation to the respective value and multiplies it by the respective absolute
+	 * frequency.
+	 */
+
 	m_range = m_rawNumericData.at(m_rawNumericData.size() - 1) - m_rawNumericData.at(0);
 
 	double dvSum(0);
@@ -342,13 +362,13 @@ void ClassIntervalFreqT::calculateDispersion(_vct<double> deviation, opType type
 
 	switch(type)
 	{
-	case opType::TYPE_DEVIATION:
+	case opType::TYPE_DEVIATION:	// Calculate standard deviation.
 		for(; itrDev != deviation.end(); itrDev++)
 			dvSum += *itrDev * *(itrFreq++);
 		m_standardDeviation = dvSum / m_totalElements;
 		break;
 
-	case opType::TYPE_VARIANCE:
+	case opType::TYPE_VARIANCE:		// Calculate variance.
 		for(; itrDev != deviation.end(); itrDev++)
 			dvSum += pow(*itrDev, 2) * *(itrFreq++);
 		m_variance = dvSum / m_totalElements;
@@ -356,7 +376,7 @@ void ClassIntervalFreqT::calculateDispersion(_vct<double> deviation, opType type
 		m_varianceCoefficient = (m_typicalDeviation / m_arithmeticAverage) * 100;
 		break;
 
-	case opType::TYPE_KURTOSIS:
+	case opType::TYPE_KURTOSIS:		// Calculate Kurtosis.
 		for(; itrDev != deviation.end(); itrDev++)
 			dvSum += pow(*itrDev, 4) * *(itrFreq++);
 		m_coefficientKurtosis = dvSum / m_totalElements;
@@ -369,6 +389,7 @@ void ClassIntervalFreqT::calculateDispersion(_vct<double> deviation, opType type
 
 QString ClassIntervalFreqT::getShape()
 {
+	/* Gets the shape of the Kurtosis. */
 	double shape;
 	shape = m_coefficientKurtosis / pow(m_variance, 2);
 	if(shape < 3)
@@ -411,7 +432,13 @@ double ClassIntervalFreqT::calculatePosition(int position, posType type)
 
 void ClassIntervalFreqT::positionFormula(posType type)
 {
+
+	/* This function is used to calculate all the position trends based on the posType parameter passed.
+	 * Each one calls calculatePosition() with different arguments.
+	 */
+
 	// NOTE: This are the same formulas used in a function above. Try merging them or something.
+	// FIXME: This is probably horribly coded since the position values are wrong. Check this.
 	int rawFreqMedian = m_absoluteFreq.at(static_cast<int>(m_absoluteFreq.size() / 2) - 1);
 	int accFreqMedianM1 = m_accAbsoluteFreq.at(static_cast<int>(m_accAbsoluteFreq.size() / 2) - 2);
 	_oda medianLimit = m_allClassIntervals.at(static_cast<int>(m_allClassIntervals.size() / 2 - 1));
@@ -424,7 +451,7 @@ void ClassIntervalFreqT::positionFormula(posType type)
 		{
 			m_quartiles.at(position - 1) =
 					((lowerLimit + calculatePosition(position, posType::QUARTILE) - accFreqMedianM1)
-					 * m_classInterval) / rawFreqMedian;
+					* m_classInterval) / rawFreqMedian;
 		}
 		break;
 
@@ -461,4 +488,69 @@ void ClassIntervalFreqT::positionFormula(posType type)
 
 	m_interquartileRange = m_quartiles.at(2) - m_quartiles.at(0);
 	m_interquartileDeviation = m_interquartileRange / 2;
+}
+
+/* The parameter is int instead of posType due to connect() reasons. I'll try to fix it later. */
+void ClassIntervalFreqT::printPosition(int type)
+{
+	QMessageBox *msgbx = new QMessageBox(this);
+	QString message;
+
+	switch(type)
+	{
+	case posType::QUARTILE:
+
+		for(int crn = 0; crn < 4; crn++)
+			message.append("Quartile #" + QString::number(crn + 1) + ": " +
+						   QString::number((int)m_quartiles.at(crn)) + "\n");
+
+		msgbx->setWindowTitle("Quartiles");
+		msgbx->setText(message);
+		msgbx->exec();
+		break;
+
+	case posType::SEXTILE:
+		for(int crn = 0; crn < 6; crn++)
+			message.append("Sextile #" + QString::number(crn + 1) + ": " +
+						   QString::number((int)m_sextiles.at(crn)) + "\n");
+
+		msgbx->setWindowTitle("Sextiles");
+		msgbx->setText(message);
+		msgbx->exec();
+		break;
+
+	case posType::DECILE:
+		for(int crn = 0; crn < 10; crn++)
+			message.append("Decile #" + QString::number(crn + 1) + ": " +
+						   QString::number((int)m_deciles.at(crn)) + "\n");
+
+		msgbx->setWindowTitle("Deciles");
+		msgbx->setText(message);
+		msgbx->exec();
+		break;
+
+	case posType::PERCENTILE:
+		for(int crn = 0; crn < 20; crn++)
+		{
+	/*		message.append("Percentile #" + QString::number(crn + 1) + ": " +
+/*						   QString::number((int)m_percentiles.at(crn)) + "\n");
+		*/
+			message.append(
+						   "Percentile #" + QString::number(crn + 1) + ": " +
+							QString::number((int)m_percentiles.at(crn))		+ "\t" +
+							"Percentile #" + QString::number(crn + 21) + ": " +
+							QString::number((int)m_percentiles.at(crn + 20)) + "\t" +
+							"Percentile #" + QString::number(crn + 41) + ": " +
+							QString::number((int)m_percentiles.at(crn + 40)) + "\t" +
+							"Percentile #" + QString::number(crn + 61) + ": " +
+							QString::number((int)m_percentiles.at(crn + 80)) + "\n");
+		}
+		msgbx->setWindowTitle("Percentiles");
+		msgbx->setText(message);
+		msgbx->exec();
+		break;
+
+	default:
+		return;
+	}
 }

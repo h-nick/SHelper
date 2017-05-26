@@ -20,11 +20,6 @@ public:
 	explicit ClassIntervalFreqT(_vct<double> &numeric_data, QWidget *parent = 0);
 	~ClassIntervalFreqT();
 
-private slots:
-	void showFreqPolygon();
-	void showHistogram();
-	void showOgive();
-
 private:
 	enum class opType
 	{
@@ -53,6 +48,9 @@ private:
 	_vct<_oda> m_allClassIntervals; // Holds all the class interval ranges.
 	int m_totalElements = 0;
 	int m_classInterval;
+
+	template<typename T>
+	void makeACMFreqTable(_vct<T> &mainFreq, _vct<T> &ACMFreq);
 	int getTotalRealAmplitude();
 	void getClassIntervalRanges();
 	void getClassMarks();
@@ -60,9 +58,6 @@ private:
 	void vectorialCalculations();
 	void buildTable();
 	void printData();
-
-	template<typename T>
-	void makeACMFreqTable(_vct<T> &mainFreq, _vct<T> &ACMFreq);
 
 	// Central trends:
 	double m_arithmeticAverage;
@@ -81,7 +76,6 @@ private:
 	std::array<double, 10> m_deciles;
 	std::array<double, 100> m_percentiles;
 	double calculatePosition(int position, posType type);
-	void positionFormula(posType type);
 
 	// Measures of dispersion:
 	double m_range;
@@ -96,6 +90,12 @@ private:
 	void calculateDispersion(_vct<double> deviation, opType type);
 	QString getShape();
 	void calculateCoefficients();
-};
 
+private slots:
+	void showFreqPolygon();
+	void showHistogram();
+	void showOgive();
+	void positionFormula(posType type);
+	void printPosition(int type);
+};
 #endif // CLASSINTERVALFREQT_H
