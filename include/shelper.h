@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QCloseEvent>
+#include "datainput.h"
 
 template<class T>
 using _vct = std::vector<T>;
@@ -31,7 +32,7 @@ private slots:
 
 private:
 	Ui::Shelper *ui;
-	_vct<double> obtainData();
+	_vct<double> obtainData(DataInput::opType type);
 };
 
 #endif // SHELPER_H

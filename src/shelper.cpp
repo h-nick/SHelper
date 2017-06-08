@@ -6,8 +6,6 @@
 #include "ui_shelper.h"
 #include "include/simplefreqt.h"
 #include "include/classintervalfreqt.h"
-#include "include/datainsert.h"
-#include "include/datainput.h" // TODO: Maybe merge this with DataInsert.
 #include "include/aboutdialog.h"
 
 Shelper::Shelper(QWidget *parent) :
@@ -49,9 +47,8 @@ void Shelper::changeLang()
 
 void Shelper::showAbout()
 {
-	AboutDialog *about = new AboutDialog(this);
-	about->exec();
-	about->setAttribute(Qt::WA_DeleteOnClose);
+	AboutDialog about(this);
+	about.exec();
 }
 
 void Shelper::closeEvent(QCloseEvent *event)
@@ -67,32 +64,27 @@ void Shelper::closeEvent(QCloseEvent *event)
 		event->ignore();
 }
 
-_vct<double> Shelper::obtainData()
+_vct<double> Shelper::obtainData(DataInput::opType type)
 {
-	DataInsert *alldata = new DataInsert(this);
-	alldata->exec();
-	alldata->deleteLater();
-	_vct<double> numeric_data = alldata->getVectorData();
-	return numeric_data;
+	DataInput allData(type, this);
+	allData.exec();
+	return allData.getStatisticalData();
 }
 
 void Shelper::callSimpleFreqT()
 {
-	SimpleFreqT *table = new SimpleFreqT(obtainData());
-	table->show();
-	table->setAttribute(Qt::WA_DeleteOnClose);
+	SimpleFreqT simpleTable(obtainData(DataInput::opType::TYPE_STATISTIC), this);
+	simpleTable.show();
 }
 
 void Shelper::callClassIntervalFreqT()
 {
-	ClassIntervalFreqT *table = new ClassIntervalFreqT(obtainData());
-	table->show();
-	table->setAttribute(Qt::WA_DeleteOnClose);
+	ClassIntervalFreqT intFreqTable(obtainData(DataInput::opType::TYPE_STATISTIC), this);
+	intFreqTable.show();
 }
 
 void Shelper::test()
 {
-	DataInput *input = new DataInput(this);
+	DataInput *input = new DataInput(DataInput::opType::TYPE_STATISTIC, this);
 	input->exec();
-	input->setAttribute(Qt::WA_DeleteOnClose);
 }

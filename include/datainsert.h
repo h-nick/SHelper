@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QValidator>
+#include <QCloseEvent>
 
 template<class T>
 using _vct = std::vector<T>;
@@ -21,12 +22,15 @@ public:
 
 	const _vct<double> & getVectorData() const;
 
+protected:
+	void closeEvent(QCloseEvent *);
+
 private slots:
-	void datainsertion();
+	void StatisticalData();
 
 private:
 	Ui::DataInsert *ui;
-	_vct<double> numeric_data;
+	_vct<double> m_numericData;
 };
 
 #endif // DATAINSERT_H

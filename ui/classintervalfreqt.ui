@@ -160,6 +160,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="buttonQuartiles">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Show Quartiles</string>
        </property>
@@ -167,6 +170,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="buttonSextiles">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Show Sextiles</string>
        </property>
@@ -174,6 +180,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="buttonDeciles">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Show Deciles</string>
        </property>
@@ -181,6 +190,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="buttonPercentiles">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Show Percentiles</string>
        </property>

@@ -2,6 +2,7 @@
 #define DATAINPUT_H
 
 #include <QDialog>
+#include <QTextEdit>
 
 namespace Ui {
 class DataInput;
@@ -12,11 +13,24 @@ class DataInput : public QDialog
 	Q_OBJECT
 
 public:
-	explicit DataInput(QWidget *parent = 0);
+	enum class opType
+	{
+		TYPE_STATISTIC,
+		TYPE_LINEARPROGRAMMING
+	};
+
+
+	explicit DataInput(opType type, QWidget *parent = 0);
 	~DataInput();
+	std::vector<double> getStatisticalData();
+
+private slots:
+	void statisticalData(QWidget *textEdit);
+	void linearProgrammingData();
 
 private:
 	Ui::DataInput *ui;
+	std::vector<double> m_statisticalData;
 };
 
 #endif // DATAINPUT_H

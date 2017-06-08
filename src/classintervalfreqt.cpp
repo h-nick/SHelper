@@ -27,7 +27,7 @@ ClassIntervalFreqT::ClassIntervalFreqT(_vct<double> &numeric_data, QWidget *pare
 	connect(mapper, SIGNAL(mapped(int)), this, SLOT(printPosition(int)));
 
 	connect(ui->buttonQuartiles, SIGNAL(pressed()), mapper, SLOT(map()));
-	mapper->setMapping(ui->buttonQuartiles, (int)posType::QUARTILE);
+	mapper->setMapping(ui->buttonQuartiles, static_cast<int>(posType::QUARTILE));
 	connect(ui->buttonSextiles, SIGNAL(pressed()), mapper, SLOT(map()));
 	mapper->setMapping(ui->buttonSextiles, (int)posType::SEXTILE);
 	connect(ui->buttonDeciles, SIGNAL(pressed()), mapper, SLOT(map()));
@@ -45,8 +45,9 @@ ClassIntervalFreqT::~ClassIntervalFreqT()
 int ClassIntervalFreqT::getTotalRealAmplitude()
 {
 	return m_rawNumericData.at(m_rawNumericData.size() - 1) - m_rawNumericData.at(0) + 1;
-	// Instead of adding 1, it should determine if there's decimals in the values and add either
-	// 1 or 0.1 accordingly.
+	/*	FIXME: I'm an idiot. Instead of adding 1, it should determine if there's decimals
+	 *	in the values and add either 1 or 0.1 accordingly.
+	 */
 }
 
 void ClassIntervalFreqT::getClassIntervalRanges()
@@ -270,8 +271,8 @@ void ClassIntervalFreqT::showOgive()
 void ClassIntervalFreqT::printData()
 {
 	/* Prints all the data below the tableGrid */
-	CentralTendencyLabel->setTextFormat(Qt::RichText);
 	QLabel *CentralTendencyLabel = new QLabel(this);
+	CentralTendencyLabel->setTextFormat(Qt::RichText);
 	CentralTendencyLabel->setText(
 				"<b>Central tendencies:</b><br>"
 				"Arithmetic average: "	+ QString::number(m_arithmeticAverage) + "<br>"
@@ -409,7 +410,7 @@ void ClassIntervalFreqT::calculateCoefficients()
 
 double ClassIntervalFreqT::calculatePosition(int position, posType type)
 {
-	int temp = position * m_totalElements;
+	int temp = ++position * m_totalElements;
 
 	switch(type)
 	{
@@ -438,23 +439,29 @@ void ClassIntervalFreqT::positionFormula(posType type)
 	 */
 
 	// NOTE: This are the same formulas used in a function above. Try merging them or something.
-	// FIXME: This is probably horribly coded since the position values are wrong. Check this.
+
+	_vct<int>::const_iterator freqItr = m_absoluteFreq.begin();
+
+
 	int rawFreqMedian = m_absoluteFreq.at(static_cast<int>(m_absoluteFreq.size() / 2) - 1);
 	int accFreqMedianM1 = m_accAbsoluteFreq.at(static_cast<int>(m_accAbsoluteFreq.size() / 2) - 2);
 	_oda medianLimit = m_allClassIntervals.at(static_cast<int>(m_allClassIntervals.size() / 2 - 1));
 	int lowerLimit = medianLimit.at(0);
 
+	// FIXME
 	switch(type)
 	{
-	case posType::QUARTILE:
-		for(int position = 1; position <= 4; position++)
+/*	case posType::QUARTILE:
+		_vct<int> positions;
+		for(int pos = 0; pos < 4; pos++)
 		{
-			m_quartiles.at(position - 1) =
-					((lowerLimit + calculatePosition(position, posType::QUARTILE) - accFreqMedianM1)
-					* m_classInterval) / rawFreqMedian;
+			positions.at(pos)(calculatePosition(position, posType::QUARTILE));
 		}
+		m_quartiles.at(position - 1) =
+				((lowerLimit + calculatePosition(position, posType::QUARTILE) - accFreqMedianM1)
+				* m_classInterval) / rawFreqMedian;
 		break;
-
+*/
 	case posType::SEXTILE:
 		for(int position = 1; position <= 6; position++)
 		{
