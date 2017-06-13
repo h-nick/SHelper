@@ -3,7 +3,6 @@
 
 #include <QDialog>
 #include <QTextEdit>
-#include <QDebug>
 
 namespace Ui {
 class DataInput;
@@ -17,22 +16,21 @@ public:
 	enum class opType
 	{
 		TYPE_STATISTIC,
-		TYPE_LPGRAPHICAL,
-		TYPE_LPGENERAL
+		TYPE_LINEARPROGRAMMING
 	};
 
 
 	explicit DataInput(opType type, QWidget *parent = 0);
 	~DataInput();
-	std::vector<double> getStatisticalData();
+	std::vector<double> getVectorData();
 
 private slots:
-	void statisticalData(QWidget *textEdit);
-	void linearProgrammingData(QWidget *table);
-	void prepareTable(QWidget *table);
+	std::vector<double> statisticalData(QWidget *textEdit);
+	void linearProgrammingData();
 
 private:
 	Ui::DataInput *ui;
-	std::vector<double> m_statisticalData, varX, varY, varZ, objFn;
+	std::vector<double> m_statisticalData;
 };
+
 #endif // DATAINPUT_H

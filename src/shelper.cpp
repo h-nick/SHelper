@@ -18,7 +18,8 @@ Shelper::Shelper(QWidget *parent) :
 	connect(ui->button_classintervalfreq, SIGNAL(pressed()), this, SLOT(callClassIntervalFreqT()));
 	connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(showAbout()));
 	connect(ui->actionLanguage, SIGNAL(triggered()), this, SLOT(changeLang()));
-	connect(ui->button_LPgraphical, SIGNAL(pressed()), this, SLOT(test())); // NOTE: Placeholder to test class.
+	connect(ui->button_LPgraphical, SIGNAL(pressed()), this, SLOT(lpGraphical()));
+	connect(ui->button_LPSimplex, SIGNAL(pressed()), this, SLOT(lpSimplex()));
 }
 
 Shelper::~Shelper()
@@ -64,27 +65,46 @@ void Shelper::closeEvent(QCloseEvent *event)
 		event->ignore();
 }
 
-_vct<double> Shelper::obtainData(DataInput::opType type)
+_vct<double> Shelper::obtainStatisticalData(DataInput::opType type)
 {
 	DataInput allData(type, this);
 	allData.exec();
 	return allData.getStatisticalData();
 }
 
+void Shelper::obtainLPGData(DataInput::opType type,
+							std::vector<double> &X, std::vector<double> &Y, std::vector<double> &Obj)
+{
+	DataInput allData(type, this);
+	allData.exec();
+}
+
 void Shelper::callSimpleFreqT()
 {
-	SimpleFreqT simpleTable(obtainData(DataInput::opType::TYPE_STATISTIC), this);
+	SimpleFreqT simpleTable(obtainStatisticalData(DataInput::opType::TYPE_STATISTIC), this);
 	simpleTable.show();
 }
 
 void Shelper::callClassIntervalFreqT()
 {
-	ClassIntervalFreqT intFreqTable(obtainData(DataInput::opType::TYPE_STATISTIC), this);
+	ClassIntervalFreqT intFreqTable(obtainStatisticalData(DataInput::opType::TYPE_STATISTIC), this);
 	intFreqTable.show();
 }
 
-void Shelper::test()
+// NOTE: Placeholders!
+void Shelper::lpGraphical()
 {
-	DataInput *input = new DataInput(DataInput::opType::TYPE_STATISTIC, this);
-	input->exec();
+	std::vector<double> X, Y, Obj;
+	obtainLPGData(DataInput::opType::TYPE_LPGRAPHICAL, X, Y, Obj);
+}
+
+void Shelper::lpSimplex()
+{
+	std::vector<double> X, Y, Obj;
+	obtainLPGData(DataInput::opType::TYPE_LPGENERAL, X, Y, Obj);
+}
+
+void Shelper::lpDual()
+{
+
 }

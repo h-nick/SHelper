@@ -62,6 +62,9 @@
      <property name="sizeConstraint">
       <enum>QLayout::SetMinimumSize</enum>
      </property>
+     <item row="1" column="0">
+      <layout class="QFormLayout" name="formLayout"/>
+     </item>
     </layout>
    </item>
   </layout>

@@ -395,7 +395,7 @@ QString ClassIntervalFreqT::getShape()
 	shape = m_coefficientKurtosis / pow(m_variance, 2);
 	if(shape < 3)
 		return "Platykurtic";
-	if(shape = 3)
+	if(shape == 3)
 		return "Mesokurtic";
 	else
 		return "Leptokurtic";
