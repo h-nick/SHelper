@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>LPGraphicalM</class>
  <widget class="QDialog" name="LPGraphicalM">
@@ -5,14 +6,32 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>536</width>
+    <height>411</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <widget class="QtCharts::QChartView" name="chartView" native="true">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>9</y>
+     <width>521</width>
+     <height>321</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QtCharts::QChartView</class>
+   <extends>QWidget</extends>
+   <header location="global">QtCharts/qchartview.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

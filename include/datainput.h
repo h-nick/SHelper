@@ -25,6 +25,7 @@ public:
 	explicit DataInput(opType type, QWidget *parent = 0);
 	~DataInput();
 	std::vector<double> getStatisticalData();
+	std::vector<std::vector<double>> getLinearProgrammingData();
 
 private slots:
 	void statisticalData(QWidget *textEdit);
@@ -33,6 +34,7 @@ private slots:
 
 private:
 	Ui::DataInput *ui;
-	std::vector<double> m_statisticalData, varX, varY, varZ, objFn;
+	std::vector<double> m_statisticalData, m_objFn;
+	std::vector<std::vector<double>> m_coefficientGroup;
 };
 #endif // DATAINPUT_H

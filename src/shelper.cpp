@@ -7,6 +7,7 @@
 #include "include/simplefreqt.h"
 #include "include/classintervalfreqt.h"
 #include "include/aboutdialog.h"
+#include "include/lpgraphicalm.h"
 
 Shelper::Shelper(QWidget *parent) :
 	QMainWindow(parent),
@@ -72,36 +73,42 @@ _vct<double> Shelper::obtainStatisticalData(DataInput::opType type)
 	return allData.getStatisticalData();
 }
 
-void Shelper::obtainLPGData(DataInput::opType type,
-							std::vector<double> &X, std::vector<double> &Y, std::vector<double> &Obj)
+_vct<_vct<double>> Shelper::obtainLPGData(DataInput::opType type, _vct<_vct<double>> coefficientGroup)
 {
 	DataInput allData(type, this);
 	allData.exec();
+	return allData.getLinearProgrammingData();
 }
 
 void Shelper::callSimpleFreqT()
 {
-	SimpleFreqT simpleTable(obtainStatisticalData(DataInput::opType::TYPE_STATISTIC), this);
-	simpleTable.show();
+	SimpleFreqT *simpleTable = new SimpleFreqT(obtainStatisticalData
+											  (DataInput::opType::TYPE_STATISTIC));
+	simpleTable->show();
+	simpleTable->deleteLater();
 }
 
 void Shelper::callClassIntervalFreqT()
 {
-	ClassIntervalFreqT intFreqTable(obtainStatisticalData(DataInput::opType::TYPE_STATISTIC), this);
-	intFreqTable.show();
+	ClassIntervalFreqT *intFreqTable = new ClassIntervalFreqT(obtainStatisticalData
+															 (DataInput::opType::TYPE_STATISTIC));
+	intFreqTable->show();
+	intFreqTable->deleteLater();
+}
+
+void Shelper::lpGraphical()
+{
+	std::vector<std::vector<double>> coefficientGroup;
+	LPGraphicalM *lpGraphical = new LPGraphicalM(obtainLPGData(DataInput::opType::TYPE_LPGRAPHICAL,
+															   coefficientGroup));
+	lpGraphical->show();
 }
 
 // NOTE: Placeholders!
-void Shelper::lpGraphical()
-{
-	std::vector<double> X, Y, Obj;
-	obtainLPGData(DataInput::opType::TYPE_LPGRAPHICAL, X, Y, Obj);
-}
-
 void Shelper::lpSimplex()
 {
-	std::vector<double> X, Y, Obj;
-	obtainLPGData(DataInput::opType::TYPE_LPGENERAL, X, Y, Obj);
+	std::vector<std::vector<double>> coefficientGroup;
+	obtainLPGData(DataInput::opType::TYPE_LPGENERAL, coefficientGroup);
 }
 
 void Shelper::lpDual()

@@ -2,6 +2,8 @@
 #define LPGRAPHICALM_H
 
 #include <QDialog>
+#include <QPointF>
+#include <QList>
 
 namespace Ui {
 class LPGraphicalM;
@@ -12,14 +14,17 @@ class LPGraphicalM : public QDialog
 	Q_OBJECT
 
 public:
-	explicit LPGraphicalM(std::vector<double> X, std::vector<double> Y, std::vector<double> Z,
+	explicit LPGraphicalM(std::vector<std::vector<double> > coefficientGroup,
 						  QWidget *parent = 0);
 	~LPGraphicalM();
 
 private:
 	Ui::LPGraphicalM *ui;
+	std::vector<std::vector<double>> m_coefficientGroup;
+	QList<QPointF> m_restrictionPoints;
 
-	std::vector<double> varX, varY, varZ, objFn;
+	void determinePoints(std::vector<double> restriction);
+	void graphicate();
 };
 
 #endif // LPGRAPHICALM_H

@@ -35,8 +35,8 @@ private slots:
 private:
 	Ui::Shelper *ui;
 	_vct<double> obtainStatisticalData(DataInput::opType type);
-	void obtainLPGData(DataInput::opType type,
-					   std::vector<double> &X, std::vector<double> &Y, std::vector<double> &Obj);
+	_vct<_vct<double> > obtainLPGData(DataInput::opType type,
+					   _vct<_vct<double> > coefficientGroup);
 	// TODO: obtainLPGData() will have to be modified later to work with Simplex/Dual.
 };
 

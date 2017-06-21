@@ -109,9 +109,29 @@ std::vector<double> DataInput::getStatisticalData()
 	return m_statisticalData;
 }
 
+std::vector<std::vector<double>> DataInput::getLinearProgrammingData()
+{
+	return m_coefficientGroup;
+}
+
 void DataInput::linearProgrammingData(QWidget *table)
 {
+	QTableWidget *tableptr = static_cast<QTableWidget *>(table);
 
+	// TODO: This can probably be optimized.
+	for(int crnRow = 0; crnRow < tableptr->rowCount(); crnRow++)
+	{
+		/* Stores each row in a vector. Each vector is then stored in another vector.
+		 * Vector 0 corresponds to the Object Function.
+		 */
+		std::vector<double> variableGroup;
+		for(int crnCol = 0; crnCol < tableptr->columnCount()-2; crnCol++)
+			variableGroup.push_back(tableptr->item(crnRow, crnCol)->text().toDouble());
+		variableGroup.push_back(tableptr->item(crnRow, tableptr->columnCount()-1)->text().toDouble());
+		m_coefficientGroup.push_back(variableGroup);
+	}
+	delete tableptr;
+	this->close();
 }
 
 void DataInput::prepareTable(QWidget *table)
@@ -120,14 +140,18 @@ void DataInput::prepareTable(QWidget *table)
 	QStringList tempList;
 
 	// Renames all the columns to have "variable" labels. X1, X2, etc.
-	// Also renames the last 2 columns accordingly.
+	// Also renames the last 2 columns and first row accordingly.
 	for(int crn = 0; crn < tableptr->columnCount()-2;)
-	{
 		tempList.append("X" + QString::number(++crn));
-	}
 	tempList.append("Rel");
 	tempList.append("Result");
 	tableptr->setHorizontalHeaderLabels(tempList);
+
+	tempList.clear();
+	tempList.append("Obj");
+	for(int crn = 1; crn < tableptr->rowCount();)
+		tempList.append("R" + QString::number(crn++));
+	tableptr->setVerticalHeaderLabels(tempList);
 
 	// Adds a QComboBox to the Rel column.
 	for(int crn = 0; crn < tableptr->rowCount(); crn++)

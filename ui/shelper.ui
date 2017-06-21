@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>523</width>
-    <height>362</height>
+    <width>235</width>
+    <height>155</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,6 +15,13 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="5" column="0">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;LINEAR PROGRAMMING CALCULATIONS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
     <item row="6" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="sizeConstraint">
@@ -50,19 +57,6 @@ Method</string>
 Method</string>
         </property>
        </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_3">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
       </item>
      </layout>
     </item>
@@ -105,19 +99,6 @@ Freq. Table</string>
         </property>
        </widget>
       </item>
-      <item>
-       <spacer name="horizontalSpacer_4">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
      </layout>
     </item>
     <item row="1" column="0">
@@ -127,26 +108,6 @@ Freq. Table</string>
       </property>
      </widget>
     </item>
-    <item row="5" column="0">
-     <widget class="QLabel" name="label_2">
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;LINEAR PROGRAMMING CALCULATIONS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
-    </item>
-    <item row="8" column="0">
-     <spacer name="verticalSpacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -154,8 +115,8 @@ Freq. Table</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>523</width>
-     <height>20</height>
+     <width>235</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuOptions">
