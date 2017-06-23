@@ -6,13 +6,14 @@
 
 using namespace QtCharts;
 
+// TODO: Check the math.
 LPGraphicalM::LPGraphicalM(std::vector<std::vector<double>> coefficientGroup, QWidget *parent) :
 	m_coefficientGroup(coefficientGroup), QDialog(parent),
 	ui(new Ui::LPGraphicalM)
 {
 	ui->setupUi(this);
 
-	for(int crn = 1; crn < m_coefficientGroup.size(); crn++)
+	for(unsigned int crn = 1; crn < m_coefficientGroup.size(); crn++)
 	{
 		std::vector<double> restriction = m_coefficientGroup.at(crn);
 		determinePoints(restriction);
@@ -31,19 +32,24 @@ void LPGraphicalM::determinePoints(std::vector<double> restriction)
 	double Y = restriction.at(1);
 	double Z = restriction.at(2);
 
-	QPointF point(Z/X, Z/Y);
-	m_restrictionPoints.push_back(point);
-	qDebug() << "Points:" << point.rx() << " : " << point.ry();
+	QPointF pointY(0, Z/Y);
+	m_restrictionPoints.push_back(pointY);
+	QPointF pointX(Z/X, 0);
+	m_restrictionPoints.push_back(pointX);
+	qDebug() << "PointY:" << pointY.rx() << " : " <<
+				pointY.ry() << "PointX:" << pointX.rx() << " : " << pointX.ry();;
 }
 
 void LPGraphicalM::graphicate()
 {
-	QLineSeries *serie = new QLineSeries();
-	serie->append(m_restrictionPoints);
-
 	QChart *chart = new QChart();
-	chart->addSeries(serie);
-	chart->legend()->hide();
+	std::vector<QPointF>::const_iterator pointItr;
+	for(pointItr = m_restrictionPoints.begin(); pointItr != m_restrictionPoints.end(); pointItr++)
+	{		QLineSeries *constraint = new QLineSeries();
+		constraint->append(*pointItr);
+		constraint->append(*(++pointItr));
+		chart->addSeries(constraint);
+	}
 	chart->createDefaultAxes();
 	ui->chartView->setChart(chart);
 }

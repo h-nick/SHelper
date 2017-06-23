@@ -8,6 +8,7 @@
 #include <QSpinBox>
 #include <QPushButton>
 #include <QComboBox>
+#include <QMessageBox>
 #include "include/datainput.h"
 #include "ui_datainput.h"
 
@@ -61,8 +62,9 @@ DataInput::DataInput(opType type, QWidget *parent) :
 		// If it's going to be used for LP Graphical Method.
 		if(type == opType::TYPE_LPGRAPHICAL)
 		{
-			info->setText(info->text() + "\nGraphical methods can only have two variables.");
-			numOfVars->setRange(1, 2);
+			info->setText(info->text() + "\n2D Graphical method can only have two variables.");
+			numOfVars->setRange(2, 2);
+			numOfVars->setEnabled(false);
 		}
 		ui->mainLayout->addWidget(info, 0, 0, Qt::AlignTop);
 
@@ -127,11 +129,12 @@ void DataInput::linearProgrammingData(QWidget *table)
 		std::vector<double> variableGroup;
 		for(int crnCol = 0; crnCol < tableptr->columnCount()-2; crnCol++)
 			variableGroup.push_back(tableptr->item(crnRow, crnCol)->text().toDouble());
+
 		variableGroup.push_back(tableptr->item(crnRow, tableptr->columnCount()-1)->text().toDouble());
 		m_coefficientGroup.push_back(variableGroup);
 	}
-	delete tableptr;
-	this->close();
+		delete tableptr;
+		this->close();
 }
 
 void DataInput::prepareTable(QWidget *table)

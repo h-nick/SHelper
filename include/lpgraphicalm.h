@@ -21,7 +21,7 @@ public:
 private:
 	Ui::LPGraphicalM *ui;
 	std::vector<std::vector<double>> m_coefficientGroup;
-	QList<QPointF> m_restrictionPoints;
+	std::vector<QPointF> m_restrictionPoints;
 
 	void determinePoints(std::vector<double> restriction);
 	void graphicate();
