@@ -64,9 +64,13 @@ private:
 	double m_geometricAverage;
 	double m_mode;
 	double m_median;
+	double m_approxMode;
+	double m_approxMedian;
 	void calculateAverages();
-	void calculateMedian();
-	void calculateMode(int lowerLimit);
+	void calculateTrueMedian();
+	void calculateTrueMode();
+	void calculateApproximateMedian(); // Not necessary if we receive the raw data.
+	void calculateApproximateMode(); // Not necessary if we receive the raw data.
 
 	// Position trends:
 	std::array<double, 4> m_quartiles;

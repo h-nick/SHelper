@@ -85,7 +85,7 @@ void Shelper::callSimpleFreqT()
 	SimpleFreqT *simpleTable = new SimpleFreqT(obtainStatisticalData
 											  (DataInput::opType::TYPE_STATISTIC));
 	simpleTable->show();
-	simpleTable->deleteLater();
+	simpleTable->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void Shelper::callClassIntervalFreqT()
@@ -93,7 +93,7 @@ void Shelper::callClassIntervalFreqT()
 	ClassIntervalFreqT *intFreqTable = new ClassIntervalFreqT(obtainStatisticalData
 															 (DataInput::opType::TYPE_STATISTIC));
 	intFreqTable->show();
-	intFreqTable->deleteLater();
+	intFreqTable->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void Shelper::lpGraphical()
@@ -102,6 +102,7 @@ void Shelper::lpGraphical()
 	LPGraphicalM *lpGraphical = new LPGraphicalM(obtainLPGData(DataInput::opType::TYPE_LPGRAPHICAL,
 															   coefficientGroup));
 	lpGraphical->show();
+	lpGraphical->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 // NOTE: Placeholders!

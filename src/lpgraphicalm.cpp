@@ -44,10 +44,13 @@ void LPGraphicalM::graphicate()
 {
 	QChart *chart = new QChart();
 	std::vector<QPointF>::const_iterator pointItr;
+	int restrictionNumber = 1;
 	for(pointItr = m_restrictionPoints.begin(); pointItr != m_restrictionPoints.end(); pointItr++)
-	{		QLineSeries *constraint = new QLineSeries();
+	{
+		QLineSeries *constraint = new QLineSeries();
 		constraint->append(*pointItr);
 		constraint->append(*(++pointItr));
+		constraint->setName("R" + restrictionNumber);
 		chart->addSeries(constraint);
 	}
 	chart->createDefaultAxes();

@@ -16,7 +16,6 @@ ClassIntervalFreqT::ClassIntervalFreqT(_vct<double> &numeric_data, QWidget *pare
 	ui(new Ui::ClassIntervalFreqT)
 {
 	ui->setupUi(this);
-	m_rawNumericData.resize(numeric_data.size());
 	vectorialCalculations();
 
 	connect(ui->buttonFreqPol, SIGNAL(pressed()), this, SLOT(showFreqPolygon()));
@@ -45,7 +44,7 @@ ClassIntervalFreqT::~ClassIntervalFreqT()
 int ClassIntervalFreqT::getTotalRealAmplitude()
 {
 	return m_rawNumericData.at(m_rawNumericData.size() - 1) - m_rawNumericData.at(0) + 1;
-	/*	FIXME: I'm an idiot. Instead of adding 1, it should determine if there's decimals
+	/*	FIXME: Instead of adding 1, it should determine if there's decimals
 	 *	in the values and add either 1 or 0.1 accordingly.
 	 */
 }
@@ -80,8 +79,21 @@ void ClassIntervalFreqT::getClassMarks()
 
 void ClassIntervalFreqT::getSingleClassIntervalRange()
 {
-	// TODO: This can be optimized greatly. Consider this algorithm a placeholder.
+	// TODO: This can probably be optimized greatly. Consider this algorithm a placeholder.
 	_vct<_oda>::const_iterator cntCI = m_allClassIntervals.begin();
+	for(; cntCI != m_allClassIntervals.end(); cntCI++)
+	{
+		int tempCounter = 0;
+		_oda ciTemp = *cntCI;
+		_vct<double>::const_iterator cntVal = m_rawNumericData.begin();
+
+		for(; cntVal != m_rawNumericData.end(); cntVal++)
+			if(*cntVal <= ciTemp.at(1) && *cntVal >= ciTemp.at(0))
+				tempCounter++;
+		m_absoluteFreq.push_back(tempCounter);
+	}
+
+/*	_vct<_oda>::const_iterator cntCI = m_allClassIntervals.begin();
 	m_absoluteFreq.resize(m_allClassIntervals.size());
 	_vct<int>::iterator cntAF = m_absoluteFreq.begin();
 
@@ -95,6 +107,7 @@ void ClassIntervalFreqT::getSingleClassIntervalRange()
 				*cntAF += 1;
 		cntAF++;
 	}
+	*/
 
 }
 
@@ -138,13 +151,14 @@ void ClassIntervalFreqT::vectorialCalculations()
 
 	/* Calculate central trends */
 	calculateAverages();
-	calculateMedian(); // calculateMedian() calls calculateMode().
+	calculateTrueMedian();
+	calculateTrueMedian();
 
 	/* Calculate position trends */
-	positionFormula(posType::QUARTILE);
+	/*positionFormula(posType::QUARTILE);
 	positionFormula(posType::SEXTILE);
 	positionFormula(posType::DECILE);
-	positionFormula(posType::PERCENTILE);
+	positionFormula(posType::PERCENTILE);*/
 
 	/* Calculate measures of dispersion */
 	_vct<double> allDeviations = calculateAllDeviations();
@@ -317,23 +331,65 @@ void ClassIntervalFreqT::calculateAverages()
 	m_geometricAverage = pow(10, (sumForGAvg / m_totalElements));
 }
 
-void ClassIntervalFreqT::calculateMedian()
+void ClassIntervalFreqT::calculateApproximateMedian()
 {
-	int rawFreqMedian = m_absoluteFreq.at(static_cast<int>(m_absoluteFreq.size() / 2) - 1);
-	int accFreqMedianM1 = m_accAbsoluteFreq.at(static_cast<int>(m_accAbsoluteFreq.size() / 2) - 2);
-	_oda medianLimit = m_allClassIntervals.at(static_cast<int>(m_allClassIntervals.size() / 2 - 1));
-	int lowerLimit = medianLimit.at(0);
+	int rawFreqMedian, accFreqMedianM1, lowerLimit;
+	_oda medianLimit;
+	if(m_absoluteFreq.size() % 2 != 0) // If we have an odd amount of elements.
+	{
+		rawFreqMedian = m_absoluteFreq.at(std::floor(m_absoluteFreq.size() / 2));
+		accFreqMedianM1 = m_accAbsoluteFreq.at(std::floor(m_accAbsoluteFreq.size() / 2) - 1);
+		medianLimit = m_allClassIntervals.at(std::floor(m_allClassIntervals.size() / 2));
+		lowerLimit = medianLimit.at(0);
+	}
+	else // If we have an even amount of elements.
+	{
+		rawFreqMedian = (m_absoluteFreq.at(m_absoluteFreq.size() / 2) +
+						 m_absoluteFreq.at((m_absoluteFreq.size() / 2)- 1)) / 2;
+		accFreqMedianM1 = (m_accAbsoluteFreq.at(m_accAbsoluteFreq.size() / 2) +
+						   m_accAbsoluteFreq.at((m_accAbsoluteFreq.size() / 2) - 1)) / 2;
+		medianLimit = m_allClassIntervals.at(m_allClassIntervals.size() / 2);
+		_oda medianLimitM1 = m_allClassIntervals.at((m_allClassIntervals.size() / 2) - 1);
+		lowerLimit = (medianLimit.at(0) + medianLimitM1.at(0)) / 2;
 
-	m_median = ((((m_totalElements / 2) - accFreqMedianM1) * m_classInterval) /
-				static_cast<double>(rawFreqMedian)) + lowerLimit;
-
-	calculateMode(lowerLimit);
+		/* NOTE: Since the amount of grouped elements is even, I'm calculating everything based
+		 * in the arithmetic average values of the grouped data. I don't know if this statistically
+		 * correct.
+		 */
+	}
+	m_median = ((((m_totalElements / 2) - accFreqMedianM1) / rawFreqMedian) * m_classInterval) + lowerLimit;
 }
 
-void ClassIntervalFreqT::calculateMode(int lowerLimit)
+void ClassIntervalFreqT::calculateApproximateMode()
 {
-	_vct<int>::iterator FreqItr = std::max_element(m_absoluteFreq.begin(), m_absoluteFreq.end());
-	m_mode = ((*FreqItr / ((*FreqItr - 1) + (*FreqItr + 1))) * m_classInterval) + lowerLimit;
+	// Gets the first biggest element in the absoluteFreq. This should be the most repeated element.
+	// FIXME: This will crash if the modal position (FreqItr) is the first or last element of the vector.
+	_vct<int>::const_iterator FreqItr = std::max_element(m_absoluteFreq.begin(), m_absoluteFreq.end());
+	int modalPos = FreqItr - m_absoluteFreq.begin(); // Gets the index where the iterator is located.
+	/* This is done because the index where FreqItr finds the first biggest element in absoluteFreq, is the
+	 * same index where the lowerLimit we're looking for is located.
+	 */
+	_oda lowerLimit = m_allClassIntervals.at(modalPos);
+	double tempVal = *FreqItr - *(FreqItr-1);
+	m_mode = ((tempVal / (tempVal + (*FreqItr - *(FreqItr+1)))) * m_classInterval) + lowerLimit.at(0);
+}
+
+void ClassIntervalFreqT::calculateTrueMedian()
+{
+	if(m_rawNumericData.size() % 2 != 0)
+		m_median = m_rawNumericData.at((m_rawNumericData.size() / 2) - 1);
+	else
+	{
+		double temp1 = m_rawNumericData.at(m_rawNumericData.size() / 2);
+		double temp2 = m_rawNumericData.at((m_rawNumericData.size() / 2) - 1);
+		m_median = (temp1 + temp2) / 2;
+	}
+}
+
+void ClassIntervalFreqT::calculateTrueMode()
+{
+	// TODO: Implement this.
+	m_mode = 1;
 }
 
 _vct<double> ClassIntervalFreqT::calculateAllDeviations()
@@ -439,19 +495,16 @@ void ClassIntervalFreqT::positionFormula(posType type)
 	 */
 
 	// NOTE: This are the same formulas used in a function above. Try merging them or something.
-
-	_vct<int>::const_iterator freqItr = m_absoluteFreq.begin();
-
-
-	int rawFreqMedian = m_absoluteFreq.at(static_cast<int>(m_absoluteFreq.size() / 2) - 1);
-	int accFreqMedianM1 = m_accAbsoluteFreq.at(static_cast<int>(m_accAbsoluteFreq.size() / 2) - 2);
-	_oda medianLimit = m_allClassIntervals.at(static_cast<int>(m_allClassIntervals.size() / 2 - 1));
+	// FIXME: Math might be wrong.
+	int rawFreqMedian = m_absoluteFreq.at(static_cast<int>(m_absoluteFreq.size() / 2));
+	int accFreqMedianM1 = m_accAbsoluteFreq.at(static_cast<int>(m_accAbsoluteFreq.size() / 2) - 1);
+	_oda medianLimit = m_allClassIntervals.at(static_cast<int>(m_allClassIntervals.size() / 2));
 	int lowerLimit = medianLimit.at(0);
 
-	// FIXME
+	// FIXME: Reimplement algorithm.
 	switch(type)
 	{
-/*	case posType::QUARTILE:
+	/*case posType::QUARTILE:
 		_vct<int> positions;
 		for(int pos = 0; pos < 4; pos++)
 		{
@@ -461,7 +514,7 @@ void ClassIntervalFreqT::positionFormula(posType type)
 				((lowerLimit + calculatePosition(position, posType::QUARTILE) - accFreqMedianM1)
 				* m_classInterval) / rawFreqMedian;
 		break;
-*/
+	*/
 	case posType::SEXTILE:
 		for(int position = 1; position <= 6; position++)
 		{
