@@ -152,7 +152,7 @@ void ClassIntervalFreqT::vectorialCalculations()
 	/* Calculate central trends */
 	calculateAverages();
 	calculateTrueMedian();
-	calculateTrueMedian();
+	calculateTrueMode();
 
 	/* Calculate position trends */
 	/*positionFormula(posType::QUARTILE);
@@ -377,7 +377,7 @@ void ClassIntervalFreqT::calculateApproximateMode()
 void ClassIntervalFreqT::calculateTrueMedian()
 {
 	if(m_rawNumericData.size() % 2 != 0)
-		m_median = m_rawNumericData.at((m_rawNumericData.size() / 2) - 1);
+		m_median = m_rawNumericData.at((int)m_rawNumericData.size() / 2);
 	else
 	{
 		double temp1 = m_rawNumericData.at(m_rawNumericData.size() / 2);
@@ -388,8 +388,28 @@ void ClassIntervalFreqT::calculateTrueMedian()
 
 void ClassIntervalFreqT::calculateTrueMode()
 {
-	// TODO: Implement this.
-	m_mode = 1;
+	std::vector<double>::const_iterator exItr(m_rawNumericData.begin());
+	int exOcurrence(0);
+	for(; exItr != m_rawNumericData.end(); exItr++)
+	{
+		std::vector<double>::const_iterator inItr(exItr);
+		double tempVal(*exItr);
+		int inOcurrence(0);
+
+		for(; inItr != m_rawNumericData.end(); inItr++)
+		{
+			if(*inItr == tempVal)
+				inOcurrence++;
+			else
+				break;
+		}
+
+		if(inOcurrence > exOcurrence)
+		{
+			m_mode = tempVal;
+			exOcurrence = inOcurrence;
+		}
+	}
 }
 
 _vct<double> ClassIntervalFreqT::calculateAllDeviations()
