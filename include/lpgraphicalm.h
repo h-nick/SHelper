@@ -22,9 +22,11 @@ private:
 	Ui::LPGraphicalM *ui;
 	std::vector<std::vector<double>> m_coefficientGroup;
 	std::vector<QPointF> m_restrictionPoints;
+	std::vector<QPointF> m_vertexPoints;
 
 	void determinePoints(std::vector<double> restriction);
 	void graphicate();
+	void getVertex();
 };
 
 #endif // LPGRAPHICALM_H

@@ -5,12 +5,15 @@
 #include <QDebug>
 
 /*
- *	aboutdialog			>>> Shows information about the program and Qt.
- *	classintervalfreq	>>> Calculations and table generation for Class-Interval statistical calculations.
- *	datainser			>>> Data insertion for statistical calculations.
- *	shelper				>>> MainWindow.
- *	simplefreqg			>>>	Graph generation for Simple Frequency statistical calculations.
- *	simplefreqt			>>> Calculations and table generation for Simple Frequency statistical calculations.
+ *aboutdialog		>>> Shows information about the program and Qt.
+ *accumulator		>>> Holds functions to accumulate all the values of a vector into another progressively.
+ *barchar			>>> Bar Chart Graph generation for ClassInterval and SimpleFreq
+ *classintervalfreqt>>> Calculations and table generation for Class-Interval statistical calculations.
+ *datainput			>>> Data insertion class.
+ *shelper			>>> MainWindow.
+ *simplefreqg		>>>	Graph generation for Simple Frequency statistical calculations.
+ *simplefreqt		>>> Calculations and table generation for Simple Frequency statistical calculations.
+ *
  */
 
 

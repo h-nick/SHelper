@@ -92,23 +92,6 @@ void ClassIntervalFreqT::getSingleClassIntervalRange()
 				tempCounter++;
 		m_absoluteFreq.push_back(tempCounter);
 	}
-
-/*	_vct<_oda>::const_iterator cntCI = m_allClassIntervals.begin();
-	m_absoluteFreq.resize(m_allClassIntervals.size());
-	_vct<int>::iterator cntAF = m_absoluteFreq.begin();
-
-	for(; cntCI != m_allClassIntervals.end(); cntCI++)
-	{
-		_oda ciTemp = *cntCI;
-
-		_vct<double>::const_iterator cntVal = m_rawNumericData.begin();
-		for(; cntVal != m_rawNumericData.end(); cntVal++)
-			if(*cntVal <= ciTemp.at(1) && *cntVal >= ciTemp.at(0))
-				*cntAF += 1;
-		cntAF++;
-	}
-	*/
-
 }
 
 void ClassIntervalFreqT::vectorialCalculations()
