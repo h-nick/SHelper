@@ -64,8 +64,9 @@ void LPGraphicalM::graphicate()
 
 void LPGraphicalM::getVertex()
 {
-	// TODO: Finish this algorithm. It's not generating the vertex for all lines.
+	// TODO: Finish this algorithm. It's not generating the vertices for 0Y or 0X.
 	// NOTE: I haven't checked if the vertex generated are correct.
+	// FIXME: Repeated elements in the vertices "vector".
 	std::vector<QPointF>::const_iterator pointItr(m_restrictionPoints.begin());
 	std::vector<QLineF> constraintLines;
 	for(; pointItr != m_restrictionPoints.end(); pointItr+=2)
@@ -73,8 +74,32 @@ void LPGraphicalM::getVertex()
 		QLineF tempLine(*pointItr, *(pointItr+1));
 		constraintLines.push_back(tempLine);
 	}
+
 	std::vector<QLineF>::const_iterator lineItr(constraintLines.begin());
+	for(; lineItr != constraintLines.end(); lineItr++)
+	{
+		QPointF tempPoint;
+		QLineF tempLine(*lineItr); // Gets a constraint QLineF.
+		std::vector<QLineF>::const_iterator nextLineItr(constraintLines.begin());
+
+		// NOTE: Probably not very optimal.
+		for(; nextLineItr != constraintLines.end(); nextLineItr++) // Check lineItr against every other one.
+		{
+			//if(nextLineItr != lineItr) // Don't compare a line with itself.
+			tempLine.intersect(*nextLineItr, &tempPoint);
+			if(!tempPoint.isNull())
+				m_vertexPoints.push_back(tempPoint);
+		}
+	}
+
+	qDebug() << "\n";
+	std::vector<QPointF>::const_iterator debugItr(m_vertexPoints.begin());
+	for(; debugItr != m_vertexPoints.end(); debugItr++)
+		qDebug() << *debugItr;
+
+	/*
 	for(; lineItr != constraintLines.end()-1; lineItr++)
+	// constraintLines.end()-1 so *(lineItr+1) down there doesn't break the vector.
 	{
 		QPointF tempPoint;
 		QLineF tempLine(*lineItr); // Gets a constraint line.
@@ -87,5 +112,5 @@ void LPGraphicalM::getVertex()
 		qDebug() << "Line: (" << tempLine.x1() << "," << tempLine.x2() << ") (" <<
 					tempLine.y1() << "," << tempLine.y2() << ") is null: " << tempPoint.isNull();
 		qDebug() << "Vertex: " << tempPoint.rx() << "," << tempPoint.ry();
-	}
+	}*/
 }
