@@ -177,6 +177,8 @@ void DataInput::prepareTable(QWidget *table)
 	temp->setFlags(Qt::ItemIsEnabled);
 	temp->setBackgroundColor(Qt::lightGray);
 	temp->setTextAlignment(Qt::AlignCenter);
+
+	this->resize(500, 300);
 }
 
 void DataInput::statisticalData(QWidget *textEdit)

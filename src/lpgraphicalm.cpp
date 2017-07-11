@@ -96,21 +96,4 @@ void LPGraphicalM::getVertex()
 	std::vector<QPointF>::const_iterator debugItr(m_vertexPoints.begin());
 	for(; debugItr != m_vertexPoints.end(); debugItr++)
 		qDebug() << *debugItr;
-
-	/*
-	for(; lineItr != constraintLines.end()-1; lineItr++)
-	// constraintLines.end()-1 so *(lineItr+1) down there doesn't break the vector.
-	{
-		QPointF tempPoint;
-		QLineF tempLine(*lineItr); // Gets a constraint line.
-		QLineF nextLine(*(lineItr+1)); // And the next one.
-		tempLine.intersect(nextLine, &tempPoint); // Checks if it intersects with the next line.
-
-		if(!tempPoint.isNull())
-			m_vertexPoints.push_back(tempPoint);
-
-		qDebug() << "Line: (" << tempLine.x1() << "," << tempLine.x2() << ") (" <<
-					tempLine.y1() << "," << tempLine.y2() << ") is null: " << tempPoint.isNull();
-		qDebug() << "Vertex: " << tempPoint.rx() << "," << tempPoint.ry();
-	}*/
 }
