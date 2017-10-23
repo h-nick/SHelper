@@ -64,8 +64,8 @@ void ClassIntervalFreqG::generateChart(QSplineSeries *chartSeries)
 	chart->addSeries(chartSeries);
 	chart->createDefaultAxes();
 
-	// TODO: Mmmmm... Do something about this... It looks awful.
 	std::sort(m_freq.rbegin(), m_freq.rend());
+	// I add 1 at the end to create some slack in the vertical-axis for graphical reasons.
 	chart->axisY()->setRange(0, m_freq.at(0) + 1);
 	ui->GraphShow->setChart(chart);
 }

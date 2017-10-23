@@ -76,7 +76,6 @@ void ClassIntervalFreqT::getClassIntervalRanges()
 		cntValue += m_classInterval;
 		ciTemp.at(1) = cntValue - 1;
 		m_allClassIntervals.push_back(ciTemp);
-		// FIXME: The final class interval .at(1) should be cntValue, not cntValue - 1.
 	}
 }
 
@@ -114,7 +113,6 @@ void ClassIntervalFreqT::vectorialCalculations()
 	std::sort(m_rawNumericData.begin(), m_rawNumericData.end());
 
 	/* Gets the TRA */
-	// FIXME: This doesn't work if the values are decimals.
 	double TRA = getTotalRealAmplitude();
 
 	/* Gets the class interval */

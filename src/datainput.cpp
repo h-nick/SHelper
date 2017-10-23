@@ -59,7 +59,6 @@ DataInput::DataInput(opType type, QWidget *parent) :
 		itemsList.append("Maximize");
 		objective->addItems(itemsList);
 
-		// If it's going to be used for LP Graphical Method.
 		if(type == opType::TYPE_LPGRAPHICAL)
 		{
 			info->setText(info->text() + "\n2D Graphical method can only have two variables.");
@@ -191,6 +190,15 @@ void DataInput::statisticalData(QWidget *textEdit)
 	// Adds each value of the QStringList to the data vector.
 	foreach(QString data, lines)
 		m_statisticalData.push_back(data.toDouble());
-	this->close();
-	delete textEdit;
+
+	if (m_statisticalData.size() > 1) // As long as there are more than one element.
+	{
+		this->close();
+		delete textEdit;
+	}
+	else
+	{
+		m_statisticalData.clear();
+		QMessageBox::information(this, "Not enough elements", "Please insert more than one element.");
+	}
 }
