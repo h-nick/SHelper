@@ -82,16 +82,16 @@ _vct<_vct<double>> Shelper::obtainLPGData(DataInput::opType type, _vct<_vct<doub
 
 void Shelper::callSimpleFreqT()
 {
-	SimpleFreqT *simpleTable = new SimpleFreqT(obtainStatisticalData
-											  (DataInput::opType::TYPE_STATISTIC));
+        _vct<double> temp = obtainStatisticalData(DataInput::opType::TYPE_STATISTIC);
+	SimpleFreqT *simpleTable = new SimpleFreqT(temp);
 	simpleTable->show();
 	simpleTable->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void Shelper::callClassIntervalFreqT()
 {
-	ClassIntervalFreqT *intFreqTable = new ClassIntervalFreqT(obtainStatisticalData
-															 (DataInput::opType::TYPE_STATISTIC));
+        _vct<double> temp = obtainStatisticalData(DataInput::opType::TYPE_STATISTIC);
+	ClassIntervalFreqT *intFreqTable = new ClassIntervalFreqT(temp);
 	intFreqTable->show();
 	intFreqTable->setAttribute(Qt::WA_DeleteOnClose);
 }

@@ -51,7 +51,8 @@ private:
 
 	template<typename T>
 	void makeACMFreqTable(_vct<T> &mainFreq, _vct<T> &ACMFreq);
-	int getTotalRealAmplitude();
+	double getTotalRealAmplitude();
+	bool areThereIntegers();
 	void getClassIntervalRanges();
 	void getClassMarks();
 	void getSingleClassIntervalRange();

@@ -74,8 +74,7 @@ DataInput::DataInput(opType type, QWidget *parent) :
 		 * Lambda (Gets the pointer via copy).
 		 */
 		QMetaObject::Connection * buttonConn = new QMetaObject::Connection;
-		*buttonConn = connect(ui->buttonProceed, &QPushButton::pressed, this,
-				[=, this]()
+		*buttonConn = connect(ui->buttonProceed, &QPushButton::pressed, [=, this]()
 				{
 					 // Disconnects buttonProceed from calling the Lambda again.
 					QObject::disconnect(*buttonConn);

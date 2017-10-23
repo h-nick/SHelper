@@ -41,12 +41,26 @@ ClassIntervalFreqT::~ClassIntervalFreqT()
 }
 
 // NOTE: This should probably be a template.
-int ClassIntervalFreqT::getTotalRealAmplitude()
+double ClassIntervalFreqT::getTotalRealAmplitude()
 {
-	return m_rawNumericData.at(m_rawNumericData.size() - 1) - m_rawNumericData.at(0) + 1;
-	/*	FIXME: Instead of adding 1, it should determine if there's decimals
-	 *	in the values and add either 1 or 0.1 accordingly.
-	 */
+	double TRA = m_rawNumericData.at(m_rawNumericData.size() - 1) - m_rawNumericData.at(0);
+
+	if (areThereIntegers())
+		return TRA + 1;
+	else
+		return TRA + 0.1;
+}
+
+bool ClassIntervalFreqT::areThereIntegers()
+{
+	_vct<double>::const_iterator allItr = m_rawNumericData.begin();
+
+	for (; allItr != m_rawNumericData.end(); allItr++)
+	{
+		if (std::floor(std::abs(*allItr)) == std::abs(*allItr))
+			return true;
+	}
+	return false;
 }
 
 void ClassIntervalFreqT::getClassIntervalRanges()
@@ -561,7 +575,7 @@ void ClassIntervalFreqT::printPosition(int type)
 
 	switch(type)
 	{
-	case posType::QUARTILE:
+	case (int)posType::QUARTILE:
 
 		for(int crn = 0; crn < 4; crn++)
 			message.append("Quartile #" + QString::number(crn + 1) + ": " +
@@ -572,7 +586,7 @@ void ClassIntervalFreqT::printPosition(int type)
 		msgbx->exec();
 		break;
 
-	case posType::SEXTILE:
+	case (int)posType::SEXTILE:
 		for(int crn = 0; crn < 6; crn++)
 			message.append("Sextile #" + QString::number(crn + 1) + ": " +
 						   QString::number((int)m_sextiles.at(crn)) + "\n");
@@ -582,7 +596,7 @@ void ClassIntervalFreqT::printPosition(int type)
 		msgbx->exec();
 		break;
 
-	case posType::DECILE:
+	case (int)posType::DECILE:
 		for(int crn = 0; crn < 10; crn++)
 			message.append("Decile #" + QString::number(crn + 1) + ": " +
 						   QString::number((int)m_deciles.at(crn)) + "\n");
@@ -592,7 +606,7 @@ void ClassIntervalFreqT::printPosition(int type)
 		msgbx->exec();
 		break;
 
-	case posType::PERCENTILE:
+	case (int)posType::PERCENTILE:
 		for(int crn = 0; crn < 20; crn++)
 		{
 	/*		message.append("Percentile #" + QString::number(crn + 1) + ": " +
