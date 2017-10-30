@@ -150,8 +150,8 @@ void ClassIntervalFreqT::vectorialCalculations()
 	calculateTrueMode();
 
 	/* Calculate position trends */
-	/*positionFormula(posType::QUARTILE);
-	positionFormula(posType::SEXTILE);
+	positionFormula(posType::QUARTILE);
+	/*positionFormula(posType::SEXTILE);
 	positionFormula(posType::DECILE);
 	positionFormula(posType::PERCENTILE);*/
 
@@ -482,21 +482,22 @@ void ClassIntervalFreqT::calculateCoefficients()
 
 double ClassIntervalFreqT::calculatePosition(int position, posType type)
 {
-	int temp = ++position * m_totalElements;
+	float temp = ++position * m_totalElements;
+	// Since arrays start at 0, we add 1 to position for math reasons.
 
 	switch(type)
 	{
 	case posType::QUARTILE:
-		return (temp / 4);
+		return std::round((temp / 4));
 
 	case posType::SEXTILE:
-		return (temp / 6);
+		return std::round((temp / 6));
 
 	case posType::DECILE:
-		return (temp / 10);
+		return std::round((temp / 10));
 
 	case posType::PERCENTILE:
-		return (temp / 100);
+		return std::round((temp / 100));
 
 	default:
 		return 0;
@@ -509,28 +510,76 @@ void ClassIntervalFreqT::positionFormula(posType type)
 	/* This function is used to calculate all the position trends based on the posType parameter passed.
 	 * Each one calls calculatePosition() with different arguments.
 	 */
-
-	// NOTE: This are the same formulas used in a function above. Try merging them or something.
-	int rawFreqMedian = m_absoluteFreq.at(static_cast<int>(m_absoluteFreq.size() / 2));
-	int accFreqMedianM1 = m_accAbsoluteFreq.at(static_cast<int>(m_accAbsoluteFreq.size() / 2) - 1);
-	_oda medianLimit = m_allClassIntervals.at(static_cast<int>(m_allClassIntervals.size() / 2));
-	int lowerLimit = medianLimit.at(0);
-
+	
 	// FIXME: Reimplement positions algorithm.
-	switch(type)
+	switch (type)
 	{
-	/*case posType::QUARTILE:
-		_vct<int> positions;
-		for(int pos = 0; pos < 4; pos++)
+	case posType::QUARTILE:
+		for(int crn = 0; crn < 4; crn++)
 		{
-			positions.at(pos)(calculatePosition(position, posType::QUARTILE));
+			int qPosition = calculatePosition(crn, posType::QUARTILE);
+
+			// NOTE: Placeholder algorithm.
+			// NOTE: Move this algorithm to its own function since it's the same for the other positions.
+			_vct<int>::const_iterator frItr = m_accAbsoluteFreq.begin();
+			int lowerValue, higherValue;
+			bool usingRange;
+
+			for(; frItr != m_accAbsoluteFreq.end(); frItr++)
+			{
+				// This will set a range in the m_accAbsoluteFreq vector where selectedACMFreq fits.
+				// Then it determines the closer limit and chooses that one.
+				if(*frItr == qPosition)
+				{
+					usingRange = false;
+					break;
+				}
+				if(*frItr < qPosition)
+				{ 
+					lowerValue = *frItr;
+					continue;
+				}
+
+				higherValue = *frItr;
+				usingRange = true;
+				break;
+			}
+
+			int selectedACMFreq = qPosition;
+			if(usingRange)
+			{
+				int lowerDif = qPosition - lowerValue;
+				int higherDif = std::abs(qPosition - higherValue);
+
+				higherDif > lowerDif ? selectedACMFreq = lowerValue : selectedACMFreq = higherValue;
+				// The selected Accumulated Frequency will be the range limit that is closer to qPosition;
+			}
+
+			frItr = m_accAbsoluteFreq.begin();
+			int freqPosition;
+			for(; frItr != m_accAbsoluteFreq.end(); frItr++)
+			{
+				if(*frItr == selectedACMFreq)
+				{
+					freqPosition = std::distance(m_accAbsoluteFreq.cbegin(), frItr);
+					break;
+				}
+			}
+
+			_oda medianLimit = m_allClassIntervals.at(freqPosition);
+			int lowerLimit = medianLimit.at(0);
+			int rawFreqMedian = m_absoluteFreq.at(freqPosition);
+			int accFreqMedianM1 = m_accAbsoluteFreq.at(freqPosition - 1);
+
+
+			double qTemp = qPosition - accFreqMedianM1;
+			qTemp /= rawFreqMedian;
+			qTemp *= m_classInterval;
+			qTemp += lowerLimit;
+			m_quartiles.at(crn) = qTemp;
 		}
-		m_quartiles.at(position - 1) =
-				((lowerLimit + calculatePosition(position, posType::QUARTILE) - accFreqMedianM1)
-				* m_classInterval) / rawFreqMedian;
 		break;
-	*/
-	case posType::SEXTILE:
+/*	case posType::SEXTILE:
 		for(int position = 1; position <= 6; position++)
 		{
 			m_sextiles.at(position - 1) =
@@ -562,7 +611,8 @@ void ClassIntervalFreqT::positionFormula(posType type)
 	}
 
 	m_interquartileRange = m_quartiles.at(2) - m_quartiles.at(0);
-	m_interquartileDeviation = m_interquartileRange / 2;
+	m_interquartileDeviation = m_interquartileRange / 2;*/
+	}
 }
 
 /* The parameter is int instead of posType due to connect() reasons. */
@@ -577,7 +627,7 @@ void ClassIntervalFreqT::printPosition(int type)
 
 		for(int crn = 0; crn < 4; crn++)
 			message.append("Quartile #" + QString::number(crn + 1) + ": " +
-						   QString::number((int)m_quartiles.at(crn)) + "\n");
+						   QString::number(std::round(m_quartiles.at(crn))) + "\n");
 
 		msgbx->setWindowTitle("Quartiles");
 		msgbx->setText(message);
@@ -587,7 +637,7 @@ void ClassIntervalFreqT::printPosition(int type)
 	case static_cast<int>(posType::SEXTILE):
 		for(int crn = 0; crn < 6; crn++)
 			message.append("Sextile #" + QString::number(crn + 1) + ": " +
-						   QString::number((int)m_sextiles.at(crn)) + "\n");
+						   QString::number(std::round(m_sextiles.at(crn))) + "\n");
 
 		msgbx->setWindowTitle("Sextiles");
 		msgbx->setText(message);
@@ -597,7 +647,7 @@ void ClassIntervalFreqT::printPosition(int type)
 	case static_cast<int>(posType::DECILE):
 		for(int crn = 0; crn < 10; crn++)
 			message.append("Decile #" + QString::number(crn + 1) + ": " +
-						   QString::number((int)m_deciles.at(crn)) + "\n");
+						   QString::number(std::round(m_deciles.at(crn))) + "\n");
 
 		msgbx->setWindowTitle("Deciles");
 		msgbx->setText(message);
@@ -605,24 +655,7 @@ void ClassIntervalFreqT::printPosition(int type)
 		break;
 
 	case static_cast<int>(posType::PERCENTILE):
-		for(int crn = 0; crn < 20; crn++)
-		{
-	/*		message.append("Percentile #" + QString::number(crn + 1) + ": " +
-/*						   QString::number((int)m_percentiles.at(crn)) + "\n");
-		*/
-			message.append(
-						   "Percentile #" + QString::number(crn + 1) + ": " +
-							QString::number((int)m_percentiles.at(crn))		+ "\t" +
-							"Percentile #" + QString::number(crn + 21) + ": " +
-							QString::number((int)m_percentiles.at(crn + 20)) + "\t" +
-							"Percentile #" + QString::number(crn + 41) + ": " +
-							QString::number((int)m_percentiles.at(crn + 40)) + "\t" +
-							"Percentile #" + QString::number(crn + 61) + ": " +
-							QString::number((int)m_percentiles.at(crn + 80)) + "\n");
-		}
-		msgbx->setWindowTitle("Percentiles");
-		msgbx->setText(message);
-		msgbx->exec();
+		// TODO: Implement this printing algorithm.
 		break;
 
 	default:
