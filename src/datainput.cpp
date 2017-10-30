@@ -99,6 +99,18 @@ DataInput::DataInput(opType type, QWidget *parent) :
 	}
 }
 
+void DataInput::closeEvent(QCloseEvent *event)
+{
+	m_wasCanceled = true;
+	qDebug() << "DataInput closed flag set: True";
+	event->accept();
+}
+
+bool DataInput::getFlagSet()
+{
+	return m_wasCanceled;
+}
+
 DataInput::~DataInput()
 {
 	delete ui;

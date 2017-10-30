@@ -3,7 +3,6 @@
 #include "include/classintervalfreqg.h"
 #include "ui_classintervalfreqg.h"
 
-// FIXME: This is showing lines with absolute frequency 0.
 ClassIntervalFreqG::ClassIntervalFreqG(_vct<_oda> & classIntervals, _vct<int> & AbsFreq, QWidget *parent)
 										: m_allClassIntervals(classIntervals), m_freq(AbsFreq),
 										QDialog(parent), ui(new Ui::ClassIntervalFreqG)

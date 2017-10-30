@@ -92,7 +92,6 @@ void ClassIntervalFreqT::getClassMarks()
 
 void ClassIntervalFreqT::getSingleClassIntervalRange()
 {
-	// TODO: This can probably be optimized greatly. Consider this algorithm a placeholder.
 	_vct<_oda>::const_iterator cntCI = m_allClassIntervals.begin();
 	for(; cntCI != m_allClassIntervals.end(); cntCI++)
 	{
@@ -171,6 +170,7 @@ void ClassIntervalFreqT::vectorialCalculations()
 
 void ClassIntervalFreqT::buildTable()
 {
+	// FIXME: This is showing lines with absolute frequency 0.
 	_vct<double>::const_iterator dItr; // Iterator for double-type vectors.
 	_vct<int>::const_iterator nItr;	// Iterator for int-type vectors.
 	_vct<_oda>::const_iterator ciItr = m_allClassIntervals.begin();

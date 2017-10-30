@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QTextEdit>
 #include <QDebug>
+#include <QCloseEvent>
 
 namespace Ui {
 class DataInput;
@@ -26,6 +27,7 @@ public:
 	~DataInput();
 	std::vector<double> getStatisticalData();
 	std::vector<std::vector<double>> getLinearProgrammingData();
+	bool getFlagSet();
 
 private slots:
 	void statisticalData(QWidget *textEdit);
@@ -36,5 +38,7 @@ private:
 	Ui::DataInput *ui;
 	std::vector<double> m_statisticalData, m_objFn;
 	std::vector<std::vector<double>> m_coefficientGroup;
+	bool m_wasCanceled = false;
+	void DataInput::closeEvent(QCloseEvent *event);
 };
 #endif // DATAINPUT_H
