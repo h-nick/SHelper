@@ -70,10 +70,7 @@ _vct<double> Shelper::obtainStatisticalData(DataInput::opType type)
 {
 	DataInput allData(type, this);
 	allData.exec();
-	if (!allData.getFlagSet())
-		return allData.getStatisticalData();
-	else
-		return _vct<double>();	// Returns an empty vector if the DataInput window was closed.
+	return allData.getStatisticalData();
 }
 
 _vct<_vct<double>> Shelper::obtainLPGData(DataInput::opType type, _vct<_vct<double>> coefficientGroup)
@@ -87,7 +84,7 @@ void Shelper::callSimpleFreqT()
 {
     _vct<double> temp = obtainStatisticalData(DataInput::opType::TYPE_STATISTIC);
 	if (temp.empty())
-		return;	// If the DataInput window was closed, it will return an empty vector and won't call ClassIntervalFreqT.
+		return;	// If the DataInput window was closed, it will return an empty vector and won't call SimpleFreqT.
 
 	SimpleFreqT *simpleTable = new SimpleFreqT(temp);
 	simpleTable->show();

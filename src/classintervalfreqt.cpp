@@ -92,6 +92,7 @@ void ClassIntervalFreqT::getClassMarks()
 
 void ClassIntervalFreqT::getSingleClassIntervalRange()
 {
+	// NOTE: This can probably be optimized greatly. Consider this algorithm a placeholder.
 	_vct<_oda>::const_iterator cntCI = m_allClassIntervals.begin();
 	for(; cntCI != m_allClassIntervals.end(); cntCI++)
 	{
@@ -510,13 +511,12 @@ void ClassIntervalFreqT::positionFormula(posType type)
 	 */
 
 	// NOTE: This are the same formulas used in a function above. Try merging them or something.
-	// FIXME: Math might be wrong.
 	int rawFreqMedian = m_absoluteFreq.at(static_cast<int>(m_absoluteFreq.size() / 2));
 	int accFreqMedianM1 = m_accAbsoluteFreq.at(static_cast<int>(m_accAbsoluteFreq.size() / 2) - 1);
 	_oda medianLimit = m_allClassIntervals.at(static_cast<int>(m_allClassIntervals.size() / 2));
 	int lowerLimit = medianLimit.at(0);
 
-	// FIXME: Reimplement algorithm.
+	// FIXME: Reimplement positions algorithm.
 	switch(type)
 	{
 	/*case posType::QUARTILE:
@@ -565,7 +565,7 @@ void ClassIntervalFreqT::positionFormula(posType type)
 	m_interquartileDeviation = m_interquartileRange / 2;
 }
 
-/* The parameter is int instead of posType due to connect() reasons. I'll try to fix it later. */
+/* The parameter is int instead of posType due to connect() reasons. */
 void ClassIntervalFreqT::printPosition(int type)
 {
 	QMessageBox *msgbx = new QMessageBox(this);
@@ -573,7 +573,7 @@ void ClassIntervalFreqT::printPosition(int type)
 
 	switch(type)
 	{
-	case (int)posType::QUARTILE:
+	case static_cast<int>(posType::QUARTILE):
 
 		for(int crn = 0; crn < 4; crn++)
 			message.append("Quartile #" + QString::number(crn + 1) + ": " +
@@ -584,7 +584,7 @@ void ClassIntervalFreqT::printPosition(int type)
 		msgbx->exec();
 		break;
 
-	case (int)posType::SEXTILE:
+	case static_cast<int>(posType::SEXTILE):
 		for(int crn = 0; crn < 6; crn++)
 			message.append("Sextile #" + QString::number(crn + 1) + ": " +
 						   QString::number((int)m_sextiles.at(crn)) + "\n");
@@ -594,7 +594,7 @@ void ClassIntervalFreqT::printPosition(int type)
 		msgbx->exec();
 		break;
 
-	case (int)posType::DECILE:
+	case static_cast<int>(posType::DECILE):
 		for(int crn = 0; crn < 10; crn++)
 			message.append("Decile #" + QString::number(crn + 1) + ": " +
 						   QString::number((int)m_deciles.at(crn)) + "\n");
@@ -604,7 +604,7 @@ void ClassIntervalFreqT::printPosition(int type)
 		msgbx->exec();
 		break;
 
-	case (int)posType::PERCENTILE:
+	case static_cast<int>(posType::PERCENTILE):
 		for(int crn = 0; crn < 20; crn++)
 		{
 	/*		message.append("Percentile #" + QString::number(crn + 1) + ": " +

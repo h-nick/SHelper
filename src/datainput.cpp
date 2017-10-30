@@ -101,14 +101,17 @@ DataInput::DataInput(opType type, QWidget *parent) :
 
 void DataInput::closeEvent(QCloseEvent *event)
 {
-	m_wasCanceled = true;
-	qDebug() << "DataInput closed flag set: True";
-	event->accept();
-}
+	qDebug() << "DataInput::m_dataIsSet = " << m_dataIsSet;
 
-bool DataInput::getFlagSet()
-{
-	return m_wasCanceled;
+	if(m_dataIsSet)
+		event->accept();
+	else
+	{
+		m_statisticalData.clear();
+		m_coefficientGroup.clear();
+		event->accept();
+		// Clears all stored data so the other functions in the stack don't get called.
+	}
 }
 
 DataInput::~DataInput()
@@ -130,7 +133,7 @@ void DataInput::linearProgrammingData(QWidget *table)
 {
 	QTableWidget *tableptr = static_cast<QTableWidget *>(table);
 
-	// TODO: This can probably be optimized.
+	// NOTE: This can probably be optimized.
 	for(int crnRow = 0; crnRow < tableptr->rowCount(); crnRow++)
 	{
 		/* Stores each row in a vector. Each vector is then stored in another vector.
@@ -205,6 +208,7 @@ void DataInput::statisticalData(QWidget *textEdit)
 
 	if (m_statisticalData.size() > 1) // As long as there are more than one element.
 	{
+		m_dataIsSet = true;
 		this->close();
 		delete textEdit;
 	}
