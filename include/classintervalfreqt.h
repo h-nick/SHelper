@@ -49,8 +49,6 @@ private:
 	int m_totalElements = 0;
 	int m_classInterval;
 
-	template<typename T>
-	void makeACMFreqTable(_vct<T> &mainFreq, _vct<T> &ACMFreq);
 	double getTotalRealAmplitude();
 	bool areThereIntegers();
 	void getClassIntervalRanges();
@@ -80,7 +78,8 @@ private:
 	std::array<double, 6> m_sextiles;
 	std::array<double, 10> m_deciles;
 	std::array<double, 100> m_percentiles;
-	double calculatePosition(int position, posType type);
+	double positionConstant(int position, posType type);
+	int positionCalculations(const int positionConst);
 
 	// Measures of dispersion:
 	double m_range;
@@ -100,7 +99,7 @@ private slots:
 	void showFreqPolygon();
 	void showHistogram();
 	void showOgive();
-	void positionFormula(posType type);
+	void positionTrends(posType type);
 	void printPosition(int type);
 };
 #endif // CLASSINTERVALFREQT_H
