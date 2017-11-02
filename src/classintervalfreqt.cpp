@@ -5,6 +5,7 @@
 #include <QMessageBox>
 #include <algorithm>
 #include <cmath>
+#include <functional>
 #include "include/classintervalfreqt.h"
 #include "include/accumulator.h"
 #include "include/classintervalfreqg.h"
@@ -151,11 +152,10 @@ void ClassIntervalFreqT::vectorialCalculations()
 
 	/* Calculate position trends */
 	positionTrends(posType::QUARTILE);
-	/* FIXME: This is causing a segfault. It works fine with Quartiles.
 	positionTrends(posType::SEXTILE);
 	positionTrends(posType::DECILE);
+	// TODO: Check if the generated percentiles are correct.
 	positionTrends(posType::PERCENTILE);
-	*/
 
 	/* Calculate measures of dispersion */
 	_vct<double> allDeviations = calculateAllDeviations();
@@ -510,8 +510,8 @@ int ClassIntervalFreqT::positionCalculations(const int positionConst)
 {
 	// NOTE: Placeholder algorithm.
 	_vct<int>::const_iterator frItr = m_accAbsoluteFreq.begin();
-	int lowerValue, higherValue;
-	bool usingRange;
+	int lowerValue = 0, higherValue = 0;
+	bool usingRange = true;
 
 	for(; frItr != m_accAbsoluteFreq.end(); frItr++)
 	{
@@ -519,6 +519,7 @@ int ClassIntervalFreqT::positionCalculations(const int positionConst)
 		// Then it determines the closer limit and chooses that one.
 		if(*frItr == positionConst)
 		{
+			// Since the value is found, there's no need to set a range.
 			usingRange = false;
 			break;
 		}
@@ -529,14 +530,13 @@ int ClassIntervalFreqT::positionCalculations(const int positionConst)
 		}
 
 		higherValue = *frItr;
-		usingRange = true;
 		break;
 	}
 
 	int selectedACMFreq = positionConst;
 	if(usingRange)
 	{
-		int lowerDif = positionConst - lowerValue;
+		int lowerDif = std::abs(positionConst - lowerValue);
 		int higherDif = std::abs(positionConst - higherValue);
 
 		higherDif > lowerDif ? selectedACMFreq = lowerValue : selectedACMFreq = higherValue;
@@ -544,12 +544,13 @@ int ClassIntervalFreqT::positionCalculations(const int positionConst)
 	}
 
 	frItr = m_accAbsoluteFreq.begin();
-	int freqPosition;
+	int freqPosition = 0;
 	for(; frItr != m_accAbsoluteFreq.end(); frItr++)
 	{
 		if(*frItr == selectedACMFreq)
 		{
 			freqPosition = std::distance(m_accAbsoluteFreq.cbegin(), frItr);
+			// This gets the index of the selectedACMFreq.
 			break;
 		}
 	}
@@ -559,28 +560,32 @@ int ClassIntervalFreqT::positionCalculations(const int positionConst)
 
 void ClassIntervalFreqT::positionTrends(posType type)
 {
-	// FIXME: Reimplement positions algorithm.
+	// Excuse to use a Lambda <3.
+	auto getIndexes = [this](int position, int freqPosition) -> double
+	{
+		_oda medianLimit = m_allClassIntervals.at(freqPosition);
+		int lowerLimit = medianLimit.at(0);
+		int rawFreqMedian = m_absoluteFreq.at(freqPosition);
+		int accFreqMedianM1 = 0;
+
+		/* NOTE: Check the math. If the selected Accumulated Frequency Median is the first one, then the one
+		* before is 0.
+		*/
+		if(freqPosition > 0)
+			accFreqMedianM1 = m_accAbsoluteFreq.at(freqPosition - 1);
+
+		return (static_cast<double>(position) - accFreqMedianM1) / rawFreqMedian * m_classInterval + lowerLimit;
+	};
 
 	switch(type)
 	{
 	case posType::QUARTILE:
 		for(int crn = 0; crn < 4; crn++)
 		{
-			// TODO: Move this to it's own function since it's repeating a lot.
 			const int position = positionConstant(crn, posType::QUARTILE);
 			int freqPosition = positionCalculations(position);
-
-			_oda medianLimit = m_allClassIntervals.at(freqPosition);
-			int lowerLimit = medianLimit.at(0);
-			int rawFreqMedian = m_absoluteFreq.at(freqPosition);
-			int accFreqMedianM1 = m_accAbsoluteFreq.at(freqPosition - 1);
-
-			// TODO: Change this to a single line.
-			double temp = position - accFreqMedianM1;
-			temp /= rawFreqMedian;
-			temp *= m_classInterval;
-			temp += lowerLimit;
-			m_quartiles.at(crn) = temp;
+			double quartile = getIndexes(position, freqPosition);
+			m_quartiles.at(crn) = quartile;
 		}
 		break;
 
@@ -589,17 +594,8 @@ void ClassIntervalFreqT::positionTrends(posType type)
 		{
 			const int position = positionConstant(crn, posType::SEXTILE);
 			int freqPosition = positionCalculations(position);
-
-			_oda medianLimit = m_allClassIntervals.at(freqPosition);
-			int lowerLimit = medianLimit.at(0);
-			int rawFreqMedian = m_absoluteFreq.at(freqPosition);
-			int accFreqMedianM1 = m_accAbsoluteFreq.at(freqPosition - 1);
-
-			double temp = position - accFreqMedianM1;
-			temp /= rawFreqMedian;
-			temp *= m_classInterval;
-			temp += lowerLimit;
-			m_sextiles.at(crn) = temp;
+			double sextile = getIndexes(position, freqPosition);
+			m_sextiles.at(crn) = sextile;
 		}
 		break;
 
@@ -608,17 +604,8 @@ void ClassIntervalFreqT::positionTrends(posType type)
 		{
 			const int position = positionConstant(crn, posType::DECILE);
 			int freqPosition = positionCalculations(position);
-
-			_oda medianLimit = m_allClassIntervals.at(freqPosition);
-			int lowerLimit = medianLimit.at(0);
-			int rawFreqMedian = m_absoluteFreq.at(freqPosition);
-			int accFreqMedianM1 = m_accAbsoluteFreq.at(freqPosition - 1);
-
-			double temp = position - accFreqMedianM1;
-			temp /= rawFreqMedian;
-			temp *= m_classInterval;
-			temp += lowerLimit;
-			m_deciles.at(crn) = temp;
+			double decile = getIndexes(position, freqPosition);
+			m_deciles.at(crn) = decile;
 		}
 		break;
 
@@ -627,17 +614,8 @@ void ClassIntervalFreqT::positionTrends(posType type)
 		{
 			const int position = positionConstant(crn, posType::PERCENTILE);
 			int freqPosition = positionCalculations(position);
-
-			_oda medianLimit = m_allClassIntervals.at(freqPosition);
-			int lowerLimit = medianLimit.at(0);
-			int rawFreqMedian = m_absoluteFreq.at(freqPosition);
-			int accFreqMedianM1 = m_accAbsoluteFreq.at(freqPosition - 1);
-
-			double temp = position - accFreqMedianM1;
-			temp /= rawFreqMedian;
-			temp *= m_classInterval;
-			temp += lowerLimit;
-			m_percentiles.at(crn) = temp;
+			double percentile = getIndexes(position, freqPosition);
+			m_percentiles.at(crn) = percentile;
 		}
 		break;
 	}
