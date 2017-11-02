@@ -13,14 +13,22 @@
         <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;SHelper &lt;/span&gt;&lt;br/&gt;&lt;span style=&quot; font-style:italic; text-decoration: underline;&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic; text-decoration: underline;&quot;&gt;ersión 0.1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Utilidad de soporte a los cálculos estadísticos orientados a la ingeniería.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/aboutdialog.ui" line="441"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Shelper &lt;/span&gt;&lt;br/&gt;&lt;span style=&quot; font-style:italic; text-decoration: underline;&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic; text-decoration: underline;&quot;&gt;ersion 0.1.2&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Statistical calculations helping utility oriented to engineering.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;SHelper &lt;/span&gt;&lt;br/&gt;&lt;span style=&quot; font-style:italic; text-decoration: underline;&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic; text-decoration: underline;&quot;&gt;ersión 0.1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Utilidad de soporte a los cálculos estadísticos orientados a la ingeniería.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt; {14p?} {600;?} {9p?} {0.1.2&lt;?} {9p?}</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;SHelper &lt;/span&gt;&lt;br/&gt;&lt;span style=&quot; font-style:italic; text-decoration: underline;&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic; text-decoration: underline;&quot;&gt;ersión 0.1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Utilidad de soporte a los cálculos estadísticos orientados a la ingeniería.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt; {14p?} {600;?} {9p?} {0.1.2&lt;?} {9p?}</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SHelper has been developed as a tool to simplify statistical calculations for engineering purposes.&lt;br/&gt;&lt;br/&gt;This is an open-source project made in C++ and QT5, available at:&lt;br/&gt;&lt;a href=&quot;https://github.com/nhd15c/SHelper&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/nhd15c/SHelper&lt;br/&gt;&lt;br/&gt;&lt;/span&gt;&lt;/a&gt;Developed by:&lt;br/&gt;Nicolás H.&lt;br/&gt;&lt;br/&gt;(C) All rights reserved | 2017.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SHelper ha sido desarrollado como una herramienta para simplificar los cálculos estadísticos&lt;br/&gt;para propósitos de ingeniería.&lt;br/&gt;&lt;br/&gt;Este es un proyecto de código-abierto desarrollado en C++ y QT5, disponible en:&lt;br/&gt;&lt;a href=&quot;https://github.com/nhd15c/SHelper&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/nhd15c/SHelper&lt;br/&gt;&lt;br/&gt;&lt;/span&gt;&lt;/a&gt;Desarrollado por:&lt;br/&gt;Nicolás H.&lt;br/&gt;&lt;br/&gt;(C) Todos los derechos reservados | 2017.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../ui/aboutdialog.ui" line="441"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Shelper &lt;/span&gt;&lt;br/&gt;&lt;span style=&quot; font-style:italic; text-decoration: underline;&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic; text-decoration: underline;&quot;&gt;ersion 0.0.1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Statistical calculations and linear programming utility oriented to engineering problems.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Shelper &lt;/span&gt;&lt;br/&gt;&lt;span style=&quot; font-style:italic; text-decoration: underline;&quot;&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic; text-decoration: underline;&quot;&gt;Version 0.0.1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Utilidad orientada a problemas de ingeniería de cálculos estadísticos y programación lineal.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../ui/aboutdialog.ui" line="461"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SHelper has been developed as a tool to simplify statistical calculations for engineering purposes.&lt;br/&gt;&lt;br/&gt;This is an open-source project made in C++ and QT5, available at:&lt;br/&gt;&lt;a href=&quot;https://github.com/nhd15c/SHelper&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/nhd15c/SHelper&lt;br/&gt;&lt;br/&gt;&lt;/span&gt;&lt;/a&gt;Developed by:&lt;br/&gt;Nicolás H.&lt;br/&gt;&lt;br/&gt;(C) All rights reserved | 2017.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SHelper ha sido desarrollado como una herramienta para simplificar los cálculos estadísticos&lt;br/&gt;para propósitos de ingeniería.&lt;br/&gt;&lt;br/&gt;Este es un proyecto de código-abierto desarrollado en C++ y QT5, disponible en:&lt;br/&gt;&lt;a href=&quot;https://github.com/nhd15c/SHelper&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/nhd15c/SHelper&lt;br/&gt;&lt;br/&gt;&lt;/span&gt;&lt;/a&gt;Desarrollado por:&lt;br/&gt;Nicolás H.&lt;br/&gt;&lt;br/&gt;(C) Todos los derechos reservados | 2017.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SHelper has been developed as a tool to simplify statistical calculations and linear programming problem related to engineering.&lt;br/&gt;&lt;br/&gt;This is an open-source project released under the GPL 3.0 license.&lt;p&gt;It was created using C++17 and QT5. The source code is available at:&lt;br/&gt;&lt;a href=&quot;https://github.com/nhd15c/SHelper&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/nhd15c/SHelper&lt;br/&gt;&lt;br/&gt;&lt;/span&gt;&lt;/a&gt;Developed by:&lt;br/&gt;Nicolás H.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shelper ha sido desarrollada como una herramienta para simplificar cálculos estadísticos y problemas de programación&lt;br/&gt;lineal orientados al área de ingeniería.&lt;br/&gt;&lt;br/&gt;Este es un proyecto de código libre sujeto a la licencia GPL 3.0.&lt;p&gt;Ha sido creado usando C++17 y QT5. El código fuente está disponible en:&lt;br/&gt;&lt;a href=&quot;https://github.com/nhd15c/SHelper&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/nhd15c/SHelper&lt;br/&gt;&lt;br/&gt;&lt;/span&gt;&lt;/a&gt;Desarrollado por:&lt;br/&gt;Nicolás H.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../ui/aboutdialog.ui" line="474"/>
@@ -70,77 +78,78 @@
     <message>
         <location filename="../ui/classintervalfreqt.ui" line="54"/>
         <source>Show Freq. Polygon</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar polígono de
+frecuencia</translation>
     </message>
     <message>
         <location filename="../ui/classintervalfreqt.ui" line="64"/>
         <source>Show Histogram</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar histograma</translation>
     </message>
     <message>
         <location filename="../ui/classintervalfreqt.ui" line="71"/>
         <source>Show Ogive</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar ojiva</translation>
     </message>
     <message>
         <location filename="../ui/classintervalfreqt.ui" line="103"/>
         <source>CI</source>
-        <translation type="unfinished"></translation>
+        <translation>IC</translation>
     </message>
     <message>
         <location filename="../ui/classintervalfreqt.ui" line="108"/>
         <source>Xi</source>
-        <translation type="unfinished"></translation>
+        <translation>Xi</translation>
     </message>
     <message>
         <location filename="../ui/classintervalfreqt.ui" line="113"/>
         <source>Fi</source>
-        <translation type="unfinished"></translation>
+        <translation>Fi</translation>
     </message>
     <message>
         <location filename="../ui/classintervalfreqt.ui" line="118"/>
         <source>Fi (ACM)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/classintervalfreqt.ui" line="123"/>
         <source>Hi</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/classintervalfreqt.ui" line="128"/>
         <source>Hi (ACM)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/classintervalfreqt.ui" line="133"/>
         <source>%</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/classintervalfreqt.ui" line="138"/>
         <source>% (ACM)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/classintervalfreqt.ui" line="167"/>
         <source>Show Quartiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar cuartiles</translation>
     </message>
     <message>
         <location filename="../ui/classintervalfreqt.ui" line="177"/>
         <source>Show Sextiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar sextiles</translation>
     </message>
     <message>
         <location filename="../ui/classintervalfreqt.ui" line="187"/>
         <source>Show Deciles</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar deciles</translation>
     </message>
     <message>
         <location filename="../ui/classintervalfreqt.ui" line="197"/>
         <source>Show Percentiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar percentiles</translation>
     </message>
 </context>
 <context>
@@ -153,12 +162,12 @@
     <message>
         <location filename="../ui/datainput.ui" line="47"/>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../ui/datainput.ui" line="54"/>
         <source>Proceed</source>
-        <translation type="unfinished"></translation>
+        <translation>Proceder</translation>
     </message>
 </context>
 <context>
@@ -175,7 +184,7 @@
 <context>
     <name>LPGraphicalM</name>
     <message>
-        <location filename="../ui/lpgraphicalm.ui" line="13"/>
+        <location filename="../ui/lpgraphicalm.ui" line="14"/>
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
@@ -188,24 +197,24 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/shelper.ui" line="80"/>
+        <location filename="../ui/shelper.ui" line="74"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Generates a Simple Frequency Table based on a number of variables. The Simple Frequency Table correlates the variables with the number of repetitions for each one. This option also generates a bar chart.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Genera una Tabla de Frecuencia Simple basada en un número de variables. La Tabla de Frecuencia Simple correlaciona las variables con el número de repeticiones de cada una. Esta opción además genera un gráfico de barras.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/shelper.ui" line="83"/>
+        <location filename="../ui/shelper.ui" line="77"/>
         <source>Simple Freq.
 Table</source>
         <translation>Tabla de Frecuencia
 Simple</translation>
     </message>
     <message>
-        <location filename="../ui/shelper.ui" line="126"/>
+        <location filename="../ui/shelper.ui" line="107"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;STATISTICAL CALCULATIONS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;CÁLCULOS ESTADÍSTICOS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/shelper.ui" line="133"/>
+        <location filename="../ui/shelper.ui" line="21"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;LINEAR PROGRAMMING CALCULATIONS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;CÁLCULOS DE PROGRAMACIÓN LINEAL&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -218,57 +227,57 @@ Simple</translation>
         <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Cálculos Estadísticos&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html</translation>
     </message>
     <message>
-        <location filename="../ui/shelper.ui" line="35"/>
+        <location filename="../ui/shelper.ui" line="42"/>
         <source>Graphical
 Method</source>
         <translation>Método
 Gráfico</translation>
     </message>
     <message>
-        <location filename="../ui/shelper.ui" line="100"/>
+        <location filename="../ui/shelper.ui" line="94"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Generates a Class Interval Frequency Table based on a number of variables. This creates various marks (categories) based on the variable values inserted and correlates them with the number of repetitions for each mark. This option allows the generation of frequency polygons (Both absolute and accumulated) and histograms for the data. Also allows to measure central trends, position trends, and dispersion.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Genera una Tabla de Frecuencia de Intérvalos de Clases basada en un número de variables. Esto crea varias marcas (categorías) basadas en el valor de las variables ingresadas y las correlaciona con el número de repeticiones para cada marca. Esta opción permite la generación de polígonos de frecuencia (Tanto absoluta como acumulada) e histogramas para los datos. Además permite la medición de tendencias centrales, de posición y de dispersión.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/shelper.ui" line="103"/>
+        <location filename="../ui/shelper.ui" line="97"/>
         <source>Class Interval
 Freq. Table</source>
         <translation>Tabla de Frecuencia 
 por Int. de Clase</translation>
     </message>
     <message>
-        <location filename="../ui/shelper.ui" line="49"/>
+        <location filename="../ui/shelper.ui" line="56"/>
         <source>Simplex
 Method</source>
-        <translation type="unfinished">Método
+        <translation>Método
 Simplex</translation>
     </message>
     <message>
-        <location filename="../ui/shelper.ui" line="163"/>
+        <location filename="../ui/shelper.ui" line="124"/>
         <source>Options</source>
         <translation>Opciones</translation>
     </message>
     <message>
-        <location filename="../ui/shelper.ui" line="172"/>
+        <location filename="../ui/shelper.ui" line="133"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Lenguaje</translation>
     </message>
     <message>
         <source>Language (Not Implemented)</source>
         <translation type="vanished">Lenguaje</translation>
     </message>
     <message>
-        <location filename="../ui/shelper.ui" line="177"/>
+        <location filename="../ui/shelper.ui" line="138"/>
         <source>About</source>
         <translation>Acerca de</translation>
     </message>
     <message>
-        <location filename="../src/shelper.cpp" line="57"/>
+        <location filename="../src/shelper.cpp" line="58"/>
         <source>Close Shelper?</source>
         <translation>¿Cerrar SHelper?</translation>
     </message>
     <message>
-        <location filename="../src/shelper.cpp" line="58"/>
+        <location filename="../src/shelper.cpp" line="59"/>
         <source>If you close Shelper, all open tables will be closed. Are you sure you want to continue?</source>
         <translation>Si cierra SHelper, todas las tablas abiertas serán cerradas. ¿Está seguro de que desea continuar?</translation>
     </message>
@@ -304,37 +313,37 @@ Simplex</translation>
     <message>
         <location filename="../ui/simplefreqt.ui" line="60"/>
         <source>Variable</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/simplefreqt.ui" line="65"/>
         <source>Fi</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/simplefreqt.ui" line="70"/>
         <source>Hi</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/simplefreqt.ui" line="75"/>
         <source>Fi (ACM)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/simplefreqt.ui" line="80"/>
         <source>Hi (ACM)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/simplefreqt.ui" line="85"/>
         <source>%</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/simplefreqt.ui" line="90"/>
         <source>% (ACM)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Absolute Freq (fi)</source>
