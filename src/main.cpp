@@ -23,8 +23,12 @@
  *simplexdatainsert	>>> Insertion class for linear programming data solved by simplex method.
  */
 
-void initConfig(QSettings settingsFile)
+void initConfig(const bool &newConfig)
 {
+	if(newConfig)
+		configuration->setValue("locale", "EN");
+
+	qDebug() << configuration->value("locale");
 }
 
 int main(int argc, char *argv[])
@@ -32,20 +36,31 @@ int main(int argc, char *argv[])
 	QApplication a(argc, argv); // QApplication must be initialized before any widget.
 	std::ofstream configFile;
 	std::string path = QCoreApplication::applicationDirPath().toStdString() + "\\config.ini";
+	bool newConfig = false;
 
 	if(!std::experimental::filesystem::exists(std::experimental::filesystem::path(path)))
+	{
 		QMessageBox(QMessageBox::Information, QTranslator::tr("New configuration file"),
 			QTranslator::tr("A configuration file was not found. A new one will be created.")).exec();
-
+		newConfig = true;
+	}
+	
 	// Creates the configuration file.
 	configFile.open(path, std::ios::out);
 
 	if(!configFile.is_open())
+	{
 		QMessageBox(QMessageBox::Warning, QTranslator::tr("Can not create file"),
 			QTranslator::tr("The configuration file couldn't be created or opened. Check the permissions and try again.")
 		).exec();
+	}
+	else
+	{
+		configuration = new QSettings(QString::fromStdString(path), QSettings::IniFormat);
+		initConfig(newConfig);
+	}
 
-
+	configFile.close();
 	Shelper w;
 	w.show();
 	return a.exec();
