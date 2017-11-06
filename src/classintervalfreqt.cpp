@@ -173,7 +173,7 @@ void ClassIntervalFreqT::vectorialCalculations()
 
 void ClassIntervalFreqT::buildTable()
 {
-	// FIXME: This is showing lines with absolute frequency 0.
+	// NOTE: This is showing lines with absolute frequency 0.
 	_vct<double>::const_iterator dItr; // Iterator for double-type vectors.
 	_vct<int>::const_iterator nItr;	// Iterator for int-type vectors.
 	_vct<_oda>::const_iterator ciItr = m_allClassIntervals.begin();
@@ -327,49 +327,6 @@ void ClassIntervalFreqT::calculateAverages()
 	}
 	m_arithmeticAverage = sumForAAvg / m_totalElements;
 	m_geometricAverage = pow(10, (sumForGAvg / m_totalElements));
-}
-
-void ClassIntervalFreqT::calculateApproximateMedian()
-{
-	int rawFreqMedian, accFreqMedianM1, lowerLimit;
-	_oda medianLimit;
-	if(m_absoluteFreq.size() % 2 != 0) // If we have an odd amount of elements.
-	{
-		rawFreqMedian = m_absoluteFreq.at(std::floor(m_absoluteFreq.size() / 2));
-		accFreqMedianM1 = m_accAbsoluteFreq.at(std::floor(m_accAbsoluteFreq.size() / 2) - 1);
-		medianLimit = m_allClassIntervals.at(std::floor(m_allClassIntervals.size() / 2));
-		lowerLimit = medianLimit.at(0);
-	}
-	else // If we have an even amount of elements.
-	{
-		rawFreqMedian = (m_absoluteFreq.at(m_absoluteFreq.size() / 2) +
-						 m_absoluteFreq.at((m_absoluteFreq.size() / 2)- 1)) / 2;
-		accFreqMedianM1 = (m_accAbsoluteFreq.at(m_accAbsoluteFreq.size() / 2) +
-						   m_accAbsoluteFreq.at((m_accAbsoluteFreq.size() / 2) - 1)) / 2;
-		medianLimit = m_allClassIntervals.at(m_allClassIntervals.size() / 2);
-		_oda medianLimitM1 = m_allClassIntervals.at((m_allClassIntervals.size() / 2) - 1);
-		lowerLimit = (medianLimit.at(0) + medianLimitM1.at(0)) / 2;
-
-		/* NOTE: Since the amount of grouped elements is even, I'm calculating everything based
-		 * in the arithmetic average values of the grouped data. I don't know if this statistically
-		 * correct.
-		 */
-	}
-	m_median = ((((m_totalElements / 2) - accFreqMedianM1) / rawFreqMedian) * m_classInterval) + lowerLimit;
-}
-
-void ClassIntervalFreqT::calculateApproximateMode()
-{
-	// Gets the first biggest element in the absoluteFreq. This should be the most repeated element.
-	// FIXME: This will crash if the modal position (FreqItr) is the first or last element of the vector.
-	_vct<int>::const_iterator FreqItr = std::max_element(m_absoluteFreq.begin(), m_absoluteFreq.end());
-	int modalPos = FreqItr - m_absoluteFreq.begin(); // Gets the index where the iterator is located.
-	/* This is done because the index where FreqItr finds the first biggest element in absoluteFreq, is the
-	 * same index where the lowerLimit we're looking for is located.
-	 */
-	_oda lowerLimit = m_allClassIntervals.at(modalPos);
-	double tempVal = *FreqItr - *(FreqItr-1);
-	m_mode = ((tempVal / (tempVal + (*FreqItr - *(FreqItr+1)))) * m_classInterval) + lowerLimit.at(0);
 }
 
 void ClassIntervalFreqT::calculateTrueMedian()
@@ -660,8 +617,8 @@ void ClassIntervalFreqT::printPosition(int type)
 		msgbx->exec();
 		break;
 
-	case static_cast<int>(posType::PERCENTILE):
-		// TODO: Implement this printing algorithm.
+	case static_cast<int>(posType::PERCENTILE) :
+		// TODO: Implement this.
 		break;
 
 	default:
