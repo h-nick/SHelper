@@ -18,6 +18,7 @@ DataInput::DataInput(opType type, QWidget *parent) :
 	ui(new Ui::DataInput)
 {
 	ui->setupUi(this);
+	ui->retranslateUi(this);
 	QSignalMapper *map = new QSignalMapper(this);
 	connect(ui->buttonCancel, SIGNAL(pressed()), this, SLOT(close()));
 
@@ -29,9 +30,9 @@ DataInput::DataInput(opType type, QWidget *parent) :
 	{
 			connect(map, SIGNAL(mapped(QWidget*)), this, SLOT(statisticalData(QWidget*)));
 			this->setWindowTitle("Inert statistical data");
-			info->setText("Insert all the numeric values for the table.\n"
+			info->setText(this->tr("Insert all the numeric values for the table.\n"
 						  "Each value must be in a line by itself.\n"
-						  "Use a dot (.) as the decimal denominator.\n");
+						  "Use a dot (.) as the decimal denominator.\n"));
 			QTextEdit *textEdit = new QTextEdit(this);
 
 			ui->mainLayout->addWidget(info, 0, 0, Qt::AlignCenter);

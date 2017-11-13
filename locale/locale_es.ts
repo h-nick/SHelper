@@ -157,7 +157,7 @@ frecuencia</translation>
     <message>
         <location filename="../ui/datainput.ui" line="20"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserte los datos</translation>
     </message>
     <message>
         <location filename="../ui/datainput.ui" line="47"/>

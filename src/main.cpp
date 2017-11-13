@@ -1,13 +1,9 @@
+#include "include\settingsconfig.h"
 #include "include/shelper.h"
-#include "include/main.h"
 #include <QApplication>
 #include <QTranslator>
-#include <QDebug>
-#include <qdir.h>
-#include <qstring.h>
-#include <fstream>
-#include <experimental/filesystem>
-#include <qmessagebox.h>
+#include <QDir>
+#include <experimental\filesystem>
 
 
 /*
@@ -18,49 +14,29 @@
  *classintervalfreqt>>> Calculations and table generation for Class-Interval statistical calculations.
  *datainput			>>> Insertion class for statistical data and linear programming data.
  *lpgraphicalm		>>> Linear programming solver and graph generator.
+ *SettingsConfig	>>> Class to create and manage settings file.
  *shelper			>>> MainWindow.
  *simplefreqt		>>> Calculations and table generation for Simple Frequency statistical calculations.
  *simplexdatainsert	>>> Insertion class for linear programming data solved by simplex method.
  */
 
-void initConfig(const bool &newConfig)
+void loadLocale(SettingsConfig *configuration)
 {
-	if(newConfig)
-		configuration->setValue("locale", "EN");
+	QDir masterPath = QCoreApplication::applicationDirPath();
+	masterPath.cdUp();
+	masterPath.cd(masterPath.absolutePath() + "/locale");
 
-	qDebug() << configuration->value("locale");
+	QTranslator *locale = new QTranslator();
+	locale->load(QString(configuration->getLocale()), masterPath.absolutePath());
+
+	qApp->installTranslator(locale);
 }
 
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv); // QApplication must be initialized before any widget.
-	std::ofstream configFile;
-	std::string path = QCoreApplication::applicationDirPath().toStdString() + "\\config.ini";
-	bool newConfig = false;
-
-	if(!std::experimental::filesystem::exists(std::experimental::filesystem::path(path)))
-	{
-		QMessageBox(QMessageBox::Information, QTranslator::tr("New configuration file"),
-			QTranslator::tr("A configuration file was not found. A new one will be created.")).exec();
-		newConfig = true;
-	}
-	
-	// Creates the configuration file.
-	configFile.open(path, std::ios::out);
-
-	if(!configFile.is_open())
-	{
-		QMessageBox(QMessageBox::Warning, QTranslator::tr("Can not create file"),
-			QTranslator::tr("The configuration file couldn't be created or opened. Check the permissions and try again.")
-		).exec();
-	}
-	else
-	{
-		configuration = new QSettings(QString::fromStdString(path), QSettings::IniFormat);
-		initConfig(newConfig);
-	}
-
-	configFile.close();
+	SettingsConfig *configuration = new SettingsConfig();
+	loadLocale(configuration);
 	Shelper w;
 	w.show();
 	return a.exec();

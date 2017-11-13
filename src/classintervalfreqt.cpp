@@ -17,6 +17,8 @@ ClassIntervalFreqT::ClassIntervalFreqT(_vct<double> &numeric_data, QWidget *pare
 	ui(new Ui::ClassIntervalFreqT)
 {
 	ui->setupUi(this);
+	ui->retranslateUi(this);
+
 	vectorialCalculations();
 
 	connect(ui->buttonFreqPol, SIGNAL(pressed()), this, SLOT(showFreqPolygon()));

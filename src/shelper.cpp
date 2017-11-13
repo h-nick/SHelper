@@ -2,18 +2,20 @@
 #include <QMessageBox>
 #include <QTranslator>
 #include <QDir>
-#include "include/shelper.h"
 #include "ui_shelper.h"
+#include "include/shelper.h"
 #include "include/simplefreqt.h"
 #include "include/classintervalfreqt.h"
 #include "include/aboutdialog.h"
 #include "include/lpgraphicalm.h"
+#include "include/settingsconfig.h"
 
 Shelper::Shelper(QWidget *parent) :
 	QMainWindow(parent),
 	ui(new Ui::Shelper)
 {
 	ui->setupUi(this);
+	ui->retranslateUi(this);
 
 	connect(ui->button_simplefreq, SIGNAL(pressed()), this, SLOT(callSimpleFreqT()));
 	connect(ui->button_classintervalfreq, SIGNAL(pressed()), this, SLOT(callClassIntervalFreqT()));
@@ -30,21 +32,7 @@ Shelper::~Shelper()
 
 void Shelper::changeLang()
 {
-	// TODO: Implement this fully. I think this must be moved to main() before QMainWindow constructor.
-	QDir masterPath(QApplication::applicationDirPath());
-	masterPath.cdUp();
-	masterPath.cd(masterPath.absolutePath() + "/locale");
 
-	QTranslator locale;
-
-	if(locale.load("locale_es", masterPath.absolutePath()))
-		qDebug() << "successful";
-	else
-		qDebug() << "error";
-
-	qApp->installTranslator(&locale);
-
-	ui->retranslateUi(this);
 }
 
 void Shelper::showAbout()
