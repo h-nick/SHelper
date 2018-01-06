@@ -26,8 +26,12 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Shelper &lt;/span&gt;&lt;br/&gt;&lt;span style=&quot; font-style:italic; text-decoration: underline;&quot;&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic; text-decoration: underline;&quot;&gt;Version 0.0.1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Utilidad orientada a problemas de ingeniería de cálculos estadísticos y programación lineal.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/aboutdialog.ui" line="461"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SHelper has been developed as a tool to simplify statistical calculations and linear programming problem related to engineering.&lt;br/&gt;&lt;br/&gt;This is an open-source project released under the GPL 3.0 license.&lt;p&gt;It was created using C++17 and QT5. The source code is available at:&lt;br/&gt;&lt;a href=&quot;https://github.com/nhd15c/SHelper&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/nhd15c/SHelper&lt;br/&gt;&lt;br/&gt;&lt;/span&gt;&lt;/a&gt;Developed by:&lt;br/&gt;Nicolás H.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shelper ha sido desarrollada como una herramienta para simplificar cálculos estadísticos y problemas de programación&lt;br/&gt;lineal orientados al área de ingeniería.&lt;br/&gt;&lt;br/&gt;Este es un proyecto de código libre sujeto a la licencia GPL 3.0.&lt;p&gt;Ha sido creado usando C++17 y QT5. El código fuente está disponible en:&lt;br/&gt;&lt;a href=&quot;https://github.com/nhd15c/SHelper&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/nhd15c/SHelper&lt;br/&gt;&lt;br/&gt;&lt;/span&gt;&lt;/a&gt;Desarrollado por:&lt;br/&gt;Nicolás H.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../ui/aboutdialog.ui" line="461"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SHelper has been developed as an utility to simplify statistical calculations and linear programming problems&lt;br/&gt; related to engineering.&lt;br/&gt;&lt;br/&gt;This is an open-source project released under the GPL 3.0 license.&lt;p&gt;It was created using C++17 and QT5. The source code is available at:&lt;br/&gt;&lt;a href=&quot;https://github.com/nhd15c/SHelper&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/nhd15c/SHelper&lt;br/&gt;&lt;br/&gt;&lt;/span&gt;&lt;/a&gt;Developed by:&lt;br/&gt;Nicolás H.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shelper ha sido desarrollada como una herramienta para simplificar cálculos estadísticos y problemas de programación&lt;br/&gt;lineal orientados al área de ingeniería.&lt;br/&gt;&lt;br/&gt;Este es un proyecto de código libre sujeto a la licencia GPL 3.0.&lt;p&gt;Ha sido creado usando C++17 y QT5. El código fuente está disponible en:&lt;br/&gt;&lt;a href=&quot;https://github.com/nhd15c/SHelper&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/nhd15c/SHelper&lt;br/&gt;&lt;br/&gt;&lt;/span&gt;&lt;/a&gt;Desarrollado por:&lt;br/&gt;Nicolás H.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -56,24 +60,24 @@
     <name>BarChart</name>
     <message>
         <location filename="../ui/barchart.ui" line="14"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <source>Chart</source>
+        <translation>Gráfico</translation>
     </message>
 </context>
 <context>
     <name>ClassIntervalFreqG</name>
     <message>
         <location filename="../ui/classintervalfreqg.ui" line="14"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <source>Chart</source>
+        <translation>Gráfico</translation>
     </message>
 </context>
 <context>
     <name>ClassIntervalFreqT</name>
     <message>
         <location filename="../ui/classintervalfreqt.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
+        <source>Class Interval Frequency Table</source>
+        <translation>Tabla de Frecuencia de Intérvalos de Clase</translation>
     </message>
     <message>
         <location filename="../ui/classintervalfreqt.ui" line="54"/>
@@ -147,17 +151,105 @@ frecuencia</translation>
         <translation>Mostrar deciles</translation>
     </message>
     <message>
-        <location filename="../ui/classintervalfreqt.ui" line="197"/>
         <source>Show Percentiles</source>
-        <translation>Mostrar percentiles</translation>
+        <translation type="vanished">Mostrar percentiles</translation>
+    </message>
+    <message>
+        <location filename="../src/classintervalfreqt.cpp" line="295"/>
+        <source>&lt;b&gt;Central tendencies:&lt;/b&gt;&lt;br&gt;Arithmetic average: </source>
+        <translation>&lt;b&gt;Tendencias centrales:&lt;/b&gt;&lt;br&gt;Promedio aritmético: </translation>
+    </message>
+    <message>
+        <location filename="../src/classintervalfreqt.cpp" line="297"/>
+        <source>Geometric average: </source>
+        <translation>Promedio geométrico: </translation>
+    </message>
+    <message>
+        <location filename="../src/classintervalfreqt.cpp" line="298"/>
+        <source>Median: </source>
+        <translation>Media: </translation>
+    </message>
+    <message>
+        <location filename="../src/classintervalfreqt.cpp" line="299"/>
+        <source>Mode: </source>
+        <translation>Moda: </translation>
+    </message>
+    <message>
+        <location filename="../src/classintervalfreqt.cpp" line="306"/>
+        <source>&lt;b&gt;Measures of disperion:&lt;/b&gt;&lt;br&gt;Range: </source>
+        <translation>&lt;b&gt;Medidas de dispersión&lt;/b&gt;&lt;br&gt;Rango: </translation>
+    </message>
+    <message>
+        <location filename="../src/classintervalfreqt.cpp" line="308"/>
+        <source>Standard deviation: </source>
+        <translation>Desviación estándar: </translation>
+    </message>
+    <message>
+        <location filename="../src/classintervalfreqt.cpp" line="309"/>
+        <source>Variance: </source>
+        <translation>Varianza: </translation>
+    </message>
+    <message>
+        <location filename="../src/classintervalfreqt.cpp" line="310"/>
+        <source>Typical deviation: </source>
+        <translation>Desviación típica: </translation>
+    </message>
+    <message>
+        <location filename="../src/classintervalfreqt.cpp" line="311"/>
+        <source>Cft. of variation: </source>
+        <translation>Cft. de variación: </translation>
+    </message>
+    <message>
+        <location filename="../src/classintervalfreqt.cpp" line="312"/>
+        <source>Interquartile range: </source>
+        <translation>Rango de cuartil: </translation>
+    </message>
+    <message>
+        <location filename="../src/classintervalfreqt.cpp" line="313"/>
+        <source>Interqrt. deviation: </source>
+        <translation>Desviación Intercrt.: </translation>
+    </message>
+    <message>
+        <location filename="../src/classintervalfreqt.cpp" line="314"/>
+        <source>Pearson Cft.: </source>
+        <translation>Cft. Pearson: </translation>
+    </message>
+    <message>
+        <location filename="../src/classintervalfreqt.cpp" line="315"/>
+        <source>Bowley Cft.: </source>
+        <translation>Cft. Bowley: </translation>
+    </message>
+    <message>
+        <location filename="../src/classintervalfreqt.cpp" line="316"/>
+        <source>Kurtosis Cft.: </source>
+        <translation>Cft. Kurtosis: </translation>
+    </message>
+    <message>
+        <location filename="../src/classintervalfreqt.cpp" line="434"/>
+        <source>Platykurtic</source>
+        <translation>Platicúrtico</translation>
+    </message>
+    <message>
+        <location filename="../src/classintervalfreqt.cpp" line="436"/>
+        <source>Mesokurtic</source>
+        <translation>Mesocúrtico</translation>
+    </message>
+    <message>
+        <location filename="../src/classintervalfreqt.cpp" line="438"/>
+        <source>Leptokurtic</source>
+        <translation>Leptocúrtico</translation>
     </message>
 </context>
 <context>
     <name>DataInput</name>
     <message>
-        <location filename="../ui/datainput.ui" line="20"/>
         <source>Dialog</source>
-        <translation>Inserte los datos</translation>
+        <translation type="vanished">Inserte los datos</translation>
+    </message>
+    <message>
+        <location filename="../ui/datainput.ui" line="20"/>
+        <source>Data Insertion Module</source>
+        <translation>Módulo de inserción de datos: </translation>
     </message>
     <message>
         <location filename="../ui/datainput.ui" line="47"/>
@@ -168,6 +260,14 @@ frecuencia</translation>
         <location filename="../ui/datainput.ui" line="54"/>
         <source>Proceed</source>
         <translation>Proceder</translation>
+    </message>
+    <message>
+        <location filename="../src/datainput.cpp" line="33"/>
+        <source>Insert all the numeric values for the table.
+Each value must be in a line by itself.
+Use a dot (.) as the decimal denominator.
+</source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -186,7 +286,7 @@ frecuencia</translation>
     <message>
         <location filename="../ui/lpgraphicalm.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserte los datos</translation>
     </message>
 </context>
 <context>
@@ -272,12 +372,12 @@ Simplex</translation>
         <translation>Acerca de</translation>
     </message>
     <message>
-        <location filename="../src/shelper.cpp" line="58"/>
+        <location filename="../src/shelper.cpp" line="42"/>
         <source>Close Shelper?</source>
         <translation>¿Cerrar SHelper?</translation>
     </message>
     <message>
-        <location filename="../src/shelper.cpp" line="59"/>
+        <location filename="../src/shelper.cpp" line="43"/>
         <source>If you close Shelper, all open tables will be closed. Are you sure you want to continue?</source>
         <translation>Si cierra SHelper, todas las tablas abiertas serán cerradas. ¿Está seguro de que desea continuar?</translation>
     </message>
@@ -375,7 +475,7 @@ Simplex</translation>
     <message>
         <location filename="../ui/simplexdatainsert.ui" line="13"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserte los datos</translation>
     </message>
 </context>
 </TS>

@@ -29,7 +29,6 @@ DataInput::DataInput(opType type, QWidget *parent) :
 	if(type == opType::TYPE_STATISTIC) // If the data's going to be used for statistical calculations.
 	{
 			connect(map, SIGNAL(mapped(QWidget*)), this, SLOT(statisticalData(QWidget*)));
-			this->setWindowTitle("Inert statistical data");
 			info->setText(this->tr("Insert all the numeric values for the table.\n"
 						  "Each value must be in a line by itself.\n"
 						  "Use a dot (.) as the decimal denominator.\n"));
@@ -41,9 +40,9 @@ DataInput::DataInput(opType type, QWidget *parent) :
 			connect(ui->buttonProceed, SIGNAL(pressed()), map, SLOT(map()));
 			map->setMapping(ui->buttonProceed, textEdit);
 	}
-	else // If the data's going to be used for linear programming calculations.
+	/*else // If the data's going to be used for linear programming calculations.
 	{
-		/* Generates the formLayout elements to determine the size of the problem */
+		/* Generates the formLayout elements to determine the size of the problem
 		QSpinBox *numOfVars = new QSpinBox(this);
 		QSpinBox *numOfRest = new QSpinBox(this);
 		QComboBox *objective = new QComboBox(this);
@@ -72,7 +71,7 @@ DataInput::DataInput(opType type, QWidget *parent) :
 		/* Lambda to generate the table and calls prepareTable(QWidget *).
 		 * A QMetaObject::Connection pointer is used so it can be disconnected later inside the
 		 * Lambda (Gets the pointer via copy).
-		 */
+		 *
 		QMetaObject::Connection * buttonConn = new QMetaObject::Connection;
 		*buttonConn = connect(ui->buttonProceed, &QPushButton::pressed, [=, this]()
 				{
@@ -97,7 +96,7 @@ DataInput::DataInput(opType type, QWidget *parent) :
 					// Prepares the table to accept the data.
 					prepareTable(table);
 				});
-	}
+	}*/
 }
 
 void DataInput::closeEvent(QCloseEvent *event)
@@ -124,7 +123,7 @@ std::vector<double> DataInput::getStatisticalData()
 {
 	return m_statisticalData;
 }
-
+/*
 std::vector<std::vector<double>> DataInput::getLinearProgrammingData()
 {
 	return m_coefficientGroup;
@@ -139,7 +138,7 @@ void DataInput::linearProgrammingData(QWidget *table)
 	{
 		/* Stores each row in a vector. Each vector is then stored in another vector.
 		 * Vector 0 corresponds to the Object Function.
-		 */
+		 *
 		std::vector<double> variableGroup;
 		for(int crnCol = 0; crnCol < tableptr->columnCount()-2; crnCol++)
 			variableGroup.push_back(tableptr->item(crnRow, crnCol)->text().toDouble());
@@ -193,7 +192,7 @@ void DataInput::prepareTable(QWidget *table)
 	temp->setTextAlignment(Qt::AlignCenter);
 
 	this->resize(500, 300);
-}
+}*/
 
 void DataInput::statisticalData(QWidget *textEdit)
 {

@@ -26,12 +26,9 @@ public:
 	explicit DataInput(opType type, QWidget *parent = 0);
 	~DataInput();
 	std::vector<double> getStatisticalData();
-	std::vector<std::vector<double>> getLinearProgrammingData();
 
 private slots:
 	void statisticalData(QWidget *textEdit);
-	void linearProgrammingData(QWidget *table);
-	void prepareTable(QWidget *table);
 
 private:
 	Ui::DataInput *ui;

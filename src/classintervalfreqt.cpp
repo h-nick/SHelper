@@ -292,28 +292,28 @@ void ClassIntervalFreqT::printData()
 	QLabel *CentralTendencyLabel = new QLabel(this);
 	CentralTendencyLabel->setTextFormat(Qt::RichText);
 	CentralTendencyLabel->setText(
-				"<b>Central tendencies:</b><br>"
-				"Arithmetic average: "	+ QString::number(m_arithmeticAverage) + "<br>"
-				"Geometric average: "	+ QString::number(m_geometricAverage) + "<br>"
-				"Median: "				+ QString::number(m_median) + "<br>"
-				"Mode: "				+ QString::number(m_mode)
+				tr("<b>Central tendencies:</b><br>"
+				"Arithmetic average: ")		+ QString::number(m_arithmeticAverage) + "<br>" +
+				tr("Geometric average: ")	+ QString::number(m_geometricAverage) + "<br>" +
+				tr("Median: ")				+ QString::number(m_median) + "<br>" +
+				tr("Mode: ")				+ QString::number(m_mode)
 				);
 	ui->gridLayout->addWidget(CentralTendencyLabel, 2, 0, Qt::AlignLeft | Qt::AlignVCenter);
 
 	QLabel *DispersionMeasurementLabel = new QLabel(this);
 	DispersionMeasurementLabel->setTextFormat(Qt::RichText);
 	DispersionMeasurementLabel->setText(
-				"<b>Measures of disperion:</b><br>"
-				"Range: "				+ QString::number(m_range)					+ "<br>"
-				"Standard deviation: "	+ QString::number(m_standardDeviation)		+ "<br>"
-				"Variance: "			+ QString::number(m_variance)				+ "<br>"
-				"Typical deviation: "	+ QString::number(m_typicalDeviation)		+ "<br>"
-				"Cft. of variation: "	+ QString::number(m_varianceCoefficient)	+ "% <br>"
-				"Interquartile range: "	+ QString::number(m_interquartileRange)		+ "<br>"
-				"Interqrt. deviation: "	+ QString::number(m_interquartileDeviation) + "<br>"
-				"Pearson Cft.: "		+ QString::number(m_coefficientPearson, 'f')	+ "<br>"
-				"Bowley Cft.: "			+ QString::number(m_coefficientBowley, 'f')		+ "<br>"
-				"Kurtosis Cft.: "		+ QString::number(m_coefficientKurtosis, 'f')	+
+				tr("<b>Measures of disperion:</b><br>"
+				"Range: ")					+ QString::number(m_range)					+ "<br>" +
+				tr("Standard deviation: ")	+ QString::number(m_standardDeviation)		+ "<br>" +
+				tr("Variance: ")			+ QString::number(m_variance)				+ "<br>" +
+				tr("Typical deviation: ")	+ QString::number(m_typicalDeviation)		+ "<br>" +
+				tr("Cft. of variation: ")	+ QString::number(m_varianceCoefficient)	+ "% <br>" +
+				tr("Interquartile range: ")	+ QString::number(m_interquartileRange)		+ "<br>" +
+				tr("Interqrt. deviation: ")	+ QString::number(m_interquartileDeviation) + "<br>" +
+				tr("Pearson Cft.: ")		+ QString::number(m_coefficientPearson, 'f')	+ "<br>" +
+				tr("Bowley Cft.: ")			+ QString::number(m_coefficientBowley, 'f')		+ "<br>" +
+				tr("Kurtosis Cft.: ")		+ QString::number(m_coefficientKurtosis, 'f')	+
 				" (" + getShape() + ")"
 				);
 	ui->gridLayout->addWidget(DispersionMeasurementLabel, 2, 1, Qt::AlignHCenter | Qt::AlignVCenter);
@@ -431,11 +431,11 @@ QString ClassIntervalFreqT::getShape()
 	double shape;
 	shape = m_coefficientKurtosis / pow(m_variance, 2);
 	if(shape < 3)
-		return "Platykurtic";
+		return tr("Platykurtic");
 	if(shape == 3)
-		return "Mesokurtic";
+		return tr("Mesokurtic");
 	else
-		return "Leptokurtic";
+		return tr("Leptokurtic");
 }
 
 void ClassIntervalFreqT::calculateCoefficients()

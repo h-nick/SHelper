@@ -7,7 +7,6 @@
 #include "include/simplefreqt.h"
 #include "include/classintervalfreqt.h"
 #include "include/aboutdialog.h"
-#include "include/lpgraphicalm.h"
 #include "include/settingsconfig.h"
 
 Shelper::Shelper(QWidget *parent) :
@@ -21,8 +20,6 @@ Shelper::Shelper(QWidget *parent) :
 	connect(ui->button_classintervalfreq, SIGNAL(pressed()), this, SLOT(callClassIntervalFreqT()));
 	connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(showAbout()));
 	connect(ui->actionLanguage, SIGNAL(triggered()), this, SLOT(changeLang()));
-	connect(ui->button_LPgraphical, SIGNAL(pressed()), this, SLOT(lpGraphical()));
-	connect(ui->button_LPSimplex, SIGNAL(pressed()), this, SLOT(lpSimplex()));
 }
 
 Shelper::~Shelper()
@@ -61,13 +58,6 @@ _vct<double> Shelper::obtainStatisticalData(DataInput::opType type)
 	return allData.getStatisticalData();
 }
 
-_vct<_vct<double>> Shelper::obtainLPGData(DataInput::opType type, _vct<_vct<double>> coefficientGroup)
-{
-	DataInput allData(type, this);
-	allData.exec();
-	return allData.getLinearProgrammingData();
-}
-
 void Shelper::callSimpleFreqT()
 {
     _vct<double> temp = obtainStatisticalData(DataInput::opType::TYPE_STATISTIC);
@@ -88,25 +78,4 @@ void Shelper::callClassIntervalFreqT()
 	ClassIntervalFreqT *intFreqTable = new ClassIntervalFreqT(temp);
 	intFreqTable->show();
 	intFreqTable->setAttribute(Qt::WA_DeleteOnClose);
-}
-
-void Shelper::lpGraphical()
-{
-	std::vector<std::vector<double>> coefficientGroup;
-	LPGraphicalM *lpGraphical = new LPGraphicalM(obtainLPGData(DataInput::opType::TYPE_LPGRAPHICAL,
-															   coefficientGroup));
-	lpGraphical->show();
-	lpGraphical->setAttribute(Qt::WA_DeleteOnClose);
-}
-
-// NOTE: Placeholders!
-void Shelper::lpSimplex()
-{
-	std::vector<std::vector<double>> coefficientGroup;
-	obtainLPGData(DataInput::opType::TYPE_LPGENERAL, coefficientGroup);
-}
-
-void Shelper::lpDual()
-{
-
 }
