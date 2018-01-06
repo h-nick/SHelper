@@ -78,6 +78,7 @@ private:
 	std::array<double, 100> m_percentiles;
 	double positionConstant(int position, posType type);
 	int positionCalculations(const int positionConst);
+	void calculateQRanges();
 
 	// Measures of dispersion:
 	double m_range;

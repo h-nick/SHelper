@@ -3,6 +3,7 @@
 #include <QTableWidget>
 #include <QLabel>
 #include <QMessageBox>
+#include <qdialog.h>
 #include <algorithm>
 #include <cmath>
 #include <functional>
@@ -29,13 +30,11 @@ ClassIntervalFreqT::ClassIntervalFreqT(_vct<double> &numeric_data, QWidget *pare
 	connect(mapper, SIGNAL(mapped(int)), this, SLOT(printPosition(int)));
 
 	connect(ui->buttonQuartiles, SIGNAL(pressed()), mapper, SLOT(map()));
-	mapper->setMapping(ui->buttonQuartiles, static_cast<int>(posType::QUARTILE));
+	mapper->setMapping(ui->buttonQuartiles, (int)posType::QUARTILE);
 	connect(ui->buttonSextiles, SIGNAL(pressed()), mapper, SLOT(map()));
 	mapper->setMapping(ui->buttonSextiles, (int)posType::SEXTILE);
 	connect(ui->buttonDeciles, SIGNAL(pressed()), mapper, SLOT(map()));
 	mapper->setMapping(ui->buttonDeciles, (int)posType::DECILE);
-	connect(ui->buttonPercentiles, SIGNAL(pressed()), mapper, SLOT(map()));
-	mapper->setMapping(ui->buttonPercentiles, (int)posType::PERCENTILE);
 }
 
 ClassIntervalFreqT::~ClassIntervalFreqT()
@@ -156,8 +155,7 @@ void ClassIntervalFreqT::vectorialCalculations()
 	positionTrends(posType::QUARTILE);
 	positionTrends(posType::SEXTILE);
 	positionTrends(posType::DECILE);
-	// TODO: Check if the generated percentiles are correct.
-	positionTrends(posType::PERCENTILE);
+	calculateQRanges();
 
 	/* Calculate measures of dispersion */
 	_vct<double> allDeviations = calculateAllDeviations();
@@ -173,6 +171,12 @@ void ClassIntervalFreqT::vectorialCalculations()
 	printData();
 }
 
+void ClassIntervalFreqT::calculateQRanges()
+{
+	m_interquartileRange = m_quartiles[2] - m_quartiles[0];
+	m_interquartileDeviation = m_interquartileRange / 2;
+}
+
 void ClassIntervalFreqT::buildTable()
 {
 	// NOTE: This is showing lines with absolute frequency 0.
@@ -181,7 +185,7 @@ void ClassIntervalFreqT::buildTable()
 	_vct<_oda>::const_iterator ciItr = m_allClassIntervals.begin();
 	ui->table->setRowCount(m_allClassIntervals.size());
 
-	// TODO: Compress all of this in one or two functions since they are all the same.
+	// NOTE: Maybe compress all of this in one or two functions since they are all the same.
 	/* Builds the class-intervals column */
 	int crn = 0;
 	for(; ciItr != m_allClassIntervals.end(); ciItr++)
@@ -567,16 +571,6 @@ void ClassIntervalFreqT::positionTrends(posType type)
 			m_deciles.at(crn) = decile;
 		}
 		break;
-
-	case posType::PERCENTILE:
-		for(int crn = 0; crn < 100; crn++)
-		{
-			const int position = positionConstant(crn, posType::PERCENTILE);
-			int freqPosition = positionCalculations(position);
-			double percentile = getIndexes(position, freqPosition);
-			m_percentiles.at(crn) = percentile;
-		}
-		break;
 	}
 }
 
@@ -617,10 +611,6 @@ void ClassIntervalFreqT::printPosition(int type)
 		msgbx->setWindowTitle("Deciles");
 		msgbx->setText(message);
 		msgbx->exec();
-		break;
-
-	case static_cast<int>(posType::PERCENTILE) :
-		// TODO: Implement this.
 		break;
 
 	default:

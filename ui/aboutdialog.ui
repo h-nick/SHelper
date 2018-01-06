@@ -458,7 +458,7 @@
    <item row="2" column="0" colspan="2">
     <widget class="QLabel" name="labelAbout">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SHelper has been developed as a tool to simplify statistical calculations and linear programming problem related to engineering.&lt;br/&gt;&lt;br/&gt;This is an open-source project released under the GPL 3.0 license.&lt;p&gt;It was created using C++17 and QT5. The source code is available at:&lt;br/&gt;&lt;a href=&quot;https://github.com/nhd15c/SHelper&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/nhd15c/SHelper&lt;br/&gt;&lt;br/&gt;&lt;/span&gt;&lt;/a&gt;Developed by:&lt;br/&gt;Nicolás H.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SHelper has been developed as an utility to simplify statistical calculations and linear programming problems&lt;br/&gt; related to engineering.&lt;br/&gt;&lt;br/&gt;This is an open-source project released under the GPL 3.0 license.&lt;p&gt;It was created using C++17 and QT5. The source code is available at:&lt;br/&gt;&lt;a href=&quot;https://github.com/nhd15c/SHelper&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/nhd15c/SHelper&lt;br/&gt;&lt;br/&gt;&lt;/span&gt;&lt;/a&gt;Developed by:&lt;br/&gt;Nicolás H.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="openExternalLinks">
       <bool>true</bool>
